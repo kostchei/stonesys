@@ -153,8 +153,8 @@ body {
 /* ---- print visibility ---- */
 .print-only { display: none; }
 
-/* ============ A3 PRINT ============ */
-@page { size: A3 portrait; margin: 12mm; }
+/* ============ A3 PRINT (landscape) ============ */
+@page { size: A3 landscape; margin: 10mm; }
 @media print {
   body { background: #fff; }
   .no-print { display: none !important; }
@@ -162,11 +162,14 @@ body {
   .toolbar { display: none; }
   .sheet {
     max-width: none; margin: 0; box-shadow: none; padding: 0;
-    gap: 6mm; grid-template-columns: 70mm 1fr 78mm;
+    gap: 5mm; grid-template-columns: 66mm 1fr 82mm;
   }
+  /* the moves zone is the tall one; flow it into two columns to use the
+     extra landscape width instead of running off the shorter page */
+  .zone-center { column-count: 2; column-gap: 6mm; }
+  .zone-center > h2 { column-span: all; }
   .zone { break-inside: avoid; }
   .move { break-inside: avoid; }
   .pip { width: 18px; height: 18px; }
-  /* expand result text on paper; bands carry the outcomes */
   .move-out { display: none; }
 }
