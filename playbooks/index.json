@@ -1,0 +1,19 @@
+{
+  "playsets": [
+    {
+      "setting": "StoneSys (core)",
+      "steading": null,
+      "playbooks": [
+        { "id": "the-beholden", "name": "The Beholden" }
+      ]
+    },
+    {
+      "setting": "Dark Sun — The Free Legion",
+      "steading": "steadings/darksun-free-legion.md",
+      "playbooks": [
+        { "id": "darksun-preserver", "name": "The Preserver" },
+        { "id": "darksun-gladiator", "name": "The Mul Gladiator" }
+      ]
+    }
+  ]
+}
