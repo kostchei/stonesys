@@ -1,0 +1,147 @@
+{
+  "id": "the-beholden",
+  "name": "The Beholden",
+  "concept": "You were no one. A power lifted you out of the gutter, the ledger, or the grave, and made you useful. Now their reach is your reach, and their leash is always around your throat.",
+  "duty": "Your power is borrowed. Everything you can do, you can do because someone above you allows it. For now.",
+  "chassis": { "mod": "stat-2", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Sera", "Corin", "Vesh", "Oda", "Lira", "Tam", "Brannoc", "Mire", "Sable", "Joss", "Halle", "Pike", "Wenna", "Dray", "Castor"],
+    "look": [
+      { "label": "Bearing", "options": ["watchful", "ingratiating", "cold", "restless"] },
+      { "label": "Dress", "options": ["borrowed finery", "practical leathers", "a patron's livery", "deliberately plain"] },
+      { "label": "Eyes", "options": ["calculating", "tired", "hungry", "always hidden"] },
+      { "label": "Mark", "options": ["a patron's token, worn openly", "a brand or tattoo, kept covered", "a fine scar", "nothing you will show"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 1, "DEX": 3, "CON": 2, "INT": 3, "WIS": 2, "CHA": 4 },
+    "anchor": { "stat": "CHA", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "16+CON", "damage": "d6", "load": "6+STR" },
+  "gear": [
+    { "label": "Tool of the trade", "options": ["a fine blade (d6)", "a brace of knives (d6, thrown)", "a walking cane that is also a club (d6)"] },
+    { "label": "Cover", "options": ["merchant's papers", "a healer's kit", "a minstrel's instrument"] },
+    { "label": "Insurance", "options": ["a purse of someone else's coin", "a folio of useful secrets", "a single favor token from your patron"] }
+  ],
+  "moves": [
+    {
+      "name": "Strings",
+      "type": "signature",
+      "stat": "CHA",
+      "trigger": "When you arrive somewhere within your patron's reach and quietly put out feelers for a contact, roll +CHA.",
+      "results": {
+        "strong": "Hold 3 Strings.",
+        "weak": "Hold 1 String.",
+        "miss": "You still find someone, but the GM holds the Strings against you."
+      },
+      "hold": {
+        "name": "Strings",
+        "spend": [
+          "A useful contact is already here and willing to talk.",
+          "Someone nearby owes you a small debt you can call in.",
+          "You know a back way, a safe room, or a quiet exit.",
+          "You produce a token of passage, forged or genuine."
+        ]
+      }
+    },
+    {
+      "name": "Leash",
+      "type": "fixed",
+      "trigger": "When you Invoke Patron (core.md):",
+      "text": "You may take +1 Debt to treat a 6- as a 7-9, or a 7-9 as a 10+. The patron remembers every indulgence."
+    },
+    {
+      "name": "Read the Room",
+      "type": "choice",
+      "stat": "WIS",
+      "trigger": "When you enter a charged situation and size it up, roll +WIS.",
+      "results": {
+        "strong": "Ask 3. Take +1 forward acting on the answers.",
+        "weak": "Ask 1. Take +1 forward acting on the answers.",
+        "miss": "The GM asks you a question, and you must answer honestly: who here already has your number?"
+      }
+    },
+    {
+      "name": "A Face for Every Door",
+      "type": "choice",
+      "stat": "CHA",
+      "trigger": "When you pass yourself off as someone you are not, roll +CHA.",
+      "results": {
+        "strong": "They buy it until you give them a hard reason not to.",
+        "weak": "They buy it for now, but the GM names the catch.",
+        "miss": "Someone sees right through you, and they are not who you hoped."
+      }
+    },
+    {
+      "name": "Collateral",
+      "type": "choice",
+      "trigger": "When you put up something of value as surety to seal a deal:",
+      "text": "Take +1 ongoing to that deal while the collateral stands. If you forfeit it, mark XP and add 1 Heat."
+    },
+    {
+      "name": "Eyes Everywhere",
+      "type": "choice",
+      "stat": "INT",
+      "trigger": "When you spend a quiet day in a settlement listening, roll +INT.",
+      "results": {
+        "strong": "Hold 2.",
+        "weak": "Hold 1.",
+        "miss": "You hear something, but so does someone who matters: add 1 Heat."
+      },
+      "hold": { "name": "Whispers", "spend": ["Learn a secret currently in play in this settlement."] }
+    },
+    {
+      "name": "The Patron's Purse",
+      "type": "choice",
+      "trigger": "Once per session:",
+      "text": "Declare that your patron staked you. Gain coin or a needed common item now, and add 1 Debt."
+    },
+    {
+      "name": "Hard to Kill",
+      "type": "choice",
+      "trigger": "When you would take a fatal blow:",
+      "text": "You may add 1 Debt and survive instead, visibly marked by how your patron reached out to save you."
+    }
+  ],
+  "embedment": {
+    "system": "patron",
+    "start": { "Bond": 1, "Debt": 2, "Heat": 0 },
+    "bonds": [
+      "____ knew me before my patron did. They remember who I was.",
+      "____ has done work for me that could get them hanged, and I hold it gently.",
+      "I owe ____ a debt that has nothing to do with my patron, and it galls me.",
+      "____ thinks they can get me free of my patron. They are wrong, but I let them believe it.",
+      "____ is the only one I would warn before my patron came calling."
+    ],
+    "communityTie": [
+      "Your patron wants a foothold in the home. ____, who lives there, does not know you are the wedge.",
+      "The home took you in when your patron once cast you off. You would protect ____ there even against orders.",
+      "You launder your patron's interests through ____'s business in the home."
+    ]
+  },
+  "tracks": [
+    { "name": "Bond", "min": 0, "max": 3, "start": 1, "note": "Standing with your patron (core.md)." },
+    { "name": "Debt", "min": 0, "max": 6, "start": 2, "note": "At 6 the patron makes a major demand, then resets to 3." },
+    { "name": "Heat", "min": 0, "max": 4, "start": 0, "note": "Attention from rivals and authorities (core.md)." }
+  ],
+  "advancement": {
+    "basic": [
+      "+1 to a stat (max 5).",
+      "+1 to a stat (max 5).",
+      "Take another Beholden move.",
+      "Take another Beholden move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Gain a second patron (new Patron Sheet, Bond 0).",
+      "Increase your maximum held Strings by 1.",
+      "Once per session, your Leash costs no Debt.",
+      "Buy a piece of yourself back: reduce standing Debt by 1, permanently."
+    ],
+    "advanced": [
+      "Cut the Cord: end your bond with a patron for good, resolving the fallout in play. Choose a new embedment: claim or found a Bastion, or take up a god (start Devotion 1).",
+      "Become a Patron: create a small Patron Sheet with you as the gift-giver; others may now Invoke you.",
+      "Walk Away: retire to safety, or take up the mantle your patron leaves behind."
+    ]
+  }
+}

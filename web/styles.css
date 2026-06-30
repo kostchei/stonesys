@@ -1,0 +1,144 @@
+:root {
+  --ink: #1c1a17;
+  --paper: #f6f1e7;
+  --line: #b9ad97;
+  --accent: #6b4f2a;
+  --strong: #1f6b3a;
+  --weak: #9a7a1d;
+  --miss: #9a2b2b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--ink);
+  background: #d9d2c3;
+}
+
+.toolbar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 16px; background: var(--ink); color: var(--paper);
+}
+.toolbar button { margin-left: auto; }
+.toolbar button + button { margin-left: 8px; }
+.toolbar button {
+  font: inherit; padding: 4px 10px; cursor: pointer;
+  background: var(--paper); color: var(--ink); border: 0; border-radius: 3px;
+}
+
+#loading { padding: 24px; font-size: 18px; }
+
+/* ---- sheet grid (screen) ---- */
+.sheet {
+  max-width: 1100px; margin: 16px auto; background: var(--paper);
+  display: grid; gap: 10px; padding: 16px;
+  grid-template-columns: 240px 1fr 300px;
+  grid-template-areas:
+    "header header header"
+    "left   center right"
+    "footer footer footer";
+  box-shadow: 0 2px 12px rgba(0,0,0,.25);
+}
+.zone-header { grid-area: header; }
+.zone-left { grid-area: left; }
+.zone-center { grid-area: center; }
+.zone-right { grid-area: right; }
+.zone-footer { grid-area: footer; }
+
+.zone { border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; }
+.zone h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin: 4px 0 8px; border-bottom: 1px solid var(--line); }
+.zone h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin: 12px 0 4px; }
+
+/* ---- header ---- */
+.pb-title { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.pb-title h1 { margin: 0; font-size: 30px; }
+.char-name { font: italic 20px Georgia, serif; border: 0; border-bottom: 1px solid var(--line); background: transparent; min-width: 220px; }
+.concept { font-style: italic; margin: 6px 0; }
+.duty { font-weight: bold; border-left: 3px solid var(--accent); padding-left: 10px; margin: 6px 0 0; }
+.look-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 6px 0; }
+.look select, .gear-row select { font: inherit; }
+.look-print { font-size: 13px; }
+
+/* ---- stats ---- */
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.stat { border: 1px solid var(--line); border-radius: 4px; padding: 6px; text-align: center; }
+.stat-name { font-weight: bold; letter-spacing: .1em; }
+.stat-val { width: 48px; font: bold 20px Georgia, serif; text-align: center; }
+.stat-mod { font-size: 13px; color: var(--accent); }
+.stat-roll-out { display: block; min-height: 16px; font-size: 12px; margin-top: 2px; }
+
+.vital { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.vital-label { font-weight: bold; width: 36px; }
+.vital-val { font-size: 18px; min-width: 60px; text-align: center; }
+.vital-static { margin: 6px 0; font-size: 14px; }
+
+/* ---- moves ---- */
+.move { border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px; margin-bottom: 8px; }
+.move-signature { border-color: var(--accent); border-width: 2px; }
+.move-head { display: flex; align-items: center; gap: 8px; }
+.move-name { font-weight: bold; font-size: 16px; }
+.move-tag { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; padding: 1px 6px; border-radius: 8px; background: var(--line); }
+.tag-signature { background: var(--accent); color: var(--paper); }
+.move-pick { margin-left: auto; font-size: 12px; }
+.move-trigger { margin: 4px 0; font-style: italic; }
+.move-text { margin: 4px 0; }
+.bands { list-style: none; padding: 0; margin: 4px 0; font-size: 13px; }
+.bands li { padding: 2px 4px; }
+.band-strong { color: var(--strong); }
+.band-weak { color: var(--weak); }
+.band-miss { color: var(--miss); }
+.roll-btn { font: inherit; cursor: pointer; padding: 2px 10px; border: 1px solid var(--accent); background: var(--paper); border-radius: 3px; margin: 4px 4px 4px 0; }
+.move-out { margin-top: 4px; min-height: 18px; }
+.roll-line { font-weight: bold; }
+.roll-result { padding: 3px 0; }
+.xp-btn { font: inherit; cursor: pointer; margin-top: 4px; }
+
+/* ---- holds ---- */
+.hold { margin-top: 6px; border-top: 1px dashed var(--line); padding-top: 6px; }
+.hold-head { display: flex; align-items: center; gap: 8px; }
+.hold-name { font-weight: bold; }
+.hold-val { font-size: 18px; min-width: 24px; text-align: center; }
+.hold-spend { margin: 4px 0; padding-left: 18px; font-size: 13px; }
+
+/* ---- tracks ---- */
+.track { margin-bottom: 8px; }
+.track-name { font-weight: bold; }
+.pips { display: flex; gap: 4px; margin: 3px 0; }
+.pip { width: 26px; height: 26px; border: 1px solid var(--line); background: var(--paper); cursor: pointer; border-radius: 3px; font: 12px Georgia; }
+.pip.filled { background: var(--accent); color: var(--paper); }
+.pip.zero { opacity: .6; }
+.track-note { font-size: 11px; color: #6a6258; }
+.bonds-list, .tie-list { padding-left: 18px; font-size: 13px; }
+.bonds-list li, .tie-list li { margin-bottom: 4px; }
+.embed-system { font-size: 13px; font-style: italic; }
+
+/* ---- footer ---- */
+.zone-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.adv-list { display: flex; flex-direction: column; gap: 3px; font-size: 13px; }
+.adv { display: flex; gap: 6px; align-items: baseline; }
+.gear-row { display: block; margin: 3px 0; font-size: 13px; }
+.gear-label { font-weight: bold; }
+
+/* ---- print visibility ---- */
+.print-only { display: none; }
+
+/* ============ A3 PRINT ============ */
+@page { size: A3 portrait; margin: 12mm; }
+@media print {
+  body { background: #fff; }
+  .no-print { display: none !important; }
+  .print-only { display: revert; }
+  .toolbar { display: none; }
+  .sheet {
+    max-width: none; margin: 0; box-shadow: none; padding: 0;
+    gap: 6mm; grid-template-columns: 70mm 1fr 78mm;
+  }
+  .zone { break-inside: avoid; }
+  .move { break-inside: avoid; }
+  .pip { width: 18px; height: 18px; }
+  /* expand result text on paper; bands carry the outcomes */
+  .move-out { display: none; }
+}
