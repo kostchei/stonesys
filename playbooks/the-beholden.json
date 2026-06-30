@@ -3,7 +3,7 @@
   "name": "The Beholden",
   "concept": "You were no one. A power lifted you out of the gutter, the ledger, or the grave, and made you useful. Now their reach is your reach, and their leash is always around your throat.",
   "duty": "Your power is borrowed. Everything you can do, you can do because someone above you allows it. For now.",
-  "chassis": { "mod": "stat-2", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
   "identity": {
     "names": ["Sera", "Corin", "Vesh", "Oda", "Lira", "Tam", "Brannoc", "Mire", "Sable", "Joss", "Halle", "Pike", "Wenna", "Dray", "Castor"],
     "look": [
@@ -29,11 +29,22 @@
       "name": "Strings",
       "type": "signature",
       "stat": "CHA",
-      "trigger": "When you arrive somewhere within your patron's reach and quietly put out feelers for a contact, roll +CHA.",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you arrive within your patron's reach and quietly put out feelers for a contact.",
       "results": {
-        "strong": "Hold 3 Strings.",
-        "weak": "Hold 1 String.",
-        "miss": "You still find someone, but the GM holds the Strings against you."
+        "success": "You find someone who can help you here.",
+        "failure": "No one useful surfaces, or the only one who does already answers to someone else.",
+        "advantage": [
+          "Hold 1 String (spend later: a contact is already here / a nearby debt to call in / a back way or safe room / a token of passage, forged or genuine).",
+          "Learn who else has been asking after the same thing."
+        ],
+        "threat": [
+          "Add 1 Heat as word of your asking travels.",
+          "The contact wants something up front before they help."
+        ],
+        "triumph": "Someone with real reach takes a favorable interest in you.",
+        "despair": "You have walked into a rival's net; they know you are here and why."
       },
       "hold": {
         "name": "Strings",
@@ -48,48 +59,63 @@
     {
       "name": "Leash",
       "type": "fixed",
-      "trigger": "When you Invoke Patron (core.md):",
-      "text": "You may take +1 Debt to treat a 6- as a 7-9, or a 7-9 as a 10+. The patron remembers every indulgence."
+      "trigger": "When you Invoke your patron (core.md):",
+      "text": "You may add 1 Debt to upgrade your pool once (one ability die becomes proficiency) or to add a boost die. The patron remembers every indulgence."
     },
     {
       "name": "Read the Room",
       "type": "choice",
       "stat": "WIS",
-      "trigger": "When you enter a charged situation and size it up, roll +WIS.",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you enter a charged situation and read it.",
       "results": {
-        "strong": "Ask 3. Take +1 forward acting on the answers.",
-        "weak": "Ask 1. Take +1 forward acting on the answers.",
-        "miss": "The GM asks you a question, and you must answer honestly: who here already has your number?"
+        "success": "Ask the GM one: who holds the real power here? who is afraid? who owes whom? where is the quickest way out? Acting on the answer grants a boost die.",
+        "failure": "You misjudge the room, and the GM tells you how it bites you.",
+        "advantage": ["Ask an additional question.", "Spot a second exit or a useful object in reach."],
+        "threat": ["Someone clocks you studying them.", "Take a setback die on your next move in this scene."],
+        "triumph": "You spot the single lever that turns the whole room.",
+        "despair": "You badly misread someone dangerous, to your cost."
       }
     },
     {
       "name": "A Face for Every Door",
       "type": "choice",
       "stat": "CHA",
-      "trigger": "When you pass yourself off as someone you are not, roll +CHA.",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you pass yourself off as someone you are not.",
       "results": {
-        "strong": "They buy it until you give them a hard reason not to.",
-        "weak": "They buy it for now, but the GM names the catch.",
-        "miss": "Someone sees right through you, and they are not who you hoped."
+        "success": "They buy it for now.",
+        "failure": "Someone sees right through you.",
+        "advantage": ["They buy it until you give them a hard reason not to.", "You glean something only the role would be told."],
+        "threat": ["The act costs you: drop a coin, a possession, or a name.", "Someone will remember this face."],
+        "triumph": "They take you for someone important, and doors open accordingly.",
+        "despair": "The one person who knows your real face is standing right there."
       }
     },
     {
       "name": "Collateral",
       "type": "choice",
       "trigger": "When you put up something of value as surety to seal a deal:",
-      "text": "Take +1 ongoing to that deal while the collateral stands. If you forfeit it, mark XP and add 1 Heat."
+      "text": "Take a boost die on rolls to uphold the deal while the collateral stands. If you forfeit it, mark XP and add 1 Heat."
     },
     {
       "name": "Eyes Everywhere",
       "type": "choice",
       "stat": "INT",
-      "trigger": "When you spend a quiet day in a settlement listening, roll +INT.",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you spend a quiet day in a settlement, listening.",
       "results": {
-        "strong": "Hold 2.",
-        "weak": "Hold 1.",
-        "miss": "You hear something, but so does someone who matters: add 1 Heat."
+        "success": "You learn a secret currently in play here.",
+        "failure": "You hear only noise, and waste the day doing it.",
+        "advantage": ["Hold 1 Whisper (spend: reveal another live secret in this settlement).", "You learn it without anyone knowing you were asking."],
+        "threat": ["Someone who matters heard you were asking: add 1 Heat.", "The secret is bait."],
+        "triumph": "You learn who is really pulling the strings in this place.",
+        "despair": "You hear a secret someone will kill to keep, and they know you heard it."
       },
-      "hold": { "name": "Whispers", "spend": ["Learn a secret currently in play in this settlement."] }
+      "hold": { "name": "Whispers", "spend": ["Reveal a secret currently in play in this settlement."] }
     },
     {
       "name": "The Patron's Purse",
@@ -100,8 +126,8 @@
     {
       "name": "Hard to Kill",
       "type": "choice",
-      "trigger": "When you would take a fatal blow:",
-      "text": "You may add 1 Debt and survive instead, visibly marked by how your patron reached out to save you."
+      "trigger": "When you would be taken out:",
+      "text": "You may add 1 Debt and stay standing one more exchange, visibly marked by how your patron reached out to save you."
     }
   ],
   "embedment": {
@@ -127,21 +153,19 @@
   ],
   "advancement": {
     "basic": [
-      "+1 to a stat (max 5).",
-      "+1 to a stat (max 5).",
       "Take another Beholden move.",
       "Take another Beholden move.",
       "Take a move from another playbook.",
       "Take a move from another playbook.",
       "Gain a second patron (new Patron Sheet, Bond 0).",
       "Increase your maximum held Strings by 1.",
-      "Once per session, your Leash costs no Debt.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency instead of 1 (never more than its stat).",
       "Buy a piece of yourself back: reduce standing Debt by 1, permanently."
     ],
     "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
       "Cut the Cord: end your bond with a patron for good, resolving the fallout in play. Choose a new embedment: claim or found a Bastion, or take up a god (start Devotion 1).",
-      "Become a Patron: create a small Patron Sheet with you as the gift-giver; others may now Invoke you.",
-      "Walk Away: retire to safety, or take up the mantle your patron leaves behind."
+      "Become a Patron: create a small Patron Sheet with you as the gift-giver; others may now Invoke you."
     ]
   }
 }

@@ -46,65 +46,85 @@ Because the app fetches JSON, it must be served over HTTP, not opened from
 
 ## 4. Chassis constants (locked)
 
+Resolution is **Genesys-style narrative dice** on a lean, Stonetop-shaped
+character: no skill list, minimal stat gain, moves as fictional approaches (not
+"better with an axe").
+
 | Constant | Value |
 | --- | --- |
 | Stats | STR, DEX, CON, INT, WIS, CHA, rated `1-5` |
-| Roll modifier | `stat - 2` (range `-1` to `+3`) |
-| Resolution | `2d6 + mod`; `10+` strong, `7-9` weak, `6-` miss (+XP) |
-| Starting array | `{4, 3, 3, 2, 2, 1}`, archetype default + swap two |
-| Stat cap | `5` |
-| Power tracks | Bond/Debt/Heat, Devotion/Favor/Wrath, Bastion ratings (own scales) |
+| Pool | stat value = that many **ability dice** |
+| Skill | having a move grants **1 rank** = upgrade 1 ability die to proficiency. No skill list. Advancement may raise a move's upgrade to 2 (capped at its stat), rarely. |
+| Difficulty | GM sets challenge dice (`simple 0 … formidable 5`); default `average` (2) |
+| Read | net success/failure **and** net advantage/threat; triumph (proficiency) and despair (challenge) never cancel |
+| Currency | per-move hold-and-spend **and** a shared Story Point pool (spend flips sides) |
+| Starting array | `{4, 3, 3, 2, 2, 1}`, archetype default + swap two (anchor-limited) |
+| Stat cap | `5`; stat gain is a rare advanced advance, not a routine pick |
+| Power tracks | optional per setting: Bond/Debt/Heat, Devotion/Favor/Wrath, Bastion Standing |
+| Harm | HP + damage die stay Stonetop-style; the dice engine resolves moves, not damage |
 
 ## 5. Data model
 
 A playbook JSON has these top-level keys.
 
-- `id`, `name`, `concept`, `duty`: strings.
-- `chassis`: `{ mod, array, statCap }`. Echoed so a renderer needs no globals.
+- `id`, `name`, `concept`: strings. `duty` optional.
+- `chassis`: `{ resolution, array, statCap }`. Echoed so a renderer needs no globals.
 - `identity`: `{ names[], look[ {label, options[]} ] }`.
 - `stats`: `{ default{STR..CHA}, anchor{stat,min}|null, swaps }`.
 - `derived`: `{ hp, damage, load }` as formula strings (e.g. `"16+CON"`).
 - `gear`: `[ {label, options[]} ]`.
 - `moves`: `[ move ]`.
-- `embedment`: `{ system, start{}, bonds[], communityTie[] }`.
-- `tracks`: `[ {name, min, max, start} ]`.
+- `embedment` (optional): `{ system?, start?, bonds[], communityTie[] }`. `system`
+  is a freeform setting label; `start`/`tracks` appear only when a setting adds
+  power-structure tracks. Absent for settings with no Layer-2 power systems.
+- `tracks` (optional): `[ {name, min, max, start, note?} ]`.
 - `advancement`: `{ basic[], advanced[] }`.
 
 ### Move object
 
-A move is either **rollable** or **static**.
+A move is either **rollable** (Genesys form) or **static**.
 
 ```jsonc
 {
   "name": "Strings",
   "type": "signature | fixed | choice",
   "trigger": "When you ... ,",
-  "stat": "CHA",                 // present only on rollable moves
-  "results": {                   // present only on rollable moves
-    "strong": "hold 3 Strings.",
-    "weak":   "hold 1 String.",
-    "miss":   "you still find someone, but the GM holds the Strings against you."
+  "stat": "CHA",                 // rollable: sets ability dice
+  "trained": true,              // rollable: grants the 1-rank proficiency upgrade (default true)
+  "difficulty": "average",      // rollable: default task difficulty; GM may adjust
+  "results": {                   // rollable
+    "success": "you find someone who can help.",
+    "failure": "no one useful surfaces.",          // optional
+    "advantage": ["hold 1 String.", "learn who else asked."],  // spend menu
+    "threat":    ["add 1 Heat.", "they want payment up front."],
+    "triumph": "a power takes a favorable interest in you.",   // optional
+    "despair": "you walked into a rival's net."                // optional
   },
   "hold": { "name": "Strings", "spend": ["...", "..."] },  // optional
   "text": "..."                  // present only on static moves
 }
 ```
 
-The renderer rolls a move iff `stat` and `results` exist. This single
-convention is what lets the web sheet resolve play and the print sheet typeset
-the same fields with no branching logic in the data.
+The renderer rolls a move iff `stat` and `results` exist. A move is broad
+fictional competence (an approach, a situation) — never a gear/weapon
+specialization.
 
 ## 6. Dice engine (`dice.js`)
 
-Pure, no DOM. Exports:
+Pure, no DOM. Genesys narrative dice. Exports:
 
-- `rollDie()` → `1..6`.
-- `modFor(statValue)` → `statValue - 2`.
-- `rollMove(statValue)` → `{ dice:[a,b], mod, total, band }` where `band` is
-  `"strong" | "weak" | "miss"` by the thresholds `>=10`, `>=7`, else miss.
+- `DICE`, `DIFFICULTY`, `COLORS`: the standard face sets and difficulty map.
+- `buildPool({stat, ranks, difficulty, boost, setback, challengeUpgrades})` →
+  `{ability, proficiency, difficulty, challenge, boost, setback}` counts.
+  `ranks` upgrades ability→proficiency (capped at `stat`).
+- `rollPool(pool, rng?)` → array of rolled faces.
+- `tally(faces)` → `{ success, successes, advantages, threats, triumphs, despairs }`.
+  Triumph counts as a success and despair as a failure; both also persist
+  uncancelled.
+- `rollMove(opts, rng?)` → `{ pool, faces, ...tally }`.
 
-Band thresholds are defined once here and imported everywhere. The node smoke
-test pins them: total `10` is strong, `9` and `7` are weak, `6` is miss.
+The node smoke test pins pool construction (lean: upgrades capped at the stat)
+and the cancellation rules (despair still drags a tie to failure).
 
 ## 7. Web sheet (`app.js` + `index.html` + `styles.css`)
 
@@ -112,13 +132,16 @@ test pins them: total `10` is strong, `9` and `7` are weak, `6` is miss.
   (default stat assignment; signature + fixed moves + first two `choice` moves).
 - Render the three layers as labelled zones (see section 8 for the zone map; the
   screen uses the same regions the print sheet does).
-- Each stat and each rollable move shows a **Roll** button. Rolling displays the
-  two dice, the total, the band, and highlights the matching `results` line. A
-  miss offers a one-click **mark XP**.
+- Each stat and each rollable move shows roll controls (difficulty select,
+  boost/setback steppers, **Roll** button). Rolling displays the dice pool, the
+  net result (`SUCCESS/FAILURE · ▲ advantage · ▼ threat · ◆ triumph · ✶ despair`),
+  and the matching `results` text. A failure offers a one-click **mark XP**.
+- A shared **Story Point** pool lives in the toolbar; spending from one side
+  moves the point to the other. Stored globally in `localStorage`.
 - `tracks` render as clickable pip rows. Crossing a `core.md` threshold (e.g.
   Debt `6`) raises an inline note; the sheet does not auto-resolve it.
 - `hold` currencies (e.g. Strings) render as a counter with `+`, `-`, and spend
-  affordances. Spending Strings on the patron's name is flagged to tick Heat.
+  affordances, fed by advantage spends on the relevant move.
 - All mutations write through to `localStorage`.
 
 ## 8. Printable A3 sheet

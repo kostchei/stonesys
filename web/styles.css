@@ -122,6 +122,34 @@ body {
 .gear-row { display: block; margin: 3px 0; font-size: 13px; }
 .gear-label { font-weight: bold; }
 
+/* ---- Genesys result UI ---- */
+.hint { font-size: 11px; color: #6a6258; font-style: italic; margin: 2px 0 6px; }
+.stat-dice { font-size: 12px; color: var(--accent); }
+.stat-roll-out.ok, .roll-verdict.ok { color: var(--strong); font-weight: bold; }
+.stat-roll-out.bad, .roll-verdict.bad { color: var(--miss); font-weight: bold; }
+.results { font-size: 13px; margin: 4px 0; }
+.results p, .results div { margin: 3px 0; }
+.results ul { margin: 2px 0 4px; padding-left: 20px; }
+.r-success b { color: var(--strong); }
+.r-failure b { color: var(--miss); }
+.r-adv b { color: var(--strong); }
+.r-threat b { color: var(--weak); }
+.r-triumph { color: var(--strong); }
+.r-despair { color: var(--miss); }
+.roll-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 6px 0 2px; font-size: 13px; }
+.roll-controls select { font: inherit; }
+.stepper { display: inline-flex; align-items: center; gap: 4px; }
+.stepper button { font: inherit; cursor: pointer; width: 22px; }
+.chip { font-size: 12px; background: var(--line); border-radius: 8px; padding: 1px 8px; }
+.roll-pool { font-size: 12px; color: #6a6258; }
+.roll-verdict { font-size: 15px; }
+
+/* ---- Story Points ---- */
+.story-points { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; }
+.story-points .sp-label { opacity: .8; }
+.sp-side { display: inline-flex; align-items: center; gap: 3px; }
+.sp-side button { font: inherit; cursor: pointer; width: 20px; background: var(--paper); color: var(--ink); border: 0; border-radius: 3px; }
+
 /* ---- print visibility ---- */
 .print-only { display: none; }
 

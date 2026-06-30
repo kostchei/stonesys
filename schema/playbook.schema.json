@@ -3,7 +3,7 @@
   "$id": "https://stonesys/schema/playbook.schema.json",
   "title": "StoneSys Playbook",
   "type": "object",
-  "required": ["id", "name", "concept", "duty", "chassis", "identity", "stats", "derived", "moves", "embedment", "tracks", "advancement"],
+  "required": ["id", "name", "concept", "chassis", "identity", "stats", "derived", "moves", "advancement"],
   "additionalProperties": false,
   "properties": {
     "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
@@ -12,10 +12,11 @@
     "duty": { "type": "string" },
     "chassis": {
       "type": "object",
-      "required": ["mod", "array", "statCap"],
+      "required": ["resolution", "array", "statCap"],
       "additionalProperties": false,
+      "description": "Genesys narrative dice. A stat (1-5) sets ability dice; having a move grants 1 skill rank (1 ability die upgraded to proficiency); GM sets difficulty. No skill list, minimal stat gain.",
       "properties": {
-        "mod": { "type": "string" },
+        "resolution": { "type": "string" },
         "array": { "type": "array", "items": { "type": "integer" }, "minItems": 6, "maxItems": 6 },
         "statCap": { "type": "integer" }
       }
@@ -104,14 +105,20 @@
           "type": { "type": "string", "enum": ["signature", "fixed", "choice"] },
           "trigger": { "type": "string" },
           "stat": { "type": "string", "enum": ["STR", "DEX", "CON", "INT", "WIS", "CHA"] },
+          "trained": { "type": "boolean", "description": "True if acting through this move grants the 1-rank proficiency upgrade. Defaults true for rollable moves." },
+          "difficulty": { "type": "string", "enum": ["simple", "easy", "average", "hard", "daunting", "formidable"], "description": "Default task difficulty; the GM may adjust per fiction." },
           "results": {
             "type": "object",
-            "required": ["strong", "weak", "miss"],
+            "required": ["success"],
             "additionalProperties": false,
+            "description": "Genesys-form outcome. success/failure are the basic axis; advantage/threat are spend menus; triumph/despair are big swings.",
             "properties": {
-              "strong": { "type": "string" },
-              "weak": { "type": "string" },
-              "miss": { "type": "string" }
+              "success": { "type": "string" },
+              "failure": { "type": "string" },
+              "advantage": { "type": "array", "items": { "type": "string" } },
+              "threat": { "type": "array", "items": { "type": "string" } },
+              "triumph": { "type": "string" },
+              "despair": { "type": "string" }
             }
           },
           "hold": {
@@ -129,10 +136,11 @@
     },
     "embedment": {
       "type": "object",
-      "required": ["system", "start", "bonds", "communityTie"],
+      "required": ["bonds", "communityTie"],
       "additionalProperties": false,
+      "description": "Layer 2. `system` is a freeform setting label (e.g. 'village' for vanilla Stonetop, or 'patron'/'god'/'bastion' for StoneSys). `start` and the matching `tracks` are optional, present only when a setting adds power-structure tracks.",
       "properties": {
-        "system": { "type": "string", "enum": ["patron", "god", "bastion"] },
+        "system": { "type": "string" },
         "start": { "type": "object" },
         "bonds": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
         "communityTie": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
