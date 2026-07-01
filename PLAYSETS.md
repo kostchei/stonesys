@@ -114,7 +114,7 @@ Build one setting at a time, steading first, then the nine, then wire into the
 picker manifest and verify one renders/rolls.
 
 - [x] **Dark Sun**: steading → 9 playbooks → manifest → verified
-- [ ] **Elfquest**: steading → 9 playbooks → manifest → verify
+- [x] **Elfquest**: steading → 9 playbooks (village style, no tracks) → manifest → verified
 - [x] **Lankhmar**: 9th = Guild Beggar-Spy (used; swap if desired) → steading → 9 playbooks → manifest → verified
 
 Each setting also gets a short source trail appended to its steading file.

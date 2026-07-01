@@ -1,0 +1,145 @@
+{
+  "id": "elfquest-rockshaper",
+  "name": "The Rockshaper",
+  "concept": "Stone answers you as wood answers the tree-shaper — it flows under your hands like clay, then sets hard as a mountain's root. You raise walls where the tribe needs shelter, open ways through the living rock, and feel the deep bones of the earth. It is slow, deep, patient magic, and it has made you a little like the stone itself.",
+  "duty": "The stone is patient and it does not forget; shape it with respect, for what you raise will outlast you, and what you break may not be mended.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Durn", "Stone-Vael", "Ossa", "Grael", "Petra", "Mirek", "Talc", "Bront", "Sela", "Karn", "Flint", "Delve"],
+    "look": [
+      { "label": "Bearing", "options": ["slow and sure", "immovable", "patient as bedrock", "deep and quiet"] },
+      { "label": "Look", "options": ["dust-grey and callused", "marked with stone-signs", "hands that seem carved themselves", "a stillness that unsettles"] },
+      { "label": "Sign", "options": ["a shaped stone always in hand", "a way of pressing palms to rock", "the smell of deep earth", "eyes that trace every fault in a wall"] },
+      { "label": "Eyes", "options": ["grey as granite", "deep and unhurried", "seeing into the stone", "old as the hills"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 3, "DEX": 2, "CON": 4, "INT": 2, "WIS": 3, "CHA": 1 },
+    "anchor": { "stat": "CON", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "18+CON", "damage": "d6", "load": "8+STR" },
+  "gear": [
+    { "label": "Focus", "options": ["a shaped stone that fits your hand", "a chisel and mallet for finer work (d6)", "your hands and the deep bones alone"] },
+    { "label": "Craft", "options": ["stoneworked tools and vessels", "a hidden stone den you shaped", "knowledge of the earth's veins and faults"] },
+    { "label": "Bond", "options": ["a stone from the place you first shaped", "a debt the deep earth owes you", "a wall you raised that still stands guard"] }
+  ],
+  "moves": [
+    {
+      "name": "Shape the Stone",
+      "type": "signature",
+      "stat": "CON",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you set your hands to rock and earth and coax it to flow and set to your will.",
+      "results": {
+        "success": "The stone yields — it flows, shifts, and sets in the shape you need.",
+        "failure": "The rock resists, or the shaping draws more from your deep strength than you can spare.",
+        "advantage": [
+          "Hold 1 Bedrock (spend: shape it faster or larger than seems possible / make it seamless and lasting as the mountain / open a way through, or seal one shut / raise a wall, a shelter, or a bridge of stone).",
+          "You feel the deep truth of the earth here — its hollows, faults, and hidden ways."
+        ],
+        "threat": [
+          "The deep working drains you hard: a setback die until you rest on solid ground.",
+          "The earth shifts wrong — a crack, a slip, a groan of stone that carries."
+        ],
+        "triumph": "A work of stone to stand for ages, as if the mountain shaped itself.",
+        "despair": "The rock gives way in collapse, or the shaping leaves you spent to the bone."
+      },
+      "hold": {
+        "name": "Bedrock",
+        "spend": [
+          "Shape it faster or larger than should be possible.",
+          "Make it seamless and lasting as the mountain's root.",
+          "Open a way through the stone, or seal one shut.",
+          "Raise a wall, a shelter, or a bridge of solid stone."
+        ]
+      }
+    },
+    {
+      "name": "The Deep Bones",
+      "type": "fixed",
+      "trigger": "Because you feel the stone and earth around you always:",
+      "text": "You sense the rock's faults, hollows, veins, and hidden ways — take a boost die when that closeness serves you, and no deep or dark place of stone is ever wholly blind to you. But the deep patience of the stone has settled into you; you are slow to act in haste, and quick things sometimes leave you behind."
+    },
+    {
+      "name": "Raise the Wall",
+      "type": "choice",
+      "stat": "CON",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you raise stone to shelter, shield, or bar the way.",
+      "results": {
+        "success": "Stone rises where you will it, a wall or shelter that holds.",
+        "failure": "It rises too slow, too weak, or in the wrong place for the need.",
+        "advantage": ["It blends into the natural rock, hidden.", "It has a way through only you know."],
+        "threat": ["It takes time you may not have.", "Raising it drew deep on you, or woke the earth's notice."],
+        "triumph": "A rampart of living stone the tribe could hold for a generation.",
+        "despair": "The wall fails, or falls, at the moment it must hold."
+      }
+    },
+    {
+      "name": "Open the Way",
+      "type": "choice",
+      "stat": "STR",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you tunnel through stone, clear a fall, or seal a passage behind you.",
+      "results": {
+        "success": "The way opens, or closes, as you need it.",
+        "failure": "The stone fights you, or the working brings down more than you meant.",
+        "advantage": ["Do it quietly, without the grind and boom of moving rock.", "Leave the passage sound and safe behind you."],
+        "threat": ["The effort leaves you spent.", "You open a way into somewhere you did not expect."],
+        "triumph": "A road through the mountain's heart, swift and sound.",
+        "despair": "A collapse — on you, on the way home, or on what you were digging toward."
+      }
+    },
+    {
+      "name": "Read the Earth",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you sense the deep shape of the land — caverns, faults, ore, water, the tremor to come.",
+      "results": {
+        "success": "The earth tells you its secrets: what lies below, where it is weak, what is coming.",
+        "failure": "The deep is silent or strange to you here, and the not-knowing is a danger.",
+        "advantage": ["Sense it far and deep.", "Find the safe way, or the rich vein, or the hollow that hides a foe."],
+        "threat": ["Reaching deep, you brushed something down there that stirred."],
+        "triumph": "You know the bones of the whole region as if you'd shaped them.",
+        "despair": "You misread the earth, and it moves against you."
+      }
+    }
+  ],
+  "embedment": {
+    "bonds": [
+      "____ sheltered in a stone den I raised; while it stands, I feel bound to keep them safe.",
+      "____ finds my slowness maddening, and I find their haste the same.",
+      "I am teaching ____ to feel the deep bones, though few have the patience for it.",
+      "____ once dug me out of a collapse with their bare hands, and I do not forget debts of stone.",
+      "The deep earth showed me something about ____, and I have not decided what it means."
+    ],
+    "communityTie": [
+      "The Hollow-Oak Holt's walls and hidden ways are my work; ____ helps me shape them without waking what sleeps below.",
+      "When the tribe needs shelter or a way through the hills, they come to me; ____ makes sure I don't spend my deep strength to nothing.",
+      "I feel the bones of the land the Holt rests on; ____ is the one who grasps what that quiet watch costs me."
+    ]
+  },
+  "advancement": {
+    "basic": [
+      "Take another Rockshaper move.",
+      "Take another Rockshaper move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Increase your maximum held Bedrock by 1.",
+      "Deepen the bond: name a great work of stone (a mountain hall, a sealed vault, a bridge of living rock) you can attempt at Daunting difficulty.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "Quicken your hand: once per session, shape stone as swiftly as thought."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Feel the mountain's heart: your bond with the deep stone becomes a power the tribe relies upon, with all it draws.",
+      "Delve a stronghold: found a Bastion (a hall within the living rock) that shelters the tribe against any storm or siege."
+    ]
+  }
+}

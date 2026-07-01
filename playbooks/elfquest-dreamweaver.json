@@ -1,0 +1,145 @@
+{
+  "id": "elfquest-dreamweaver",
+  "name": "The Dreamweaver",
+  "concept": "The tribe's silent voices are always with you — the wordless sending that binds elf to elf — and you hear them more deeply than anyone. You walk in dreams, soothe troubled spirits, and weave many minds into one. You are the tribe's shared heart made flesh, which is a gift and a burden that never quiets.",
+  "duty": "You hold the tribe's inner life — its dreams, griefs, and silent bonds. What passes between minds passes through you, and you cannot fully close the door.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Sunael", "Dreum", "Soft-Vell", "Miren", "Ossian", "Lune", "Tais", "Rell", "Ymber", "Cael", "Noa", "Whisper-Sen"],
+    "look": [
+      { "label": "Bearing", "options": ["dreamy and warm", "still, listening inward", "gentle and knowing", "half-here, half-elsewhere"] },
+      { "label": "Look", "options": ["soft-eyed", "marked with sleep-signs and stars", "plain, but you feel watched-over near them", "ageless in the way of dreamers"] },
+      { "label": "Sign", "options": ["a way of finishing your thought", "a calm that settles a room", "eyes that flick to sleepers", "a hummed song with no words"] },
+      { "label": "Eyes", "options": ["deep and gentle", "far away in dream", "full of others' feelings", "clear as still water"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 1, "DEX": 2, "CON": 2, "INT": 3, "WIS": 3, "CHA": 4 },
+    "anchor": { "stat": "CHA", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "16+CON", "damage": "d6", "load": "6+STR" },
+  "gear": [
+    { "label": "Focus", "options": ["a dream-stone that holds memories", "a soft-toned chime or drum", "your voice and open heart alone"] },
+    { "label": "Defense", "options": ["a light staff (d6)", "a hidden knife (d6)", "the tribe's love, which shields you"] },
+    { "label": "Keepsake", "options": ["a memory shared and never returned", "a Recognition you witnessed", "a dream you cannot forget or explain"] }
+  ],
+  "moves": [
+    {
+      "name": "Weave the Dream",
+      "type": "signature",
+      "stat": "CHA",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you reach another mind or spirit through the silent sending, through dream, or through shared feeling.",
+      "results": {
+        "success": "You touch their mind — to send, to soothe, or to share — clear and true.",
+        "failure": "The reaching slips, or opens you to what you meant only to touch.",
+        "advantage": [
+          "Hold 1 Reverie (spend: reach across a great distance / share a true memory or feeling whole / soothe a troubled or grieving spirit / weave several minds together as one).",
+          "You sense a hidden truth in them — a fear, a love, a lie they tell themselves."
+        ],
+        "threat": [
+          "You brush a wound in them, and it aches in you afterward.",
+          "The reaching leaves you open; another mind, or something older, touches you back."
+        ],
+        "triumph": "A communion so deep it heals or reveals something long buried.",
+        "despair": "You touch something in the dark of their mind — or your own — that will not let go."
+      },
+      "hold": {
+        "name": "Reverie",
+        "spend": [
+          "Reach a mind across a great distance.",
+          "Share a true memory or feeling whole, beyond words.",
+          "Soothe a troubled, grieving, or panicked spirit.",
+          "Weave several minds together to act and feel as one."
+        ]
+      }
+    },
+    {
+      "name": "Open to the Sending",
+      "type": "fixed",
+      "trigger": "Because the tribe's silent voices are always with you:",
+      "text": "You hear the wordless sending of your tribe at all times — you always know, roughly, that your bonded kin live and how they fare, and you can call to them in silence. But you cannot fully close the door; strong feelings near you press in on you, and a mind in agony is very hard for you to ignore."
+    },
+    {
+      "name": "Send",
+      "type": "choice",
+      "stat": "CHA",
+      "trained": true,
+      "difficulty": "easy",
+      "trigger": "When you speak mind to mind in silence, to a bonded elf or a willing mind.",
+      "results": {
+        "success": "Your thought reaches them, wordless and unheard by any other.",
+        "failure": "The sending will not carry, or reaches a mind you did not mean.",
+        "advantage": ["Send to several at once.", "Send more than words — an image, a warning, a feeling entire."],
+        "threat": ["Something else brushes the sending.", "The effort leaves you briefly open and raw."],
+        "triumph": "Effortless, deep, and instant, across any distance you know.",
+        "despair": "You send into a mind that was waiting, quiet, for you to."
+      }
+    },
+    {
+      "name": "Soothe",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you calm a terror, a grief, a rage, or a nightmare in someone's heart.",
+      "results": {
+        "success": "The storm in them quiets; they can think and rest and act again.",
+        "failure": "You cannot reach them, or soothing them, you take the storm into yourself.",
+        "advantage": ["The calm lasts, and they trust you with what lay beneath it.", "You learn the true root of their pain."],
+        "threat": ["Their pain lingers in you a while."],
+        "triumph": "You help them truly let the pain go, not merely bury it.",
+        "despair": "You still one storm and wake another, in them or in you."
+      }
+    },
+    {
+      "name": "Dreamwalk",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you enter, read, or walk within a sleeper's dream.",
+      "results": {
+        "success": "You move within their dream and learn or ease what you came for.",
+        "failure": "The dream turns on you, or you cannot find your way back cleanly.",
+        "advantage": ["Bring a truth back out with you.", "Leave a gift in the dream — courage, a memory, peace."],
+        "threat": ["Something in the dream follows you toward waking.", "You linger too long, and waking is hard."],
+        "triumph": "You walk their dream as if it were your own, and reshape it gently.",
+        "despair": "The dream is not only theirs, and the other dreamer is not kind."
+      }
+    }
+  ],
+  "embedment": {
+    "bonds": [
+      "____ and I are bonded in the sending so closely that I feel their joys and hurts as my own.",
+      "____ fears having their mind touched, and I have promised never to, and I keep it.",
+      "I witnessed ____'s Recognition, and I carry the weight of that secret with them.",
+      "I once walked a dream of ____'s I was never meant to see, and the guilt of it binds us.",
+      "____ steadies me when the tribe's feelings press in too hard; I could not bear it alone."
+    ],
+    "communityTie": [
+      "The Hollow-Oak Holt shares one silent heart, and I am its keeper; ____ reminds me I have a self apart from it.",
+      "When grief or fear runs through the tribe, they come to me to soothe it; ____ soothes me in turn.",
+      "I feel every bond in the tribe, and every break; ____ is the one who helps me carry the breaking ones."
+    ]
+  },
+  "advancement": {
+    "basic": [
+      "Take another Dreamweaver move.",
+      "Take another Dreamweaver move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Increase your maximum held Reverie by 1.",
+      "Deepen the gift: name a great working of mind or dream you can attempt at Daunting difficulty.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "Learn to close the door: once per session, shut out the sending and the feelings pressing on you."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Weave the whole tribe into one waking mind at need, with all the peril that carries.",
+      "Raise a dreaming-place: found a Bastion (a place of shared dream and memory) that holds the tribe's soul across generations."
+    ]
+  }
+}

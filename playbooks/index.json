@@ -36,6 +36,22 @@
         { "id": "lankhmar-dabbler", "name": "The Dabbler in the Black Arts" },
         { "id": "lankhmar-beggar", "name": "The Guild Beggar-Spy" }
       ]
+    },
+    {
+      "setting": "Elfquest — The Hollow-Oak Holt",
+      "steading": "steadings/elfquest-hollow-oak.md",
+      "style": "village (bonds + tribe, no power tracks)",
+      "playbooks": [
+        { "id": "elfquest-troll-smith", "name": "The Troll Weaponsmith" },
+        { "id": "elfquest-desert-elf", "name": "The Desert Elf" },
+        { "id": "elfquest-chief", "name": "The Chief" },
+        { "id": "elfquest-healer", "name": "The Healer" },
+        { "id": "elfquest-tree-shaper", "name": "The Tree-Shaper" },
+        { "id": "elfquest-dreamweaver", "name": "The Dreamweaver" },
+        { "id": "elfquest-stargazer", "name": "The Stargazer" },
+        { "id": "elfquest-hunter", "name": "The Master Hunter" },
+        { "id": "elfquest-rockshaper", "name": "The Rockshaper" }
+      ]
     }
   ]
 }
