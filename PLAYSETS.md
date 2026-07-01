@@ -113,7 +113,7 @@ an information role no one else owns. Confirm or swap before we reach Lankhmar.
 Build one setting at a time, steading first, then the nine, then wire into the
 picker manifest and verify one renders/rolls.
 
-- [ ] **Dark Sun**: steading → 9 playbooks → manifest → verify
+- [x] **Dark Sun**: steading → 9 playbooks → manifest → verified
 - [ ] **Elfquest**: steading → 9 playbooks → manifest → verify
 - [ ] **Lankhmar**: confirm 9th → steading → 9 playbooks → manifest → verify
 

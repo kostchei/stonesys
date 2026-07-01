@@ -1,0 +1,168 @@
+{
+  "id": "darksun-poison-bard",
+  "name": "The Poison-Bard",
+  "concept": "You sing, you charm, you kill. In this land a bard is an entertainer, a spy, and a poisoner-for-hire, all in one bright costume — and the guild that trained you takes its cut of every performance, especially the fatal ones.",
+  "duty": "The best murders look like applause. The guild taught you that, and the guild never stops being owed.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Lirael", "Cosk", "Vinn", "Dessa", "Roan", "Myla", "Tave", "Ysolde", "Pav", "Sereth", "Nix", "Coro"],
+    "look": [
+      { "label": "Bearing", "options": ["dazzling", "disarming", "watchful behind a smile", "quietly amused"] },
+      { "label": "Dress", "options": ["performer's bright motley", "elegant and forgettable", "practical with one flourish", "a costume for every crowd"] },
+      { "label": "Eyes", "options": ["laughing", "measuring you for something", "warm and false", "tired of the act"] },
+      { "label": "Tell", "options": ["rings that are not just rings", "a voice that carries anywhere", "quick, careful hands", "you always know where the exits are"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 1, "DEX": 3, "CON": 2, "INT": 3, "WIS": 2, "CHA": 4 },
+    "anchor": { "stat": "CHA", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "16+CON", "damage": "d6", "load": "6+STR" },
+  "gear": [
+    { "label": "Instrument", "options": ["a hollow-necked lute (hides much)", "a singer's voice and a hidden blade (d6)", "a set of pipes and a needle"] },
+    { "label": "Craft", "options": ["a poisoner's kit", "disguises and cosmetics", "a folio of songs, codes, and secrets"] },
+    { "label": "Guild-mark", "options": ["a contract token", "a debt-tally the guild keeps on you", "a name that opens certain doors"] }
+  ],
+  "moves": [
+    {
+      "name": "Hold the Room",
+      "type": "signature",
+      "stat": "CHA",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you perform to sway a crowd, hold their eyes, or work a gathering.",
+      "results": {
+        "success": "They are rapt. For as long as you hold them, the room is yours.",
+        "failure": "You lose them, or the wrong person sees through the act.",
+        "advantage": [
+          "Hold 1 Performance (spend: slip away or into somewhere unseen / plant a rumor or a coded word / lift a purse, a key, or a letter under cover of applause / doctor a cup or a dish unremarked).",
+          "You read the room's true mood and who really rules it."
+        ],
+        "threat": [
+          "A heckler, a rival, or a suspicious eye disrupts the act.",
+          "Your message reaches an ear it was never meant for."
+        ],
+        "triumph": "The whole room moves as you want it to.",
+        "despair": "Someone in the crowd was performing back, and they are better than you."
+      },
+      "hold": {
+        "name": "Performance",
+        "spend": [
+          "Slip away, or into somewhere you shouldn't be, unseen.",
+          "Plant a rumor, a coded word, or a suggestion.",
+          "Lift a purse, a key, or a letter under cover of the crowd.",
+          "Doctor a cup, a dish, or a blade without anyone marking it."
+        ]
+      }
+    },
+    {
+      "name": "Guild Cut",
+      "type": "fixed",
+      "trigger": "When you call on the guild for a contract, a poison, a safehouse, or a name (Invoke Patron, core.md):",
+      "text": "The guild provides, and adds 1 Debt. It collects in coin, in silence, or in blood, and it decides which. No one leaves the guild owing."
+    },
+    {
+      "name": "Poisoner's Craft",
+      "type": "choice",
+      "stat": "INT",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you brew, choose, or apply a poison, or work out what one has done.",
+      "results": {
+        "success": "You have the right poison for the need, and know how to deliver it.",
+        "failure": "You lack what you need, or misjudge the dose or the victim.",
+        "advantage": ["It is subtle: slow, deniable, or mistakable for illness.", "You have the antidote, too."],
+        "threat": ["It leaves a trace a knowing eye could find.", "You handle it carelessly and catch a touch yourself."],
+        "triumph": "Undetectable, and perfectly timed.",
+        "despair": "It works on the wrong person, or is traced straight back to you."
+      }
+    },
+    {
+      "name": "Silver Tongue",
+      "type": "choice",
+      "stat": "CHA",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you talk someone into what you want with charm, flattery, or a beautiful lie.",
+      "results": {
+        "success": "They come around to your way, at least for now.",
+        "failure": "They don't buy it, and now they are wary of you.",
+        "advantage": ["They do you an extra kindness.", "They will not remember it was your idea."],
+        "threat": ["The lie has a short life; the GM says when it comes due.", "Someone else saw through it."],
+        "triumph": "They become your willing ally.",
+        "despair": "Your charm lands you a devoted enemy."
+      }
+    },
+    {
+      "name": "Read the Mark",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you study a person you mean to charm, rob, or kill.",
+      "results": {
+        "success": "Ask the GM one: what do they crave? who do they trust? when are they alone and unguarded?",
+        "failure": "You misread them, and it will show at the worst moment.",
+        "advantage": ["Ask another.", "You learn their one real weakness."],
+        "threat": ["They notice your interest.", "Getting close enough to learn this exposed you."],
+        "triumph": "You know them well enough to become whoever they most want to see.",
+        "despair": "The mark was studying you the whole time."
+      }
+    },
+    {
+      "name": "Killing Grace",
+      "type": "choice",
+      "stat": "DEX",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you strike a sudden, precise blow with blade, needle, or worse, on someone who does not expect it.",
+      "results": {
+        "success": "The blow lands true, and quietly.",
+        "failure": "You miss the moment, and now they know what you are.",
+        "advantage": ["No one else realizes what happened, yet.", "You are already moving away."],
+        "threat": ["It is messier or louder than you wanted.", "A witness."],
+        "triumph": "Clean, silent, and unseen.",
+        "despair": "The blow lands and does not stop them, and now they are looking right at you."
+      }
+    }
+  ],
+  "embedment": {
+    "system": "patron",
+    "start": { "Bond": 1, "Debt": 2, "Heat": 0 },
+    "bonds": [
+      "____ has been my audience and my alibi more than once.",
+      "The guild once had me mark ____ for death, and I did not do it. I have not told them why.",
+      "____ knows a song I sang for a killing, and could hang me with it.",
+      "____ believes the performer and not the poisoner, and I let them.",
+      "I owe ____ for a secret they kept about a job gone wrong."
+    ],
+    "communityTie": [
+      "The Free Legion loves the songs and doesn't ask about the rest; ____ suspects what your bright costume hides.",
+      "The guild wants eyes and a blade inside the Legion; ____ is the one you refuse to report on.",
+      "You keep the Legion's spirits up when nothing else can; ____ knows how much that performance costs you."
+    ]
+  },
+  "tracks": [
+    { "name": "Bond", "min": 0, "max": 3, "start": 1, "note": "Standing with your performers' guild (core.md)." },
+    { "name": "Debt", "min": 0, "max": 6, "start": 2, "note": "At 6 the guild makes a major demand, then resets to 3." },
+    { "name": "Heat", "min": 0, "max": 4, "start": 0, "note": "Attention from marks, rivals, and the watch (core.md)." }
+  ],
+  "advancement": {
+    "basic": [
+      "Take another Poison-Bard move.",
+      "Take another Poison-Bard move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Increase your maximum held Performance by 1.",
+      "Master a signature poison, disguise, or song that is yours alone.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "Buy down your guild Debt by 1, permanently, with a job well done."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Break with the guild: go independent, resolving the fallout in play.",
+      "Build a troupe: found a Bastion (a playhouse and its network of eyes) for the Legion."
+    ]
+  }
+}

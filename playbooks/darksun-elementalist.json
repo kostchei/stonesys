@@ -1,0 +1,153 @@
+{
+  "id": "darksun-elementalist",
+  "name": "The Elemental Cleric",
+  "concept": "You serve one of the raw elements — fire, earth, air, water, silt, or magma — not a god who wears a face and hears prayers kindly, but the vast thing itself. It is patient, and it does not love you. It bargains. And in a dying world, its gifts are the difference between a people who live and a people who become dust.",
+  "duty": "The element gives, and the element demands. Keep its rites and its taboos, or find out what it is like to be forsaken by the very ground or sky.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Tammur", "Isha", "Bront", "Vael", "Sorn", "Meline", "Dak", "Ourania", "Pyre", "Sil", "Cove", "Ember"],
+    "look": [
+      { "label": "Element", "options": ["water (mercy, scarcity, life)", "fire (purity, wrath, change)", "earth (endurance, patience, burial)", "air/silt/magma (choose its temper)"] },
+      { "label": "Bearing", "options": ["serene as deep water", "intense as flame", "immovable as stone", "restless as wind"] },
+      { "label": "Mark", "options": ["a shrine-brand of your element", "eyes or hair its color", "a vessel of it always carried", "scars from a rite gone hard"] },
+      { "label": "Dress", "options": ["a shrine-keeper's vestments", "a pilgrim's plain wrap", "elemental tokens over practical gear", "ash, salt, or dust ground in for good"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 2, "DEX": 1, "CON": 3, "INT": 2, "WIS": 4, "CHA": 3 },
+    "anchor": { "stat": "WIS", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "18+CON", "damage": "d6", "load": "6+STR" },
+  "gear": [
+    { "label": "Focus", "options": ["a vessel of your element", "an elemental staff or maul (d6)", "a shrine-stone you tend"] },
+    { "label": "Rite-kit", "options": ["offerings and incense", "salt, ash, and oil", "a keeper's ritual tools"] },
+    { "label": "Charge", "options": ["a relic of your shrine", "a taboo you must never break", "a debt of Favor already owed"] }
+  ],
+  "moves": [
+    {
+      "name": "Elemental Rite",
+      "type": "signature",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you call on your element under pressure and offer it something that matters.",
+      "results": {
+        "success": "The element answers with a sign or aid true to its nature.",
+        "failure": "Only silence, or an answer you did not want; the GM makes a move.",
+        "advantage": [
+          "Hold 1 Favor (spend later per core.md: bless a roll that serves the element, ask an omen, turn a weak result stronger, ward off a minor spiritual harm, or declare a shrine or sign is near).",
+          "The aid is greater or lasts longer than you asked."
+        ],
+        "threat": [
+          "The element demands visible obedience or a further offering, now.",
+          "A rival power feels you draw on the deep force."
+        ],
+        "triumph": "A surge of elemental power, freely given.",
+        "despair": "You have offended the element. Mark Wrath."
+      },
+      "hold": {
+        "name": "Favor",
+        "spend": [
+          "Add a boost die to a roll that clearly serves the element's nature.",
+          "Ask the GM for an omen or sign.",
+          "Turn a bare success on a holy act into a strong one.",
+          "Ward an ally from a minor curse, fear, or spiritual harm.",
+          "Declare a shrine, spring, ember, or sign of your element is near."
+        ]
+      }
+    },
+    {
+      "name": "Sworn to the Element",
+      "type": "fixed",
+      "trigger": "Because you have given yourself to the element (core.md: Pray for Aid, Devotion, Wrath):",
+      "text": "You can perform its rites and seek its aid, and you gain Devotion by upholding its way at cost. But its taboos bind you absolutely; break one and mark Wrath. The element is not a friend. It is a force you have learned to bargain with."
+    },
+    {
+      "name": "Shape the Element",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you command your element where it is present in the scene.",
+      "results": {
+        "success": "It moves to your will: the fire leaps, the water gathers, the earth shifts, the wind rises.",
+        "failure": "It will not heed you here, or it heeds too well.",
+        "advantage": ["Shape it larger, or to two ends at once.", "Do it without spending from your Favor."],
+        "threat": ["The element exacts a small toll for the command.", "It does as you say and a little more."],
+        "triumph": "You command it as though you were part of it.",
+        "despair": "The element turns your command back on you."
+      }
+    },
+    {
+      "name": "Elemental Sense",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "easy",
+      "trigger": "When you reach out to feel your element in the land around you.",
+      "results": {
+        "success": "You sense it: where the water hides, where the fire will spread, where the ground is hollow or the wind will turn.",
+        "failure": "The element is silent to you here, and the silence itself may mean something.",
+        "advantage": ["Sense it far off, or in fine detail.", "Feel another power that is near it."],
+        "threat": ["Reaching out, you brush something that reaches back."],
+        "triumph": "You feel the whole shape of your element across the region.",
+        "despair": "You sense your element being defiled, and it recoils through you."
+      }
+    },
+    {
+      "name": "Cleanse or Scour",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you turn your element to heal and purify, or to burn and scour away.",
+      "results": {
+        "success": "Wounds close, poison and rot are washed out, or corruption is burned clean — as fits your element.",
+        "failure": "It is beyond your element's power here, or the cure costs as much as the ill.",
+        "advantage": ["Tend several at once.", "Leave a lasting blessing on the place or person."],
+        "threat": ["The rite draws on you: setback until you rest.", "Spend 1 Favor or mark a small Wrath to finish it."],
+        "triumph": "A cleansing so complete it becomes a sign the Legion will speak of.",
+        "despair": "You scour away more than the sickness."
+      }
+    }
+  ],
+  "embedment": {
+    "system": "god",
+    "start": { "Devotion": 1, "Favor": 0, "Wrath": 0 },
+    "bonds": [
+      "____ has kept faith with my element beside me, and I trust their hands at the rite.",
+      "____ mocks the element, and I fear the day it decides to answer them.",
+      "I owe ____ a healing I could not give, and it sits between us.",
+      "____ broke one of my element's taboos to save my life, and I have not told them what it may cost.",
+      "____ is the one I would spend my last Favor to protect."
+    ],
+    "communityTie": [
+      "The Free Legion lives or dies by water and weather; ____ knows your rites are why they still live.",
+      "The Legion prays to you as much as to the element; ____ warns you not to let them confuse the two.",
+      "Your element has laid a claim on the Legion's path; ____ helps you keep its taboos without the others knowing why."
+    ]
+  },
+  "tracks": [
+    { "name": "Devotion", "min": 0, "max": 3, "start": 1, "note": "Your standing with the element (core.md)." },
+    { "name": "Favor", "min": 0, "max": 3, "start": 0, "note": "Spendable elemental hold (core.md)." },
+    { "name": "Wrath", "min": 0, "max": 4, "start": 0, "note": "The element's displeasure (core.md). It does not forgive lightly." }
+  ],
+  "advancement": {
+    "basic": [
+      "Take another Elemental Cleric move.",
+      "Take another Elemental Cleric move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Deepen a rite: name a greater working of your element you can attempt at Daunting difficulty.",
+      "Raise your Devotion by 1 through a rite or sacrifice that costs you.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "Make peace with the element: reduce your Wrath by 1 through pilgrimage or restitution."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Become a Chosen: the element marks you as its instrument, with all the danger that carries.",
+      "Raise a shrine: found a Bastion (a holy place of your element) for the Legion to gather around."
+    ]
+  }
+}

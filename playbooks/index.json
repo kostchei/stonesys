@@ -12,7 +12,14 @@
       "steading": "steadings/darksun-free-legion.md",
       "playbooks": [
         { "id": "darksun-preserver", "name": "The Preserver" },
-        { "id": "darksun-gladiator", "name": "The Mul Gladiator" }
+        { "id": "darksun-gladiator", "name": "The Mul Gladiator" },
+        { "id": "darksun-trader-thief", "name": "The Trader-Thief" },
+        { "id": "darksun-psionicist", "name": "The Psionicist" },
+        { "id": "darksun-templar", "name": "The Templar" },
+        { "id": "darksun-defiler", "name": "The Defiler" },
+        { "id": "darksun-elementalist", "name": "The Elemental Cleric" },
+        { "id": "darksun-poison-bard", "name": "The Poison-Bard" },
+        { "id": "darksun-dune-raider", "name": "The Elven Dune-Raider" }
       ]
     }
   ]

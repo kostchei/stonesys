@@ -1,0 +1,159 @@
+{
+  "id": "darksun-dune-raider",
+  "name": "The Elven Dune-Raider",
+  "concept": "You run the open waste on legs that never tire, raiding and trading and vanishing before the dust settles. Your tribe's oaths are the whole of your honor; an outsider's word is wind. The Free Legion is still learning which of those you offer them.",
+  "duty": "Keep faith with the tribe and you are never alone in the waste. Break an elf-oath and you are worse than dead to them, and to yourself.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Sha'ir", "Tethlin", "Ova", "Kessa", "Dune", "Firanu", "Wyl", "Serath", "Palo", "Ith", "Reyla", "Corr"],
+    "look": [
+      { "label": "Build", "options": ["long-limbed and lean", "wiry and scarred", "tall and light-footed", "all sinew and dust"] },
+      { "label": "Bearing", "options": ["restless", "proud", "watchful", "already gone in spirit"] },
+      { "label": "Dress", "options": ["raider's wraps against the sun", "trophies of many raids", "a trader's honest-seeming layers", "next to nothing; speed is all"] },
+      { "label": "Eyes", "options": ["far-seeing", "mocking", "sharp", "measuring the distance"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 2, "DEX": 3, "CON": 4, "INT": 1, "WIS": 3, "CHA": 2 },
+    "anchor": { "stat": "CON", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "18+CON", "damage": "d8", "load": "6+STR" },
+  "gear": [
+    { "label": "Weapon", "options": ["a raider's bow (d8)", "a long desert spear (d8)", "twin running-knives (d6)"] },
+    { "label": "Waste-kit", "options": ["water-skins and a windcloak", "a trader's pack of light goods", "trophies and trail-signs of your tribe"] },
+    { "label": "Oath-token", "options": ["a braid marking your tribe", "a debt of blood owed to you", "an oath you have not yet kept"] }
+  ],
+  "moves": [
+    {
+      "name": "Run the Waste",
+      "type": "signature",
+      "stat": "CON",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you cross the open desert at the elven pace, or run down a quarry, or vanish into the dunes.",
+      "results": {
+        "success": "You get there, or get away, faster than anything on foot can follow.",
+        "failure": "The waste beats you this time: too far, too dry, or too watched.",
+        "advantage": [
+          "Hold 1 Stride (spend: bring others along at your pace / arrive unseen / find water or a landmark on the way / choose the ground where you stop).",
+          "You read the land ahead — where the danger and the water lie."
+        ],
+        "threat": [
+          "The run costs you: thirst and strain, a setback die until you rest.",
+          "You are spotted, or you outrun your own supply."
+        ],
+        "triumph": "You cover impossible ground and arrive fresh.",
+        "despair": "The waste turns on you — a storm, a predator, a dead end with no way back."
+      },
+      "hold": {
+        "name": "Stride",
+        "spend": [
+          "Bring companions along at your pace, this once.",
+          "Arrive unseen and unexpected.",
+          "Find water, forage, or a landmark on the way.",
+          "Choose the ground where the run ends."
+        ]
+      }
+    },
+    {
+      "name": "Tribe Oaths",
+      "type": "fixed",
+      "trigger": "When you call on your raiding tribe for shelter, arms, or riders (Invoke Patron, core.md):",
+      "text": "They answer if you have kept faith, and add 1 Debt. But the tribe holds outsiders — the Legion among them — in open contempt, and an elf-oath broken makes you nothing to them. Weigh whose oaths you keep."
+    },
+    {
+      "name": "Raider's Bow",
+      "type": "choice",
+      "stat": "DEX",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you strike from the saddle or the ridge and are gone before they close.",
+      "results": {
+        "success": "Your shot lands, and you are already moving.",
+        "failure": "You are drawn into the fight you meant to avoid.",
+        "advantage": ["Drop a key foe.", "Keep the range: they cannot reach you."],
+        "threat": ["You loose your last good arrows.", "They mark your line of retreat."],
+        "triumph": "You break them without ever letting them near.",
+        "despair": "They have a way to catch you, and you just showed them where you are."
+      }
+    },
+    {
+      "name": "Desert Craft",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you read the waste for water, weather, trail, or threat.",
+      "results": {
+        "success": "The desert tells you what you need: where the water is, what the sky will do, who passed and when.",
+        "failure": "The waste keeps its secrets, and the not-knowing will cost you.",
+        "advantage": ["Enough foresight to guide the whole Legion true.", "You spot the danger before it spots you."],
+        "threat": ["What you read is already changing.", "Reading the trail, you left one of your own."],
+        "triumph": "You know the land as if you shaped it.",
+        "despair": "You misread the sky, and lead everyone into it."
+      }
+    },
+    {
+      "name": "Fleet and Unseen",
+      "type": "choice",
+      "stat": "DEX",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you move fast and hidden across open or broken ground.",
+      "results": {
+        "success": "You go where you like, quick and unseen.",
+        "failure": "You are seen, or the ground defeats your speed.",
+        "advantage": ["Take one other with you, just as hidden.", "Leave no trail worth following."],
+        "threat": ["You are quick but not quiet, or quiet but not quick — pick your cost."],
+        "triumph": "You pass through them like wind through grass.",
+        "despair": "You run straight into what you were hiding from."
+      }
+    },
+    {
+      "name": "An Elf's Bargain",
+      "type": "choice",
+      "stat": "CHA",
+      "trigger": "When you strike a sharp trade with an outsider:",
+      "text": "Take a boost die to drive the price your way. But an elf's bargain is a famous thing: they will expect the letter of the deal and no more, and so will you. The GM plays every gap you leave."
+    }
+  ],
+  "embedment": {
+    "system": "patron",
+    "start": { "Bond": 1, "Debt": 1, "Heat": 0 },
+    "bonds": [
+      "____ ran the waste beside me once and kept pace; among my people that means everything.",
+      "____ thinks my tribe are thieves and killers, and is not entirely wrong.",
+      "I gave ____ an elf-oath, and I have not decided whether I will keep it.",
+      "____ trusts me at their back, and my tribe would call them a fool for it.",
+      "I owe ____ a debt of water, which among my people is a debt of life."
+    ],
+    "communityTie": [
+      "The Free Legion needs a scout who owns the waste; ____ argued to bring an elf among them despite the muttering.",
+      "Your tribe would raid the Legion as soon as aid it; ____ is the reason you steer them away.",
+      "You could vanish into the dunes any night and leave the slow-footed Legion behind; ____ is why you are still here."
+    ]
+  },
+  "tracks": [
+    { "name": "Bond", "min": 0, "max": 3, "start": 1, "note": "Standing with your raiding tribe (core.md)." },
+    { "name": "Debt", "min": 0, "max": 6, "start": 1, "note": "At 6 the tribe makes a major demand, then resets to 3." },
+    { "name": "Heat", "min": 0, "max": 4, "start": 0, "note": "Attention from those you've raided (core.md)." }
+  ],
+  "advancement": {
+    "basic": [
+      "Take another Dune-Raider move.",
+      "Take another Dune-Raider move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Increase your maximum held Stride by 1.",
+      "Know a range: name a stretch of waste you can cross blind, in any weather.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "Prove your faith: raise your standing with the tribe by 1 through a kept oath."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Choose the Legion over the tribe: break with your people for good, resolving the fallout in play.",
+      "Bring the tribe in: broker a true alliance, founding a shared Bastion (a desert waystation) for Legion and tribe both."
+    ]
+  }
+}
