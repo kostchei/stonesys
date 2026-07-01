@@ -1,0 +1,162 @@
+{
+  "id": "lankhmar-dabbler",
+  "name": "The Dabbler in the Black Arts",
+  "concept": "You are not a great sorcerer — those are rare, terrible, and mostly dead. You are worse in a way: a clever amateur who found real spells in a bought grimoire and cannot stop using them. Each working solves the problem in front of you and takes a little more of you in payment. You tell yourself you'll stop before it's too late. Everyone who ends up like the things in the fog told themselves that.",
+  "duty": "The magic works, and that is the trap. Every spell is a loan against yourself, and the black arts always collect.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Orlin", "Yssa", "Vex", "Thessaly", "Grim", "Noct", "Perrault", "Alba", "Skrye", "Une", "Corvo", "Mel"],
+    "look": [
+      { "label": "Bearing", "options": ["nervous and brilliant", "falsely casual", "haunted", "coldly curious"] },
+      { "label": "Dress", "options": ["a shabby scholar's coat", "ordinary clothes hung with charms", "black, and a little theatrical", "whatever hides the grimoire"] },
+      { "label": "Eyes", "options": ["over-bright", "shadowed and sleepless", "flat when the magic's near", "always reading the room for danger"] },
+      { "label": "Mark", "options": ["ink and chalk that won't wash off", "a chill others feel around you", "a whisper only you hear", "nothing yet — you're careful, so far"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 1, "DEX": 2, "CON": 3, "INT": 4, "WIS": 3, "CHA": 2 },
+    "anchor": { "stat": "INT", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "14+CON", "damage": "d6", "load": "6+STR" },
+  "gear": [
+    { "label": "Book", "options": ["a bought grimoire, half-understood", "a sheaf of stolen spell-leaves", "a single memorized working and no notes"] },
+    { "label": "Kit", "options": ["chalks, candles, and reagents", "a knife for blood-work (d6)", "charms and wards of dubious make"] },
+    { "label": "Price", "options": ["a bargain already half-struck", "a thing that follows you in dreams", "a name you should never have spoken"] }
+  ],
+  "moves": [
+    {
+      "name": "Work the Spell",
+      "type": "signature",
+      "stat": "INT",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you cast a working from your grimoire to bend the world to your need.",
+      "results": {
+        "success": "The spell does what you willed. But the black arts take their price: mark Corruption unless you spend an advantage to pay it another way.",
+        "failure": "The spell fails or twists, and it takes its price anyway; the GM makes a move.",
+        "advantage": [
+          "Pay the cost in something other than yourself this time: do NOT mark Corruption.",
+          "The working is larger, longer, or subtler than you dared."
+        ],
+        "threat": [
+          "The spell warps: a side effect, a cost to a bystander, a door left ajar.",
+          "Something on the other side of the working notices you, and the fog seems closer."
+        ],
+        "triumph": "A clean, potent casting far beyond your amateur's skill.",
+        "despair": "The magic turns on you or gets loose. Mark Corruption twice, and the GM shows you what it's making of you."
+      },
+      "hold": {
+        "name": "Reagents",
+        "spend": [
+          "Spend prepared reagents to pay a spell's cost in materials, not in yourself.",
+          "Spend reagents to steady a working and avoid its worst twist."
+        ]
+      }
+    },
+    {
+      "name": "The Arts Collect",
+      "type": "fixed",
+      "trigger": "Whenever you work a spell:",
+      "text": "Mark 1 Corruption unless you pay its price another way (an advantage, rare reagents, a willing sacrifice). Corruption does not heal on its own. At Corruption 4, the GM tells you what you are becoming, and it is the sort of thing the band puts down or flees. Real sorcerers, the fog-things, and the gods can all smell the black arts on you."
+    },
+    {
+      "name": "Read the Grimoire",
+      "type": "choice",
+      "stat": "INT",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you study a spell, a ward, a summoning, or a sorcerous thing.",
+      "results": {
+        "success": "Ask the GM one: what does it do? what does it cost? how is it bound, and how undone?",
+        "failure": "You misread it, and the misreading is the kind that gets people like you killed.",
+        "advantage": ["Ask another.", "You can attempt a small piece of it yourself."],
+        "threat": ["Studying it drew the attention of what it's bound to.", "The knowledge itself marks you — a whisper, a dream, a chill."],
+        "triumph": "You grasp it whole, enough to wield or unmake it.",
+        "despair": "The working was a snare for the curious, and you took the bait."
+      }
+    },
+    {
+      "name": "Petty Hex",
+      "type": "choice",
+      "stat": "INT",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you loose a small, nasty magic — a curse of ill luck, a clinging fear, a fog of confusion.",
+      "results": {
+        "success": "The hex settles on your target as you intend.",
+        "failure": "Nothing, or it rebounds on you or someone near you.",
+        "advantage": ["It's subtle: they don't know they've been hexed, or by whom."],
+        "threat": ["Mark 1 Corruption to make it stick.", "The target feels the malice and its source."],
+        "triumph": "A hex that bites deep and clings.",
+        "despair": "The hex slips your control and lands where it will."
+      }
+    },
+    {
+      "name": "Wards and Bindings",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you raise a protective circle or bind a spirit, curse, or lesser thing.",
+      "results": {
+        "success": "The ward holds, or the thing is bound, for now.",
+        "failure": "The ward is flawed, or the binding is a leash the bound thing can chew.",
+        "advantage": ["It holds longer or stronger than you hoped.", "You learn something true about what you warded against."],
+        "threat": ["Mark 1 Corruption to make it hold.", "The binding costs you: it wants feeding, or watching."],
+        "triumph": "A ward or binding that will hold against far more than it should.",
+        "despair": "What you bound was already inside the circle with you."
+      }
+    },
+    {
+      "name": "Know When to Run",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you sense real sorcery, a fog-thing, or a power far above your dabbling.",
+      "results": {
+        "success": "You feel it in time to get clear, and you know which way is away.",
+        "failure": "You feel it too late, or it feels you first.",
+        "advantage": ["Drag the band clear with you.", "You learn one true, useful thing about it before you flee."],
+        "threat": ["Getting clear costs you a possession, a spell, or a mark."],
+        "triumph": "You slip away untouched and a step ahead.",
+        "despair": "It has your scent now, and it is patient."
+      }
+    }
+  ],
+  "embedment": {
+    "bonds": [
+      "____ has seen me work real magic and stayed; I fear what that says about them, or me.",
+      "____ begs me to stop, and I love and resent them for it.",
+      "I taught ____ one small cantrip, telling myself it was harmless.",
+      "____ watches my Corruption climb like a creditor, and they are right to.",
+      "I once worked a spell to save ____, and paid a price I've never told them."
+    ],
+    "communityTie": [
+      "The Black Cat needs an edge nothing lawful can give; ____ is the one who quietly asks you for it.",
+      "The band would cast you out if they knew how far you've gone; ____ has guessed and kept silent.",
+      "Brother Gnarl's god and your black books do not agree; ____ keeps you two from destroying each other in the cellar."
+    ]
+  },
+  "tracks": [
+    { "name": "Corruption", "min": 0, "max": 4, "start": 0, "note": "What the black arts have taken of you. At 4 you become something the band cannot keep. It does not heal on its own." }
+  ],
+  "advancement": {
+    "basic": [
+      "Take another Dabbler move.",
+      "Take another Dabbler move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Learn a greater working: name a large spell you can attempt at Daunting difficulty.",
+      "Prepare reagents: increase your maximum held Reagents by 1, and pay more costs in materials than in yourself.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "A hard cleansing: through real sacrifice, reduce your Corruption by 1."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Burn the book: forswear the black arts for good, resolving the fallout in play.",
+      "Embrace the power: stop pretending to be an amateur and become a true and terrible sorcerer — likely leaving the band behind."
+    ]
+  }
+}

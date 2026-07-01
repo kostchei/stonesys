@@ -1,0 +1,159 @@
+{
+  "id": "lankhmar-assassin",
+  "name": "The Brotherhood Assassin",
+  "concept": "You kill for the Brotherhood, patiently and well. It is a craft, not a rage: the study, the wait, the single clean moment. The Brotherhood trained you, owns your contracts, and would kill you slowly if you ever kept a coin or a secret it was owed. You are trying, quietly, to want something more than the next name on the list.",
+  "duty": "The contract is sacred and the Brotherhood is watching. Take a life it did not sanction, or spare one it did, and you become a contract yourself.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Quill", "Smaro", "the Widow", "Ilek", "Nyss", "Grave", "Ambrose", "Sefa", "Whisper", "Doran", "Vesh", "Lark"],
+    "look": [
+      { "label": "Bearing", "options": ["perfectly forgettable", "still and patient", "coldly gentle", "always slightly elsewhere"] },
+      { "label": "Dress", "options": ["whatever the crowd wears", "a servant's or tradesman's guise", "dark and close for the work", "unremarkable good quality"] },
+      { "label": "Eyes", "options": ["calm", "measuring", "tired of it", "kind, which is the frightening part"] },
+      { "label": "Mark", "options": ["a Brotherhood cipher, hidden", "a tally you keep in secret", "a scar from the one who nearly got you first", "nothing; that is the point"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 2, "DEX": 3, "CON": 2, "INT": 3, "WIS": 4, "CHA": 1 },
+    "anchor": { "stat": "WIS", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "16+CON", "damage": "d6", "load": "6+STR" },
+  "gear": [
+    { "label": "Instrument", "options": ["a thin blade made for one thrust (d6)", "a garrote and gloves", "a set of poisons and a needle"] },
+    { "label": "Cover", "options": ["a tradesman's tools and role", "a servant's livery", "the clothes and papers of a traveler"] },
+    { "label": "Secret", "options": ["a contract you have not fulfilled", "the name of your own Brotherhood handler", "a life you were paid to take and didn't"] }
+  ],
+  "moves": [
+    {
+      "name": "The Clean Kill",
+      "type": "signature",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you strike at a mark you have studied, in the moment you have waited for.",
+      "results": {
+        "success": "The mark falls, and no alarm is raised in the same breath.",
+        "failure": "The moment is wrong — the blow fails, or it lands but everything else goes loud.",
+        "advantage": [
+          "Hold 1 Patience (spend: no one saw who did it / you're already gone before they find the body / it looks like accident or another's hand / you have your escape route walked and clear).",
+          "You learn a second useful truth about the mark's world."
+        ],
+        "threat": [
+          "A witness, a trace, or a survivor who can name you.",
+          "The kill was watched, by the watch, a rival, or the Brotherhood itself."
+        ],
+        "triumph": "The perfect contract: no witness, no trace, no suspicion that it was murder at all.",
+        "despair": "You've killed the wrong person, or been made, and the fallout is already moving."
+      },
+      "hold": {
+        "name": "Patience",
+        "spend": [
+          "No one saw who struck the blow.",
+          "You are already gone before the body is found.",
+          "It reads as accident, illness, or another hand entirely.",
+          "Your escape route is walked, clear, and waiting."
+        ]
+      }
+    },
+    {
+      "name": "The Brotherhood's Reach",
+      "type": "fixed",
+      "trigger": "When you draw on the Brotherhood for a poison, a safe house, a forged writ, or a name (Invoke Patron, core.md):",
+      "text": "The Brotherhood provides, and adds 1 Debt. It keeps a ledger of every contract, coin, and secret. Cheat it, refuse a sanctioned kill, or kill outside its sanction, and the ledger balances itself with your life."
+    },
+    {
+      "name": "Stalk",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you shadow a mark to learn their life and their weak hour.",
+      "results": {
+        "success": "Ask the GM one: when are they alone? whom do they trust? what is their fear? Learn the moment to strike.",
+        "failure": "You learn little, and risk being noticed for the watching.",
+        "advantage": ["Ask another.", "You could walk into their house as someone they'd welcome."],
+        "threat": ["They sense they are being watched.", "Getting this close cost you a trace left behind."],
+        "triumph": "You know their life better than they do.",
+        "despair": "They were the hunter, and you the mark, all along."
+      }
+    },
+    {
+      "name": "Unseen",
+      "type": "choice",
+      "stat": "DEX",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you move, wait, or leave unnoticed, becoming part of the scenery.",
+      "results": {
+        "success": "No one marks you coming, staying, or going.",
+        "failure": "An eye catches you where you should not be.",
+        "advantage": ["Move another with you, just as unseen.", "Leave nothing behind that says you were there."],
+        "threat": ["You pass, but leave one thread that could be pulled.", "You're in, with no easy way back out."],
+        "triumph": "You were never there at all, as far as anyone will ever prove.",
+        "despair": "The one who sees you is the one who most matters."
+      }
+    },
+    {
+      "name": "Venoms",
+      "type": "choice",
+      "stat": "INT",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you prepare, place, or identify a poison.",
+      "results": {
+        "success": "You have the right poison, and the means to place it unremarked.",
+        "failure": "You lack it, or misjudge the dose, the timing, or the victim.",
+        "advantage": ["Slow, deniable, easily mistaken for illness.", "You carry its antidote, too."],
+        "threat": ["It leaves a trace a knowing physician could find.", "You handle it carelessly and take a touch yourself."],
+        "triumph": "Undetectable and perfectly timed.",
+        "despair": "It takes the wrong person, or is traced straight to your hand."
+      }
+    },
+    {
+      "name": "Cold Mercy",
+      "type": "choice",
+      "stat": "WIS",
+      "trigger": "When you choose, against the contract, to spare a life or stay your hand:",
+      "text": "You may refuse or delay a kill. Take a boost die to make the sparing look like failure, accident, or another's mercy — but the Brotherhood keeps its ledger, and a spared mark is a debt that will come due, in Debt and in blood."
+    }
+  ],
+  "embedment": {
+    "system": "patron",
+    "start": { "Bond": 1, "Debt": 2, "Heat": 0 },
+    "bonds": [
+      "____ knows what I do and has not turned me in; I do not fully understand why.",
+      "The Brotherhood once handed me ____'s name, and I burned the contract instead.",
+      "____ believes there is a better person under the killer, and I let them believe it.",
+      "I owe ____ for a death they helped me hide.",
+      "If the Brotherhood ever marks ____, I will break with it, and we both half-know that."
+    ],
+    "communityTie": [
+      "The Black Cat's enemies fear it because of what you can do quietly; ____ is uneasy about needing you.",
+      "The Brotherhood would pay well for a blade already inside the band; ____ is the one you'll never accept a contract on.",
+      "You have kept the band alive by removing threats they never learned about; ____ suspects, and says nothing."
+    ]
+  },
+  "tracks": [
+    { "name": "Bond", "min": 0, "max": 3, "start": 1, "note": "Standing with the Assassins' Brotherhood (core.md)." },
+    { "name": "Debt", "min": 0, "max": 6, "start": 2, "note": "At 6 the Brotherhood makes a major demand — a contract — then resets to 3." },
+    { "name": "Heat", "min": 0, "max": 4, "start": 0, "note": "Suspicion from the watch, rivals, and the marked (core.md)." }
+  ],
+  "advancement": {
+    "basic": [
+      "Take another Assassin move.",
+      "Take another Assassin move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Increase your maximum held Patience by 1.",
+      "Perfect a signature method that leaves no evidence and no doubt.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "Balance your ledger: buy down your Brotherhood Debt by 1, permanently."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Break the contract for good: leave the Brotherhood, resolving the fallout in play, and spend the rest of your life a marked one.",
+      "Rise within it: take apprentices and a Bastion (a Brotherhood cell) of your own."
+    ]
+  }
+}

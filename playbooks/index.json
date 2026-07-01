@@ -21,6 +21,21 @@
         { "id": "darksun-poison-bard", "name": "The Poison-Bard" },
         { "id": "darksun-dune-raider", "name": "The Elven Dune-Raider" }
       ]
+    },
+    {
+      "setting": "Lankhmar — The Sign of the Black Cat",
+      "steading": "steadings/lankhmar-black-cat.md",
+      "playbooks": [
+        { "id": "lankhmar-thief", "name": "The Sanctioned Thief" },
+        { "id": "lankhmar-zealot", "name": "The Zealot of the Street of Gods" },
+        { "id": "lankhmar-duelist", "name": "The Back-Alley Duelist" },
+        { "id": "lankhmar-scavenger", "name": "The Sewer Scavenger" },
+        { "id": "lankhmar-assassin", "name": "The Brotherhood Assassin" },
+        { "id": "lankhmar-mercenary", "name": "The Outlander Mercenary" },
+        { "id": "lankhmar-fence", "name": "The Antiquarian Fence" },
+        { "id": "lankhmar-dabbler", "name": "The Dabbler in the Black Arts" },
+        { "id": "lankhmar-beggar", "name": "The Guild Beggar-Spy" }
+      ]
     }
   ]
 }

@@ -115,6 +115,6 @@ picker manifest and verify one renders/rolls.
 
 - [x] **Dark Sun**: steading → 9 playbooks → manifest → verified
 - [ ] **Elfquest**: steading → 9 playbooks → manifest → verify
-- [ ] **Lankhmar**: confirm 9th → steading → 9 playbooks → manifest → verify
+- [x] **Lankhmar**: 9th = Guild Beggar-Spy (used; swap if desired) → steading → 9 playbooks → manifest → verified
 
 Each setting also gets a short source trail appended to its steading file.
