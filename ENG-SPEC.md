@@ -70,11 +70,14 @@ character: no skill list, minimal stat gain, moves as fictional approaches (not
 
 Why the rails: triumph rate is purely a function of yellow count (2Y ≈ 16%/roll,
 a healthy spike rate; 5Y ≈ 35%, criticals stop meaning anything), and difficulty
-dice cannot counter it — only the yellow cap can. The 5-die side cap bounds
-advantage flood (a 2Y3G max pool averages ~+1.7 net advantage — one ripple per
-roll — where 3Y4G averages +3 and demands a paragraph per roll). At the cap, a
-2Y3G pool vs 2 difficulty succeeds ~87%, rhyming with Stonetop's +3 (91.7% any
-hit), with "success with net threat" playing the 7-9 role.
+dice cannot counter it — only the yellow cap can. Despair mirrors it on red
+(1R ≈ 8%, 2R ≈ 16%). The 5-die side cap bounds advantage flood (a 2Y3G max pool
+averages ~+1.8 net advantage — one ripple per roll — where 3Y4G averages +3 and
+demands a paragraph per roll). Simulated with the engine's faces: a capped 2Y3G
+pool succeeds ~87% vs 2 purple, and **~84% vs the standard risky opposition
+(1P+1R)** — rhyming with Stonetop's +3 (91.7% any hit) but a touch meaner, with
+"success with net threat" playing the 7-9 role. Each difficulty step costs
+roughly 10-12 points of success chance. Full odds table in `GUIDE.md`.
 
 ## 5. Data model
 
