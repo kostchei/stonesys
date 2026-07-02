@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google-site-verification" content="KLstZ5Jes_N6P-z50KEX9fWNlWeDFbP_S8QGEJCbruQ" />
+  <title>StoneSys — Character Sheet</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <div class="toolbar no-print">
+    <strong>StoneSys</strong>
+    <span id="pb-name"></span>
+    <span id="story-points" class="story-points"></span>
+    <button id="change-pb-btn" type="button">Change Playbook</button>
+    <button id="gdrive-save-btn" type="button">Save to Drive</button>
+    <button id="gdrive-load-btn" type="button">Load from Drive</button>
+    <button id="gdrive-settings-btn" type="button">⚙ Settings</button>
+    <span class="toolbar-sep">|</span>
+    <button id="reset-btn" type="button">Reset character</button>
+    <button id="print-btn" type="button">Print A3</button>
+  </div>
+
+  <main id="sheet" class="sheet">
+    <header class="zone zone-header" id="zone-header"></header>
+    <section class="zone zone-left" id="zone-left"></section>
+    <section class="zone zone-center" id="zone-center"></section>
+    <section class="zone zone-right" id="zone-right"></section>
+    <footer class="zone zone-footer" id="zone-footer"></footer>
+    <div class="print-only import-footer">
+      <strong>StoneSys Import Code:</strong> <span id="import-code-val"></span>
+    </div>
+  </main>
+
+  <div id="settings-modal" class="modal-overlay no-print" style="display: none;">
+    <div class="modal-content">
+      <h3>Google Drive Configuration</h3>
+      <p class="hint">To save to your Google Drive, you need a Google OAuth Client ID. You can register one for free in the Google Cloud Console.</p>
+      <label class="modal-label">
+        Google OAuth Client ID:
+        <input type="text" id="gdrive-client-id-input" placeholder="paste client id here..." />
+      </label>
+      <div style="margin-top: 16px; font-size: 11px; text-align: center;">
+        <a href="privacy.html" target="_blank" style="color: var(--ink);">Privacy Policy</a> | 
+        <a href="terms.html" target="_blank" style="color: var(--ink);">Terms of Service</a>
+      </div>
+      <div class="modal-actions">
+        <button id="settings-save-btn" type="button" class="btn-primary">Save Settings</button>
+        <button id="settings-close-btn" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="loader-modal" class="modal-overlay no-print" style="display: none;">
+    <div class="modal-content">
+      <h3>Load Character from Google Drive</h3>
+      <p class="hint">Select a character sheet to import:</p>
+      <div id="gdrive-file-list" class="file-list"></div>
+      <div class="modal-actions">
+        <button id="loader-close-btn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="playbook-select-modal" class="modal-overlay no-print" style="display: none;">
+    <div class="modal-content" style="max-width: 620px; width: 90%;">
+      <h3>Choose Your Playbook</h3>
+      <p class="hint">Select a campaign setting and playbook to begin creating your character:</p>
+      <div id="playbook-list-container" class="playbook-list-container"></div>
+      <div class="modal-actions">
+        <button id="playbook-select-close-btn" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="loading">Loading playbook&hellip;</div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

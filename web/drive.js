@@ -32,14 +32,23 @@ function generateCharacterHtml(state, playbook) {
     .map(([k, v]) => `<li><strong>${k}:</strong> ${v}</li>`)
     .join('\n');
     
-  const movesList = (playbook.moves || [])
-    .filter(m => (state.chosen || []).includes(m.name) || m.type === 'start')
-    .map(m => `<li><strong>${m.name}</strong> (${m.type}) - ${m.description || ''}</li>`)
+  const chosenArray = state.choiceMoves || state.chosen || [];
+  const movesList = (playbook.choice_moves || playbook.moves || [])
+    .filter(m => chosenArray.includes(m.name) || m.type === 'start' || m.type === 'signature')
+    .map(m => `<li><strong>${m.name}</strong> (${m.type}) - ${m.trigger || m.description || ''}</li>`)
     .join('\n');
     
-  const gearList = Object.entries(state.gear || {})
-    .map(([k, v]) => `<li><strong>${k}:</strong> ${v}</li>`)
-    .join('\n');
+  let gearHtml = '';
+  if (typeof state.gear === 'string') {
+    gearHtml = `<p>${state.gear.replace(/\n/g, '<br>')}</p>`;
+  } else {
+    const entries = Object.entries(state.gear || {});
+    if (entries.length) {
+      gearHtml = '<ul>' + entries.map(([k, v]) => `<li><strong>${k}:</strong> ${v}</li>`).join('\n') + '</ul>';
+    } else {
+      gearHtml = '<p>None</p>';
+    }
+  }
 
   return `<!DOCTYPE html>
 <html>
@@ -62,9 +71,8 @@ function generateCharacterHtml(state, playbook) {
   
   <h2>Vitals</h2>
   <ul>
-    <li><strong>Level:</strong> ${state.level || 1}</li>
-    <li><strong>XP:</strong> ${state.xp || 0}</li>
-    <li><strong>HP:</strong> ${state.hp?.current ?? 20} / ${state.hp?.max ?? 20}</li>
+    <li><strong>XP:</strong> ${state.xp ?? state.availableXp ?? 0}</li>
+    <li><strong>HP:</strong> ${state.hp?.current ?? state.hp ?? 20}</li>
   </ul>
   
   <h2>Stats</h2>
@@ -78,9 +86,7 @@ function generateCharacterHtml(state, playbook) {
   </ul>
   
   <h2>Gear</h2>
-  <ul>
-    ${gearList}
-  </ul>
+  ${gearHtml}
   
   <div class="footer">
     <p>To reload this character back into the StoneSys web app, copy the exact code block below and paste it in the import dialog:</p>

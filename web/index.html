@@ -1,49 +1,370 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-site-verification" content="KLstZ5Jes_N6P-z50KEX9fWNlWeDFbP_S8QGEJCbruQ" />
-  <title>StoneSys — Character Sheet</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>StoneSys — Campaign & Playbook Manager</title>
+  <link rel="stylesheet" href="index.css">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-  <div class="toolbar no-print">
-    <strong>StoneSys</strong>
-    <span id="pb-name"></span>
-    <span id="story-points" class="story-points"></span>
-    <button id="change-pb-btn" type="button">Change Playbook</button>
-    <button id="gdrive-save-btn" type="button">Save to Drive</button>
-    <button id="gdrive-load-btn" type="button">Load from Drive</button>
-    <button id="gdrive-settings-btn" type="button">⚙ Settings</button>
-    <span class="toolbar-sep">|</span>
-    <button id="reset-btn" type="button">Reset character</button>
-    <button id="print-btn" type="button">Print A3</button>
-  </div>
-
-  <main id="sheet" class="sheet">
-    <header class="zone zone-header" id="zone-header"></header>
-    <section class="zone zone-left" id="zone-left"></section>
-    <section class="zone zone-center" id="zone-center"></section>
-    <section class="zone zone-right" id="zone-right"></section>
-    <footer class="zone zone-footer" id="zone-footer"></footer>
-    <div class="print-only import-footer">
-      <strong>StoneSys Import Code:</strong> <span id="import-code-val"></span>
+  <header>
+    <div>
+      <h1>StoneSys <span>Dashboard</span></h1>
+      <div class="subtitle">Powered by Genesys Narrative Dice & Campaign Playbooks</div>
     </div>
-  </main>
+    <div style="font-size: 0.85rem; color: var(--text-muted);">
+      Table Date: July 2026
+    </div>
+  </header>
+
+  <div class="main-container">
+    <!-- Left panel: Campaign & Archetype selectors -->
+    <div class="left-panel">
+      <div class="panel-section">
+        <h2 class="panel-title">Saved Characters</h2>
+        <div class="save-manager">
+          <select id="saved-character-select">
+            <option value="">No saved characters</option>
+          </select>
+          <div class="save-actions">
+            <button class="clear-btn" onclick="newCharacterSave()">New</button>
+            <button class="clear-btn" onclick="saveCurrentCharacter()">Save</button>
+            <button class="clear-btn" onclick="loadSelectedCharacter()">Load</button>
+            <button class="clear-btn danger" onclick="deleteSelectedCharacter()">Delete</button>
+          </div>
+          <div class="save-actions" style="margin-top: 0.5rem; display: flex; gap: 4px;">
+            <button class="clear-btn" id="gdrive-save-btn" style="flex: 1;">Save to Drive</button>
+            <button class="clear-btn" id="gdrive-load-btn" style="flex: 1;">Load from Drive</button>
+            <button class="clear-btn" id="gdrive-settings-btn">⚙</button>
+          </div>
+          <div id="save-status" class="save-status">Autosave is off. Use Save when ready.</div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h2 class="panel-title">1. Select Campaign</h2>
+        <div id="campaign-list" class="campaign-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h2 class="panel-title">2. Choose Archetype</h2>
+        <div id="archetype-list" class="archetype-list">
+          <div class="results-empty">Select a campaign first</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center panel: Character Sheet -->
+    <div class="center-panel">
+      <!-- Active Campaign Description -->
+      <div id="campaign-summary" class="campaign-info-block">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Character Sheet Grid -->
+      <div id="character-sheet" style="display: none;">
+        <div class="sheet-header">
+          <div class="sheet-header-left">
+            <h2 id="sheet-name">The Blessed</h2>
+            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 0.25rem;">
+              <input id="character-name-input" class="character-name-input" type="text" placeholder="Character name">
+              <button class="clear-btn no-print" id="print-playbook-btn" style="padding: 4px 8px; font-size: 11px;">Print Playbook (A3)</button>
+            </div>
+            <div id="sheet-duty" class="duty-line">Danu, the Great Mother, provides...</div>
+          </div>
+          <div class="sheet-header-right">
+            <div class="counter-box">
+              <div class="label">Hit Points</div>
+              <div class="value-control">
+                <button onclick="adjustHP(-1)">-</button>
+                <input type="text" id="sheet-hp-display" value="20" readonly>
+                <button onclick="adjustHP(1)">+</button>
+              </div>
+            </div>
+            <div class="counter-box">
+              <div class="label">Total XP</div>
+              <div class="value-control">
+                <button onclick="adjustTotalXP(-1)">-</button>
+                <input type="text" id="sheet-total-xp-display" value="0" readonly>
+                <button onclick="adjustTotalXP(1)">+</button>
+              </div>
+            </div>
+            <div class="counter-box">
+              <div class="label">Available XP</div>
+              <div class="value-control">
+                <button onclick="adjustXP(-1)">-</button>
+                <input type="text" id="sheet-xp-display" value="0" readonly>
+                <button onclick="adjustXP(1)">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats row (Click to load dice) -->
+        <div class="panel-section">
+          <h2 class="panel-title" style="margin-bottom: 0.5rem;">Stats (Click value to load into Dice Pool)</h2>
+          <div id="stat-rule-note" class="stat-rule-note"></div>
+          <div class="stats-grid" id="stats-grid-container">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Details grid -->
+        <div class="sheet-content-grid">
+          <!-- Main Content Col -->
+          <div class="sheet-main-col">
+            <div class="section-box" id="backgrounds-box">
+              <h3>Background <span class="badge">Choose 1</span></h3>
+              <div id="backgrounds-list">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <div class="section-box special" id="signature-moves-box">
+              <h3>Signature Moves</h3>
+              <div id="signature-moves-list" class="moves-list">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <div class="section-box" id="choice-moves-box">
+              <h3>Choice Moves <span class="badge">Taken</span></h3>
+              <div id="choice-moves-list" class="moves-list">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <div class="section-box" id="xp-ledger-box">
+              <h3>XP Spending</h3>
+              <div class="xp-spend-row">
+                <input id="xp-spend-amount" type="number" min="1" value="1" aria-label="XP amount">
+                <select id="xp-spend-category" aria-label="XP category">
+                  <option value="ability">Ability</option>
+                  <option value="move">Move</option>
+                  <option value="gear">Gear</option>
+                  <option value="steading">Steading</option>
+                  <option value="other">Other</option>
+                </select>
+                <input id="xp-spend-label" type="text" placeholder="What changed?">
+                <button class="clear-btn" onclick="addXpSpend()">Spend</button>
+              </div>
+              <div id="xp-ledger-list" class="xp-ledger-list">
+                <div class="results-empty">No XP spent yet.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Side Content Col -->
+          <div class="sheet-side-col">
+            <div class="section-box" id="instincts-box">
+              <h3>Instincts</h3>
+              <div id="instincts-list" class="instincts-list">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <div class="section-box" id="gear-box">
+              <h3>Gear</h3>
+              <textarea id="gear-text" class="sheet-textarea" placeholder="Weapons, armor, supplies, coins, unusual assets..."></textarea>
+            </div>
+
+            <div class="section-box">
+              <h3>Steading Upgrades</h3>
+              <textarea id="steading-upgrades-text" class="sheet-textarea" placeholder="Community projects, seasonal upgrades, defenses, holdings, debts..."></textarea>
+            </div>
+            
+            <div class="section-box">
+              <h3>Bonds & Notes</h3>
+              <textarea id="character-notes-text" class="sheet-textarea tall" placeholder="Write character bonds or session notes here..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="sheet-empty-state" class="campaign-info-block" style="text-align: center; padding: 4rem 2rem;">
+        <h2 style="color: var(--text-muted); font-size: 1.5rem; margin-bottom: 0.5rem;">No Archetype Selected</h2>
+        <p style="font-size: 0.9rem;">Select a campaign on the left, then click an archetype to load their character sheet details.</p>
+      </div>
+    </div>
+
+    <!-- Right panel: Interactive Dice Roller -->
+    <div class="right-panel">
+      <div class="panel-section">
+        <div class="roller-title-row">
+          <h2 class="panel-title" style="margin-bottom: 0;">Dice Roller</h2>
+          <button class="clear-btn" onclick="clearDicePool()">Clear Pool</button>
+        </div>
+
+        <div class="dice-select-grid">
+          <!-- Proficiency Yellow -->
+          <div class="die-control-row">
+            <div class="die-label">
+              <div class="die-icon proficiency"><span>P</span></div>
+              Proficiency (Yellow)
+            </div>
+            <div class="die-count-controls">
+              <button onclick="adjustDie('proficiency', -1)">-</button>
+              <div class="count-display" id="count-proficiency">0</div>
+              <button onclick="adjustDie('proficiency', 1)">+</button>
+            </div>
+          </div>
+
+          <!-- Ability Green -->
+          <div class="die-control-row">
+            <div class="die-label">
+              <div class="die-icon ability"><span>A</span></div>
+              Ability (Green)
+            </div>
+            <div class="die-count-controls">
+              <button onclick="adjustDie('ability', -1)">-</button>
+              <div class="count-display" id="count-ability">0</div>
+              <button onclick="adjustDie('ability', 1)">+</button>
+            </div>
+          </div>
+
+          <!-- Boost Blue -->
+          <div class="die-control-row">
+            <div class="die-label">
+              <div class="die-icon boost"><span>B</span></div>
+              Boost (Blue)
+            </div>
+            <div class="die-count-controls">
+              <button onclick="adjustDie('boost', -1)">-</button>
+              <div class="count-display" id="count-boost">0</div>
+              <button onclick="adjustDie('boost', 1)">+</button>
+            </div>
+          </div>
+
+          <!-- Challenge Red -->
+          <div class="die-control-row">
+            <div class="die-label">
+              <div class="die-icon challenge"><span>C</span></div>
+              Challenge (Red)
+            </div>
+            <div class="die-count-controls">
+              <button onclick="adjustDie('challenge', -1)">-</button>
+              <div class="count-display" id="count-challenge">0</div>
+              <button onclick="adjustDie('challenge', 1)">+</button>
+            </div>
+          </div>
+
+          <!-- Difficulty Purple -->
+          <div class="die-control-row">
+            <div class="die-label">
+              <div class="die-icon difficulty"><span>D</span></div>
+              Difficulty (Purple)
+            </div>
+            <div class="die-count-controls">
+              <button onclick="adjustDie('difficulty', -1)">-</button>
+              <div class="count-display" id="count-difficulty">0</div>
+              <button onclick="adjustDie('difficulty', 1)">+</button>
+            </div>
+          </div>
+
+          <!-- Setback Black -->
+          <div class="die-control-row">
+            <div class="die-label">
+              <div class="die-icon setback"><span>S</span></div>
+              Setback (Black)
+            </div>
+            <div class="die-count-controls">
+              <button onclick="adjustDie('setback', -1)">-</button>
+              <div class="count-display" id="count-setback">0</div>
+              <button onclick="adjustDie('setback', 1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="roll-options">
+          <div class="toggle-row">
+            <span>Risky Roll (+1 Yellow, +1 Red minimum)</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="risky-toggle" onchange="toggleRisky(this.checked)">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div style="display: flex; gap: 0.5rem; justify-content: space-between; margin-top: 0.5rem;">
+            <button class="clear-btn" style="flex: 1;" onclick="upgradePositiveDice()">Upgrade Positive</button>
+            <button class="clear-btn" style="flex: 1;" onclick="upgradeNegativeDice()">Upgrade Negative</button>
+          </div>
+        </div>
+
+        <button class="roll-trigger-btn" id="roll-btn" onclick="executeRoll()">Roll Dice Pool</button>
+
+        <!-- Dynamic Roll Results -->
+        <div class="roll-results-box" id="roll-results">
+          <div class="results-empty" id="results-placeholder">Dice pool is empty. Click stats or adjust dice controls above to build a pool.</div>
+          
+          <div class="results-content" id="results-content">
+            <div class="outcome-banner" id="outcome-title">Success, and...</div>
+            <div class="outcome-details" id="outcome-desc">You get the move's success line, plus spend the advantage menu.</div>
+            
+            <!-- Proactive Totals Line Description -->
+            <div id="outcome-totals-summary" style="font-size: 0.95rem; font-weight: 700; color: var(--accent-color); margin: 0.75rem 0; text-align: center; background-color: rgba(0, 0, 0, 0.3); padding: 0.5rem; border-radius: 6px; border: 1px solid var(--border-color); letter-spacing: 0.5px;">
+              Totals: Success 2, Threat 1, Despair 1
+            </div>
+
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem; margin-top: 1rem;">Net Symbols:</div>
+            <div class="symbols-grid">
+              <div class="symbol-count success">
+                <span class="icon">✱</span>
+                <span id="result-success-count">0</span>
+                <span style="font-size: 0.65rem; color: var(--text-muted);">Success</span>
+              </div>
+              <div class="symbol-count advantage">
+                <span class="icon">▲</span>
+                <span id="result-advantage-count">0</span>
+                <span style="font-size: 0.65rem; color: var(--text-muted);">Advantage</span>
+              </div>
+              <div class="symbol-count triumph">
+                <span class="icon">◆</span>
+                <span id="result-triumph-count">0</span>
+                <span style="font-size: 0.65rem; color: var(--text-muted);">Triumph</span>
+              </div>
+              <div class="symbol-count despair">
+                <span class="icon">✶</span>
+                <span id="result-despair-count">0</span>
+                <span style="font-size: 0.65rem; color: var(--text-muted);">Despair</span>
+              </div>
+            </div>
+
+            <!-- List of All Rolled Dice Faces -->
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; margin-top: 1.25rem; border-top: 1px dashed var(--border-color); padding-top: 0.75rem;">Dice Faces Rolled:</div>
+            <div id="rolled-dice-faces-container" style="display: flex; flex-direction: column; gap: 0.4rem; max-height: 150px; overflow-y: auto; background-color: rgba(0, 0, 0, 0.2); padding: 0.5rem; border-radius: 6px; border: 1px solid var(--border-color);">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <div id="raw-roll-log" style="display: none;"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- History log -->
+      <div class="roll-history-box">
+        <h2 class="panel-title" style="margin-bottom: 0.5rem; font-size: 0.8rem;">Roll History</h2>
+        <div class="history-list" id="history-list">
+          <div class="results-empty" style="padding: 1rem 0;">No rolls yet in this session</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="settings-modal" class="modal-overlay no-print" style="display: none;">
     <div class="modal-content">
       <h3>Google Drive Configuration</h3>
-      <p class="hint">To save to your Google Drive, you need a Google OAuth Client ID. You can register one for free in the Google Cloud Console.</p>
+      <p class="hint" style="font-size: 11px; margin-bottom: 12px;">To save to your Google Drive, you need a Google OAuth Client ID. You can register one for free in the Google Cloud Console.</p>
       <label class="modal-label">
         Google OAuth Client ID:
         <input type="text" id="gdrive-client-id-input" placeholder="paste client id here..." />
       </label>
       <div style="margin-top: 16px; font-size: 11px; text-align: center;">
-        <a href="privacy.html" target="_blank" style="color: var(--ink);">Privacy Policy</a> | 
-        <a href="terms.html" target="_blank" style="color: var(--ink);">Terms of Service</a>
+        <a href="privacy.html" target="_blank" style="color: var(--text-main);">Privacy Policy</a> | 
+        <a href="terms.html" target="_blank" style="color: var(--text-main);">Terms of Service</a>
       </div>
       <div class="modal-actions">
         <button id="settings-save-btn" type="button" class="btn-primary">Save Settings</button>
@@ -55,7 +376,7 @@
   <div id="loader-modal" class="modal-overlay no-print" style="display: none;">
     <div class="modal-content">
       <h3>Load Character from Google Drive</h3>
-      <p class="hint">Select a character sheet to import:</p>
+      <p class="hint" style="font-size: 11px;">Select a character sheet to import:</p>
       <div id="gdrive-file-list" class="file-list"></div>
       <div class="modal-actions">
         <button id="loader-close-btn" type="button">Close</button>
@@ -63,19 +384,11 @@
     </div>
   </div>
 
-  <div id="playbook-select-modal" class="modal-overlay no-print" style="display: none;">
-    <div class="modal-content" style="max-width: 620px; width: 90%;">
-      <h3>Choose Your Playbook</h3>
-      <p class="hint">Select a campaign setting and playbook to begin creating your character:</p>
-      <div id="playbook-list-container" class="playbook-list-container"></div>
-      <div class="modal-actions">
-        <button id="playbook-select-close-btn" type="button">Cancel</button>
-      </div>
-    </div>
-  </div>
+  <div id="loading" style="display: none; position: fixed; top: 10px; right: 10px; padding: 10px; background: rgba(0,0,0,0.8); color: white; border-radius: 4px; z-index: 10000; font-size: 12px;">Loading...</div>
 
-  <div id="loading">Loading playbook&hellip;</div>
-
-  <script type="module" src="app.js"></script>
+  <!-- Load Data -->
+  <script src="data.js"></script>
+  <!-- Load App Code -->
+  <script type="module" src="index.js"></script>
 </body>
 </html>

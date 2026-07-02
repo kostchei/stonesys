@@ -1,4 +1,5 @@
 // StoneSys JS Application logic
+import { getAccessToken, saveCharacterToDrive, listDriveFiles, loadFromDrive } from "./drive.js";
 
 // Application State
 let activeCampaign = null;
@@ -102,6 +103,140 @@ window.addEventListener('DOMContentLoaded', () => {
   
   // Set up default blank state
   clearDicePool();
+
+  // Google Drive Event Listeners
+  const CLIENT_ID_KEY = "stonesys:gdrive_client_id";
+  
+  const settingsModal = document.getElementById("settings-modal");
+  const loaderModal = document.getElementById("loader-modal");
+  const clientIdInput = document.getElementById("gdrive-client-id-input");
+  
+  // Load saved client ID
+  clientIdInput.value = localStorage.getItem(CLIENT_ID_KEY) || "";
+  
+  document.getElementById("gdrive-settings-btn").addEventListener("click", () => {
+    clientIdInput.value = localStorage.getItem(CLIENT_ID_KEY) || "";
+    settingsModal.style.display = "flex";
+  });
+  
+  document.getElementById("settings-close-btn").addEventListener("click", () => {
+    settingsModal.style.display = "none";
+  });
+  
+  document.getElementById("settings-save-btn").addEventListener("click", () => {
+    localStorage.setItem(CLIENT_ID_KEY, clientIdInput.value.trim());
+    settingsModal.style.display = "none";
+  });
+  
+  document.getElementById("loader-close-btn").addEventListener("click", () => {
+    loaderModal.style.display = "none";
+  });
+  
+  document.getElementById("print-playbook-btn").addEventListener("click", () => {
+    if (activeArchetype) {
+      window.open(`playbook.html?pb=${activeArchetype.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`, '_blank');
+    }
+  });
+
+  // Save to Google Drive
+  document.getElementById("gdrive-save-btn").addEventListener("click", () => {
+    if (!activeCampaign || !activeArchetype) {
+      alert("Please select a campaign and archetype first.");
+      return;
+    }
+    const clientId = localStorage.getItem(CLIENT_ID_KEY);
+    if (!clientId) {
+      alert("Please configure your Google OAuth Client ID in Settings first.");
+      settingsModal.style.display = "flex";
+      return;
+    }
+    
+    document.getElementById("loading").style.display = "block";
+    getAccessToken(clientId, async (token) => {
+      try {
+        const snapshot = createCharacterSnapshot();
+        await saveCharacterToDrive(token, snapshot, activeArchetype);
+        alert("Character sheet successfully saved to Google Drive!");
+      } catch (e) {
+        alert("Failed to save to Google Drive: " + e.message);
+      } finally {
+        document.getElementById("loading").style.display = "none";
+      }
+    });
+  });
+
+  // Load from Google Drive
+  document.getElementById("gdrive-load-btn").addEventListener("click", () => {
+    const clientId = localStorage.getItem(CLIENT_ID_KEY);
+    if (!clientId) {
+      alert("Please configure your Google OAuth Client ID in Settings first.");
+      settingsModal.style.display = "flex";
+      return;
+    }
+    
+    document.getElementById("loading").style.display = "block";
+    getAccessToken(clientId, async (token) => {
+      try {
+        const files = await listDriveFiles(token);
+        const listDiv = document.getElementById("gdrive-file-list");
+        listDiv.innerHTML = "";
+        
+        if (files.length === 0) {
+          listDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted);">No StoneSys character documents found.</div>';
+        } else {
+          files.forEach(f => {
+            const item = document.createElement("div");
+            item.className = "file-item";
+            const dateStr = new Date(f.modifiedTime).toLocaleDateString();
+            item.innerHTML = `
+              <span class="file-name">${f.name}</span>
+              <span class="file-date">Modified: ${dateStr}</span>
+            `;
+            item.addEventListener("click", async () => {
+              loaderModal.style.display = "none";
+              document.getElementById("loading").style.display = "block";
+              try {
+                const character = await loadFromDrive(token, f.id);
+                applyCharacterSnapshot(character);
+                saveCurrentCharacter();
+                alert("Character sheet successfully loaded!");
+              } catch (e) {
+                alert("Failed to load character: " + e.message);
+              } finally {
+                document.getElementById("loading").style.display = "none";
+              }
+            });
+            listDiv.appendChild(item);
+          });
+        }
+        loaderModal.style.display = "flex";
+      } catch (e) {
+        alert("Failed to list files: " + e.message);
+      } finally {
+        document.getElementById("loading").style.display = "none";
+      }
+    });
+  });
+
+  // Auto-import from URL parameter
+  const params = new URLSearchParams(window.location.search);
+  const importCode = params.get("import") || params.get("load");
+  if (importCode) {
+    try {
+      const decoded = decodeURIComponent(escape(atob(importCode)));
+      const parsed = JSON.parse(decoded);
+      
+      applyCharacterSnapshot(parsed);
+      saveCurrentCharacter();
+      
+      const url = new URL(window.location);
+      url.searchParams.delete("import");
+      url.searchParams.delete("load");
+      window.history.replaceState({}, document.title, url.toString());
+    } catch (e) {
+      console.error("URL import failed:", e);
+    }
+  }
 });
 
 function getSavedCharacters() {
@@ -1182,3 +1317,24 @@ function addToHistory(outcome, netSuccess, netAdvantage, triumphs, despairs, out
   
   historyList.insertBefore(item, historyList.firstChild);
 }
+
+// Expose functions to the window object to support inline HTML event handlers
+window.executeRoll = executeRoll;
+window.adjustDie = adjustDie;
+window.clearDicePool = clearDicePool;
+window.toggleRisky = toggleRisky;
+window.upgradePositiveDice = upgradePositiveDice;
+window.upgradeNegativeDice = upgradeNegativeDice;
+window.newCharacterSave = newCharacterSave;
+window.saveCurrentCharacter = saveCurrentCharacter;
+window.loadSelectedCharacter = loadSelectedCharacter;
+window.deleteSelectedCharacter = deleteSelectedCharacter;
+window.adjustHP = adjustHP;
+window.adjustXP = adjustXP;
+window.adjustTotalXP = adjustTotalXP;
+window.addXpSpend = addXpSpend;
+window.removeXpSpend = removeXpSpend;
+window.buyStatIncrease = buyStatIncrease;
+window.adjustStat = adjustStat;
+window.selectCampaign = selectCampaign;
+window.selectArchetype = selectArchetype;
