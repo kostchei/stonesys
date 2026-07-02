@@ -162,6 +162,7 @@ function renderMove(m) {
   wrap.appendChild(head);
   wrap.appendChild(el("p", { class: "move-trigger", text: m.trigger }));
 
+  const usable = m.type !== "choice" || state.chosen.includes(m.name);
   const res = m.results;
   if (res) {
     const block = el("div", { class: "results" });
@@ -177,44 +178,44 @@ function renderMove(m) {
     if (res.despair) block.appendChild(el("p", { class: "r-despair" }, [el("b", { text: "✶ Despair: " }), res.despair]));
     wrap.appendChild(block);
 
-    // roll control
-    const out = el("div", { class: "move-out" });
-    let diff = m.difficulty || "average";
-    let boost = 0, setback = 0, risky = true;
-    const diffSel = el("select", { class: "no-print", onchange: (e) => { diff = e.target.value; } },
-      DIFFS.map((d) => el("option", { value: d, selected: d === diff ? "selected" : null, text: d })));
-    const stepper = (label, get, set) => el("span", { class: "stepper" }, [
-      el("button", { type: "button", text: "−", onclick: () => { set(Math.max(0, get() - 1)); chip.textContent = `${label} ${get()}`; } }),
-      (() => { const chip = el("span", { class: "chip", text: `${label} ${get()}` }); stepper._chip = chip; return chip; })(),
-      el("button", { type: "button", text: "+", onclick: () => { set(get() + 1); chip.textContent = `${label} ${get()}`; } })
-    ]);
-    // simple boost/setback steppers
-    const bChip = el("span", { class: "chip", text: "boost 0" });
-    const sChip = el("span", { class: "chip", text: "setback 0" });
-    const controls = el("div", { class: "roll-controls no-print" }, [
-      el("span", { text: "difficulty " }), diffSel,
-      el("label", { class: "risky-toggle", title: "Risky rolls always carry at least 1 yellow and 1 red — triumph and despair are both live." }, [
-        el("input", { type: "checkbox", checked: "checked", onchange: (e) => { risky = e.target.checked; } }),
-        el("span", { text: " risky" })
-      ]),
-      el("span", { class: "stepper" }, [el("button", { type: "button", text: "−", onclick: () => { boost = Math.max(0, boost - 1); bChip.textContent = `boost ${boost}`; } }), bChip, el("button", { type: "button", text: "+", onclick: () => { boost++; bChip.textContent = `boost ${boost}`; } })]),
-      el("span", { class: "stepper" }, [el("button", { type: "button", text: "−", onclick: () => { setback = Math.max(0, setback - 1); sChip.textContent = `setback ${setback}`; } }), sChip, el("button", { type: "button", text: "+", onclick: () => { setback++; sChip.textContent = `setback ${setback}`; } })]),
-      el("button", { class: "roll-btn", type: "button", text: `Roll +${m.stat}`, onclick: () => {
-        const ranks = m.trained === false ? 0 : 1;
-        const r = rollMove({ stat: state.stats[m.stat], ranks, difficulty: diff, boost, setback, risky });
-        const nodes = [
-          el("div", { class: "roll-pool", text: poolText(r.pool) }),
-          el("div", { class: `roll-verdict ${r.success ? "ok" : "bad"}`, text: resultSummary(r) }),
-          el("div", { class: "roll-result", text: r.success ? res.success : (res.failure || "You don't. The GM makes a move.") })
-        ];
-        if (r.triumphs && res.triumph) nodes.push(el("div", { class: "r-triumph", text: "◆ " + res.triumph }));
-        if (r.despairs && res.despair) nodes.push(el("div", { class: "r-despair", text: "✶ " + res.despair }));
-        if (!r.success) nodes.push(el("button", { class: "xp-btn", type: "button", text: "mark XP", onclick: () => { state.xp += 1; save(); render(); } }));
-        out.replaceChildren(...nodes);
-      } })
-    ]);
-    wrap.appendChild(controls);
-    wrap.appendChild(out);
+    if (!usable) {
+      // Reference only: you haven't taken this move, so it can't be rolled.
+      wrap.appendChild(el("p", { class: "move-locked", text: "Not taken — check \"taken\" above, or pick it via advancement, to roll this move." }));
+    } else {
+      // roll control
+      const out = el("div", { class: "move-out" });
+      let diff = m.difficulty || "average";
+      let boost = 0, setback = 0, risky = true;
+      let ranks = m.trained === false ? 0 : (state.trainedRanks?.[m.name] ?? 1);
+      const diffSel = el("select", { class: "no-print", onchange: (e) => { diff = e.target.value; } },
+        DIFFS.map((d) => el("option", { value: d, selected: d === diff ? "selected" : null, text: d })));
+      // simple boost/setback steppers
+      const bChip = el("span", { class: "chip", text: "boost 0" });
+      const sChip = el("span", { class: "chip", text: "setback 0" });
+      const controls = el("div", { class: "roll-controls no-print" }, [
+        el("span", { text: "difficulty " }), diffSel,
+        el("label", { class: "risky-toggle", title: "Risky rolls always carry at least 1 yellow and 1 red — triumph and despair are both live." }, [
+          el("input", { type: "checkbox", checked: "checked", onchange: (e) => { risky = e.target.checked; } }),
+          el("span", { text: " risky" })
+        ]),
+        el("span", { class: "stepper" }, [el("button", { type: "button", text: "−", onclick: () => { boost = Math.max(0, boost - 1); bChip.textContent = `boost ${boost}`; } }), bChip, el("button", { type: "button", text: "+", onclick: () => { boost++; bChip.textContent = `boost ${boost}`; } })]),
+        el("span", { class: "stepper" }, [el("button", { type: "button", text: "−", onclick: () => { setback = Math.max(0, setback - 1); sChip.textContent = `setback ${setback}`; } }), sChip, el("button", { type: "button", text: "+", onclick: () => { setback++; sChip.textContent = `setback ${setback}`; } })]),
+        el("button", { class: "roll-btn", type: "button", text: `Roll +${m.stat}`, onclick: () => {
+          const r = rollMove({ stat: state.stats[m.stat], ranks, difficulty: diff, boost, setback, risky });
+          const nodes = [
+            el("div", { class: "roll-pool", text: poolText(r.pool) }),
+            el("div", { class: `roll-verdict ${r.success ? "ok" : "bad"}`, text: resultSummary(r) }),
+            el("div", { class: "roll-result", text: r.success ? res.success : (res.failure || "You don't. The GM makes a move.") })
+          ];
+          if (r.triumphs && res.triumph) nodes.push(el("div", { class: "r-triumph", text: "◆ " + res.triumph }));
+          if (r.despairs && res.despair) nodes.push(el("div", { class: "r-despair", text: "✶ " + res.despair }));
+          if (!r.success) nodes.push(el("button", { class: "xp-btn", type: "button", text: "mark XP", onclick: () => { state.xp += 1; save(); render(); } }));
+          out.replaceChildren(...nodes);
+        } })
+      ]);
+      wrap.appendChild(controls);
+      wrap.appendChild(out);
+    }
   } else if (m.text) {
     wrap.appendChild(el("p", { class: "move-text", text: m.text }));
   }

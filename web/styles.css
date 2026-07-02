@@ -93,6 +93,7 @@ body {
 .move-pick { margin-left: auto; font-size: 12px; }
 .move-trigger { margin: 4px 0; font-style: italic; }
 .move-text { margin: 4px 0; }
+.move-locked { margin: 6px 0 0; font-size: 12px; font-style: italic; color: #6a6258; }
 .bands { list-style: none; padding: 0; margin: 4px 0; font-size: 13px; }
 .bands li { padding: 2px 4px; }
 .band-strong { color: var(--strong); }
