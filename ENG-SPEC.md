@@ -24,6 +24,10 @@ roll on. Both renderers read the same data. There is no second authoring pass.
 
 ## 3. Architecture
 
+How to actually play on this chassis — reading the dice as Stonetop bands,
+using moves, holds, boosts/setbacks, Story Points, tracks, and the steading —
+is documented in `GUIDE.md`.
+
 ```
 playbooks/*.json      canonical data (validated by schema)
 schema/playbook.schema.json   JSON Schema, draft 2020-12
@@ -58,7 +62,7 @@ character: no skill list, minimal stat gain, moves as fictional approaches (not
 | Difficulty (negative) | GM sets `1-4` purple (`easy 1 … daunting 4`, default `average` 2; `simple 0` only for riskless chores). Reds (challenge) come only from upgrading purples; **max 2 red**. |
 | Risk rule | a **risky** roll (the default for moves) always carries **at least 1 yellow and 1 red** — upgrades happen even untrained, so triumph and despair are both always live |
 | Read | net success/failure **and** net advantage/threat; triumph (yellow) and despair (red) never cancel. Net advantage/threat is **bucketed into tiers**: 0 none / 1-2 minor / 3+ major, so every roll resolves to a bounded outcome |
-| Currency | per-move hold-and-spend **and** a shared Story Point pool (spend flips sides) |
+| Currency | per-move hold-and-spend **and** a shared Story Point pool (spend flips sides). SP die-upgrades respect the yellow/red caps — overflow becomes a boost/setback instead |
 | Starting array | `{4, 3, 3, 2, 2, 1}`, archetype default + swap two (anchor-limited) |
 | Stat cap | `5`; stat gain is a rare advanced advance, not a routine pick |
 | Power tracks | optional per setting: Bond/Debt/Heat, Devotion/Favor/Wrath, Bastion Standing |
