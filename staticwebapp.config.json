@@ -1,0 +1,26 @@
+{
+  "navigationFallback": {
+    "rewrite": "/web/index.html",
+    "exclude": ["/playbooks/*.json", "/web/*.js", "/web/*.css", "/web/*.html"]
+  },
+  "routes": [
+    {
+      "route": "/",
+      "redirect": "/web/index.html",
+      "statusCode": 302
+    },
+    {
+      "route": "/web",
+      "redirect": "/web/index.html",
+      "statusCode": 302
+    }
+  ],
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Referrer-Policy": "same-origin"
+  },
+  "mimeTypes": {
+    ".json": "application/json"
+  }
+}
