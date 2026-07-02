@@ -1,4 +1,7 @@
 import { rollMove } from "./dice.js";
+import { getAccessToken, saveCharacterToDrive, listDriveFiles, loadFromDrive } from "./drive.js";
+
+const CLIENT_ID_KEY = "stonesys:gdrive_client_id";
 
 const STAT_KEYS = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
 const DIFFS = ["simple", "easy", "average", "hard", "daunting"];
@@ -79,6 +82,14 @@ function saveSP() { localStorage.setItem(SP_KEY, JSON.stringify(sp)); }
 function render() {
   document.getElementById("pb-name").textContent = `— ${PB.name}`;
   renderHeader(); renderLeft(); renderCenter(); renderRight(); renderFooter();
+  
+  // Update printable import/export footer
+  try {
+    const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(state))));
+    document.getElementById("import-code-val").textContent = b64;
+  } catch (e) {
+    console.error("Failed to generate import code:", e);
+  }
 }
 
 function renderHeader() {
@@ -470,12 +481,34 @@ function renderStoryPoints() {
 // ---------- boot ----------
 async function boot() {
   const params = new URLSearchParams(location.search);
-  const id = params.get("pb") || "the-beholden";
+  
+  // Handle URL import if present
+  const importCode = params.get("import") || params.get("load");
+  let urlImportState = null;
+  if (importCode) {
+    try {
+      const decoded = decodeURIComponent(escape(atob(importCode)));
+      urlImportState = JSON.parse(decoded);
+    } catch (e) {
+      console.error("URL import failed:", e);
+    }
+  }
+
+  const id = params.get("pb") || (urlImportState ? urlImportState.playbookId : null) || "the-beholden";
   const res = await fetch(`../playbooks/${id}.json`);
   if (!res.ok) throw new Error(`could not load playbook ${id}`);
   PB = await res.json();
   storeKey = `stonesys:${PB.id}`;
+  
   state = (() => {
+    if (urlImportState) {
+      // Clean url parameters
+      const url = new URL(window.location);
+      url.searchParams.delete("import");
+      url.searchParams.delete("load");
+      window.history.replaceState({}, document.title, url.toString());
+      return urlImportState;
+    }
     const s = localStorage.getItem(storeKey);
     if (!s) return defaultState(PB);
     const parsed = JSON.parse(s);
@@ -485,9 +518,129 @@ async function boot() {
     if (parsed.swapDone === undefined) parsed.swapDone = null;
     return parsed;
   })();
+  
   sp = (() => { const s = localStorage.getItem(SP_KEY); return s ? JSON.parse(s) : { player: 1, gm: 1 }; })();
 
-  document.getElementById("loading").remove();
+  // Wire up Google Drive actions
+  const settingsModal = document.getElementById("settings-modal");
+  const clientIdInput = document.getElementById("gdrive-client-id-input");
+  
+  document.getElementById("gdrive-settings-btn").addEventListener("click", () => {
+    clientIdInput.value = localStorage.getItem(CLIENT_ID_KEY) || "";
+    settingsModal.style.display = "flex";
+  });
+  
+  document.getElementById("settings-save-btn").addEventListener("click", () => {
+    localStorage.setItem(CLIENT_ID_KEY, clientIdInput.value.trim());
+    settingsModal.style.display = "none";
+  });
+  
+  document.getElementById("settings-close-btn").addEventListener("click", () => {
+    settingsModal.style.display = "none";
+  });
+
+  document.getElementById("gdrive-save-btn").addEventListener("click", () => {
+    const clientId = localStorage.getItem(CLIENT_ID_KEY);
+    if (!clientId) {
+      alert("Please configure your Google OAuth Client ID in Settings first.");
+      clientIdInput.value = "";
+      settingsModal.style.display = "flex";
+      return;
+    }
+    
+    getAccessToken(clientId, async (accessToken) => {
+      const loadingEl = document.getElementById("loading");
+      try {
+        if (loadingEl) {
+          loadingEl.style.display = "block";
+          loadingEl.textContent = "Saving character to Google Drive...";
+        }
+        // Save playbookId inside state so url importing knows which file to fetch
+        state.playbookId = id;
+        await saveCharacterToDrive(accessToken, state, PB);
+        alert("Character saved to Google Drive successfully!");
+      } catch (err) {
+        alert("Error saving to Drive: " + err.message);
+      } finally {
+        if (loadingEl) loadingEl.style.display = "none";
+      }
+    });
+  });
+
+  const loaderModal = document.getElementById("loader-modal");
+  const fileListContainer = document.getElementById("gdrive-file-list");
+  
+  document.getElementById("gdrive-load-btn").addEventListener("click", () => {
+    const clientId = localStorage.getItem(CLIENT_ID_KEY);
+    if (!clientId) {
+      alert("Please configure your Google OAuth Client ID in Settings first.");
+      clientIdInput.value = "";
+      settingsModal.style.display = "flex";
+      return;
+    }
+    
+    getAccessToken(clientId, (accessToken) => {
+      const loadingEl = document.getElementById("loading");
+      if (loadingEl) {
+        loadingEl.style.display = "block";
+        loadingEl.textContent = "Fetching character list...";
+      }
+      
+      listDriveFiles(accessToken).then((files) => {
+        if (loadingEl) loadingEl.style.display = "none";
+        
+        fileListContainer.replaceChildren();
+        if (files.length === 0) {
+          fileListContainer.appendChild(el("div", { class: "file-item", text: "No StoneSys character sheets found in Google Drive." }));
+        } else {
+          files.forEach((file) => {
+            const mDate = new Date(file.modifiedTime).toLocaleString();
+            const item = el("div", { class: "file-item" }, [
+              el("span", { class: "file-name", text: file.name }),
+              el("span", { class: "file-date", text: mDate })
+            ]);
+            item.addEventListener("click", async () => {
+              try {
+                if (loadingEl) {
+                  loadingEl.style.display = "block";
+                  loadingEl.textContent = "Loading character data...";
+                }
+                loaderModal.style.display = "none";
+                const loadedState = await loadFromDrive(accessToken, file.id);
+                state = loadedState;
+                save();
+                
+                // If the playbook changed, we need to reload the page to load the correct JSON
+                if (state.playbookId && state.playbookId !== id) {
+                  window.location.search = `?pb=${state.playbookId}`;
+                } else {
+                  render();
+                  alert(`Character "${state.name || 'Unnamed'}" loaded successfully!`);
+                }
+              } catch (err) {
+                alert("Error loading character: " + err.message);
+              } finally {
+                if (loadingEl) loadingEl.style.display = "none";
+              }
+            });
+            fileListContainer.appendChild(item);
+          });
+        }
+        loaderModal.style.display = "flex";
+      }).catch((err) => {
+        if (loadingEl) loadingEl.style.display = "none";
+        alert("Error listing files: " + err.message);
+      });
+    });
+  });
+  
+  document.getElementById("loader-close-btn").addEventListener("click", () => {
+    loaderModal.style.display = "none";
+  });
+
+  const bootLoading = document.getElementById("loading");
+  if (bootLoading) bootLoading.style.display = "none";
+  
   document.getElementById("reset-btn").addEventListener("click", () => { if (confirm("Reset this character to the playbook defaults?")) { state = defaultState(PB); save(); render(); } });
   document.getElementById("print-btn").addEventListener("click", () => window.print());
   renderStoryPoints();
