@@ -201,7 +201,7 @@ function renderLeft() {
     el("h2", { text: "Vitals" }), hp,
     el("div", { class: "vital-static", text: `Damage ${PB.derived.damage}  ·  Load ${evalFormula(PB.derived.load, state.stats)}` }),
     xp,
-    el("p", { class: "hint", text: "Rolling physical dice instead? Use +/− to mark XP by hand — miss = +1, and mark more at the GM's call." })
+    el("p", { class: "hint", text: "Rolling physical dice instead? Use +/− to mark XP by hand — failure = +1, and mark more at the GM's call." })
   ].filter(Boolean));
 }
 

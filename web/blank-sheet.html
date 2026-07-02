@@ -53,7 +53,7 @@
 
     <section class="zone zone-center">
       <h2>Moves</h2>
-      <p class="hint no-print">Write each move; the roll buttons under Stats resolve 2d6 + modifier.</p>
+      <p class="hint no-print">Write each move; the roll buttons under Stats build a narrative dice pool.</p>
       <div id="blank-moves"></div>
     </section>
 
@@ -72,7 +72,7 @@
       </div>
       <div class="footer-col">
         <h2>Advancement</h2>
-        <p class="hint">Mark XP on a miss. Spend to improve.</p>
+        <p class="hint">Mark XP on a failure. Spend to improve.</p>
         <div class="fill-lines" id="adv-lines"></div>
       </div>
     </footer>
@@ -136,10 +136,10 @@
       const name = document.createElement("input");
       name.className = "fill"; name.placeholder = "move name";
       const stat = document.createElement("input");
-      stat.className = "fill"; stat.placeholder = "+stat"; stat.style.maxWidth = "70px";
+      stat.className = "fill"; stat.placeholder = "stat"; stat.style.maxWidth = "70px";
       nameLine.append(name, stat);
       const body = document.createElement("textarea");
-      body.placeholder = "trigger; 10+ / 7-9 / 6- results";
+      body.placeholder = "trigger; success / advantage / threat / failure results";
       m.append(nameLine, body);
       moves.appendChild(m);
     }

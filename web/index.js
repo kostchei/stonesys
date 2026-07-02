@@ -1108,13 +1108,13 @@ function performDiceRollMath() {
     }
   } else {
     outcomeClass = "failure";
-    // miss gets XP
+    // failure gets XP
     if (netAdvantage >= 1) {
-      outcomeTitle = "Miss with a silver lining";
-      outcomeDesc = "You miss (mark XP!), but you salvage something on the way down or give an ally an opening.";
+      outcomeTitle = "Failure with a silver lining";
+      outcomeDesc = "You fail (mark XP!), but you salvage something on the way down or give an ally an opening.";
     } else {
-      outcomeTitle = "Miss";
-      outcomeDesc = "You miss (mark XP!) and the GM makes a soft or hard move against you.";
+      outcomeTitle = "Failure";
+      outcomeDesc = "You fail (mark XP!) and the GM makes a soft or hard move against you.";
     }
   }
   

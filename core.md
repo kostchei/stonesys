@@ -80,11 +80,12 @@ Heat rises when patron business becomes public, when the party acts violently or
 
 ### Invoke Patron
 
-When you ask a patron for immediate aid, say what you want and what leverage you have. Then roll `2d6 + Bond - Debt risk`.
+When you ask a patron for immediate aid, say what you want and what leverage you have. Build a pool:
 
-Debt risk is `0` if the request is modest, `-1` if the request is dangerous, and `-2` if the request could expose or weaken the patron.
+- **Positive**: Green Ability dice equal to your `Bond` (0–3). If you have a relevant asset or connection, add 1 blue Boost die. You can always add `1 Debt` to upgrade one green Ability die to a yellow Proficiency die.
+- **Negative**: Difficulty set by the GM. Modest requests are Average (2 purple Challenge dice), dangerous requests are Hard (3 purple dice), and requests that could expose or weaken the patron are Daunting (4 purple dice). Add 1 black Setback die per point of current `Heat`.
 
-On a `10+`, choose two:
+On **Success with Advantage**, choose two:
 
 - The aid arrives quickly.
 - The aid is exactly what you asked for.
@@ -92,7 +93,9 @@ On a `10+`, choose two:
 - Heat does not rise.
 - The patron reveals useful extra information.
 
-On a `7-9`, choose one from the list above. The GM also chooses one:
+On **Success** (with no net advantage/threat), choose one from the list above, and choose one cost from the list below.
+
+On **Success with Threat**, choose one from the list above. The GM also chooses one:
 
 - Add `1 Debt`.
 - Add `1 Heat`.
@@ -100,7 +103,7 @@ On a `7-9`, choose one from the list above. The GM also chooses one:
 - The patron attaches a demand.
 - A rival learns about the request.
 
-On a `6-`, the patron still answers if it is interesting, but the GM makes a hard move. Add `1 Debt` and `1 Heat`, or mark the patron as offended.
+On **Failure**, the patron still answers if it is interesting, but the GM makes a hard move. Add `1 Debt` and `1 Heat`, or mark the patron as offended.
 
 ### Patron Favors
 
@@ -193,21 +196,24 @@ Lose Devotion when you break a taboo, profane a holy place, ignore a direct omen
 
 Favor is a spendable divine hold. You can hold up to `3 Favor` from one god at a time.
 
-Gain `1 Favor` when you complete a rite, sacrifice treasure, fulfill a vow, or roll a strong hit on a prayer.
+Gain `1 Favor` when you complete a rite, sacrifice treasure, fulfill a vow, or roll a success with Advantage on a prayer.
 
 Spend `1 Favor` to:
 
-- Add `+1` to a roll that clearly serves the god's portfolio.
+- Add 1 blue Boost die to a check that clearly serves the god's portfolio.
 - Ask the GM for an omen.
-- Turn a weak hit on a holy act into a stronger result.
+- Turn a success with Threat on a holy act into success with Advantage.
 - Protect an ally from a minor curse, fear, or spiritual harm.
 - Declare that a small religious contact, shrine, or sign exists nearby.
 
 ### Pray For Aid
 
-When you pray for divine aid under pressure, name the god, state the request, and offer something meaningful. Roll `2d6 + Devotion`.
+When you pray for divine aid under pressure, name the god, state the request, and offer something meaningful. Build a pool:
 
-On a `10+`, the god grants a clear sign or useful intervention. Choose one:
+- **Positive**: Green Ability dice equal to your `Devotion` (0–3). If you have a relevant offering or holy relic, add 1 blue Boost die. You can spend `1 Favor` to upgrade one green Ability die to a yellow Proficiency die.
+- **Negative**: Difficulty set by the GM (usually Average (2 purple Challenge dice) or Hard (3 purple dice)).
+
+On **Success with Advantage**, the god grants a clear sign or useful intervention. Choose one:
 
 - Healing or relief from a condition.
 - Protection from a specific danger.
@@ -216,7 +222,7 @@ On a `10+`, the god grants a clear sign or useful intervention. Choose one:
 - A hostile spirit, undead, curse, or demon forced back.
 - A path opened where none seemed available.
 
-On a `7-9`, the aid comes with a condition. Choose one:
+On **Success with Threat**, the aid comes with a condition. Choose one:
 
 - Mark `1 Favor` owed as a vow.
 - The effect is brief or incomplete.
@@ -224,7 +230,7 @@ On a `7-9`, the aid comes with a condition. Choose one:
 - A rival power notices.
 - The answer is symbolic and must be interpreted.
 
-On a `6-`, the god is silent, offended, or terrifyingly present. The GM makes a hard move and may mark Wrath.
+On **Failure**, the god is silent, offended, or terrifyingly present. The GM makes a hard move and may mark Wrath.
 
 ### Wrath
 
@@ -363,15 +369,17 @@ On a Bastion Turn:
 
 1. Choose one order for the bastion.
 2. Choose one facility to lead the order.
-3. Roll `2d6 + the relevant bastion rating`.
-4. Apply the result.
+3. Build a pool:
+   - **Positive**: Green Ability dice equal to the relevant facility or bastion rating. (If a rating is negative, roll 0 green dice but add 1 black Setback die to the pool).
+   - **Negative**: Default difficulty is Average (2 purple Challenge dice).
+4. Roll the pool and apply the result.
 5. The GM advances one external pressure.
 
-On a `10+`, the order succeeds cleanly. Choose one extra benefit.
+On **Success with Advantage**, the order succeeds cleanly. Choose one extra benefit.
 
-On a `7-9`, the order succeeds, but choose one cost.
+On **Success with Threat**, the order succeeds, but choose one cost.
 
-On a `6-`, the order fails or succeeds at a serious price. The GM makes a hard move against the bastion.
+On **Failure**, the order fails or succeeds at a serious price. The GM makes a hard move against the bastion.
 
 ### Bastion Orders
 
@@ -391,7 +399,7 @@ On a `6-`, the order fails or succeeds at a serious price. The GM makes a hard m
 
 ### Extra Benefits
 
-On a strong hit for a Bastion Order, choose one:
+On **Success with Advantage** for a Bastion Order, choose one:
 
 - Gain `1 Supply`.
 - Gain `1 Coin`.
@@ -404,7 +412,7 @@ On a strong hit for a Bastion Order, choose one:
 
 ### Costs
 
-On a weak hit, choose one:
+On **Success with Threat**, choose one:
 
 - Spend `1 Supply`.
 - Spend `1 Coin`.
@@ -429,7 +437,7 @@ At Trouble `4`, the GM makes a major bastion move and resets Trouble to `2` afte
 
 ### Bastion Moves For The GM
 
-Use these when a Bastion Turn misses, when Trouble reaches `4`, or when the world pushes back.
+Use these when a Bastion Turn fails, when Trouble reaches `4`, or when the world pushes back.
 
 - A faction makes a claim.
 - A god sends an omen.
@@ -467,7 +475,7 @@ Examples:
 - Amber resin that heals wounds but causes prophetic fevers.
 - Meteor iron that wounds monsters but attracts star cults.
 
-When a bastion exploits a strange resource, add `+1 Prosperity` while the resource flows, but roll for a side effect whenever the bastion rolls a miss on Gather, Craft, Trade, or Build.
+When a bastion exploits a strange resource, add `+1 Prosperity` while the resource flows, but roll for a side effect whenever the bastion fails a check on Gather, Craft, Trade, or Build.
 
 ### Resource Side Effects
 
