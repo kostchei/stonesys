@@ -74,7 +74,10 @@ body {
 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .stat { border: 1px solid var(--line); border-radius: 4px; padding: 6px; text-align: center; }
 .stat-name { font-weight: bold; letter-spacing: .1em; }
-.stat-val { width: 48px; font: bold 20px Georgia, serif; text-align: center; }
+.stat-val { width: 48px; margin: 0 auto; font: bold 20px Georgia, serif; text-align: center; }
+.swap-panel { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); font-size: 12px; }
+.swap-panel select { font: inherit; }
+.swap-status { font-style: italic; color: #6a6258; }
 .stat-mod { font-size: 13px; color: var(--accent); }
 .stat-roll-out { display: block; min-height: 16px; font-size: 12px; margin-top: 2px; }
 
@@ -126,8 +129,15 @@ body {
 
 /* ---- footer ---- */
 .zone-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.adv-list { display: flex; flex-direction: column; gap: 3px; font-size: 13px; }
-.adv { display: flex; gap: 6px; align-items: baseline; }
+.adv-list { display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+/* Block flow (not flex) so long advancement text wraps like a normal
+   checkbox+label paragraph instead of breaking the row apart. */
+.adv { display: block; }
+.adv input[type=checkbox] { vertical-align: middle; margin-right: 4px; }
+.adv-cost { font-size: 11px; color: var(--accent); }
+.adv-picker, .adv-applied { display: block; margin: 3px 0 0 20px; }
+.adv-picker { font: inherit; font-size: 12px; }
+.adv-applied { font-size: 12px; font-style: italic; color: var(--strong); }
 .gear-row { display: block; margin: 3px 0; font-size: 13px; }
 .gear-label { font-weight: bold; }
 

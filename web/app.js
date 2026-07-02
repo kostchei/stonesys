@@ -3,6 +3,15 @@ import { rollMove } from "./dice.js";
 const STAT_KEYS = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
 const DIFFS = ["simple", "easy", "average", "hard", "daunting"];
 const SP_KEY = "stonesys:storypoints";
+const ADV_XP_COST = 5; // GUIDE.md: "Spend 5 XP to take one advancement checkbox."
+
+// Advancement effects are detected from text patterns rather than a
+// structured field: verified consistent across every playbook in
+// playbooks/*.json (see commit history), so this is pattern-matching known
+// text, not guessing at arbitrary free text.
+function isTakeMoveText(t) { return /^Take another .+ move\.?$/i.test(t) || t === "Take a move from another playbook."; }
+function isStatRaiseText(t) { return /^Raise one stat by 1 \(max 5\)/i.test(t); }
+function isTrainMoveText(t) { return /upgrades 2 dice to proficiency/i.test(t); }
 
 // ---------- tiny DOM helper ----------
 function el(tag, attrs = {}, children = []) {
@@ -47,9 +56,21 @@ function defaultState(pb) {
     look: Object.fromEntries(pb.identity.look.map((l) => [l.label, l.options[0]])),
     gear: Object.fromEntries((pb.gear || []).map((g) => [g.label, g.options[0]])),
     stats, chosen, tracks, holds,
-    hp: { current: hp, max: hp }, xp: 0, advChecked: {}
+    hp: { current: hp, max: hp }, xp: 0, advChecked: {},
+    advChoices: {},   // key -> stat or move name chosen for a picker-backed advancement
+    trainedRanks: {}, // move name -> proficiency upgrades (1 default, 2 once trained)
+    swapDone: null    // { a, b } once the one allowed chargen stat-swap is used
   };
 }
+
+// Pick slots for "choice" moves: 2 at creation, +1 per checked "take another
+// move"/"take a move from another playbook" advancement.
+function extraMoveSlots() {
+  let n = 0;
+  (PB.advancement.basic || []).forEach((t, i) => { if (state.advChecked["b" + i] && isTakeMoveText(t)) n++; });
+  return n;
+}
+function moveSlotCap() { return 2 + extraMoveSlots(); }
 
 function save() { localStorage.setItem(storeKey, JSON.stringify(state)); }
 function saveSP() { localStorage.setItem(SP_KEY, JSON.stringify(sp)); }
@@ -110,8 +131,7 @@ function renderLeft() {
     const out = el("span", { class: "stat-roll-out" });
     return el("div", { class: "stat" }, [
       el("div", { class: "stat-name", text: k }),
-      el("input", { class: "stat-val", type: "number", min: "1", max: String(PB.chassis.statCap), value: String(v),
-        onchange: (e) => { let n = Math.max(1, Math.min(PB.chassis.statCap, Number(e.target.value) || 1)); state.stats[k] = n; e.target.value = String(n); save(); render(); } }),
+      el("div", { class: "stat-val", text: String(v) }),
       el("div", { class: "stat-dice", text: `${v} dice` }),
       el("button", { class: "roll-btn no-print", type: "button", text: "roll", onclick: () => {
         // bare check: plain green vs purple, no risk upgrades
@@ -122,6 +142,43 @@ function renderLeft() {
       out
     ]);
   }));
+
+  // Chargen: the array is fixed; the archetype's default assignment may be
+  // adjusted with exactly one swap of two stats (per stats.swaps > 0),
+  // respecting the anchor minimum if the playbook has one.
+  let swapPanel = null;
+  if (PB.stats.swaps > 0) {
+    const selA = el("select", { class: "no-print" }, STAT_KEYS.map((k) => el("option", { value: k, text: k })));
+    const selB = el("select", { class: "no-print" }, STAT_KEYS.map((k) => el("option", { value: k, text: k })));
+    selB.selectedIndex = 1;
+    const status = state.swapDone
+      ? `Swapped ${state.swapDone.a} ↔ ${state.swapDone.b}.`
+      : "No swap used yet.";
+    const anchorNote = PB.stats.anchor ? ` ${PB.stats.anchor.stat} must stay ≥ ${PB.stats.anchor.min}.` : "";
+    swapPanel = el("div", { class: "swap-panel no-print" }, [
+      el("p", { class: "hint", text: `Chargen: swap two stats' values once, if you like.${anchorNote}` }),
+      selA, el("span", { text: " ↔ " }), selB,
+      el("button", { class: "no-print", type: "button", text: state.swapDone ? "Undo swap" : "Swap", onclick: () => {
+        if (state.swapDone) {
+          const { a, b } = state.swapDone;
+          const tmp = state.stats[a]; state.stats[a] = state.stats[b]; state.stats[b] = tmp;
+          state.swapDone = null;
+          save(); render();
+          return;
+        }
+        const a = selA.value, b = selB.value;
+        if (a === b) { alert("Pick two different stats to swap."); return; }
+        const newA = state.stats[b], newB = state.stats[a];
+        const anchor = PB.stats.anchor;
+        if (anchor && anchor.stat === a && newA < anchor.min) { alert(`That swap would drop ${a} below its minimum of ${anchor.min}.`); return; }
+        if (anchor && anchor.stat === b && newB < anchor.min) { alert(`That swap would drop ${b} below its minimum of ${anchor.min}.`); return; }
+        state.stats[a] = newA; state.stats[b] = newB;
+        state.swapDone = { a, b };
+        save(); render();
+      } }),
+      el("span", { class: "swap-status", text: " " + status })
+    ]);
+  }
 
   const hp = el("div", { class: "vital" }, [
     el("span", { class: "vital-label", text: "HP" }),
@@ -136,14 +193,16 @@ function renderLeft() {
     el("button", { class: "no-print", type: "button", text: "+", onclick: () => { state.xp += 1; save(); render(); } })
   ]);
 
-  z.replaceChildren(
+  z.replaceChildren(...[
     el("h2", { text: "Stats" }),
     el("p", { class: "hint", text: "Value = ability dice. A move you have upgrades 1 to proficiency." }),
     statGrid,
+    swapPanel,
     el("h2", { text: "Vitals" }), hp,
     el("div", { class: "vital-static", text: `Damage ${PB.derived.damage}  ·  Load ${evalFormula(PB.derived.load, state.stats)}` }),
-    xp
-  );
+    xp,
+    el("p", { class: "hint", text: "Rolling physical dice instead? Use +/− to mark XP by hand — miss = +1, and mark more at the GM's call." })
+  ].filter(Boolean));
 }
 
 function renderMove(m) {
@@ -155,7 +214,24 @@ function renderMove(m) {
   if (m.type === "choice") {
     head.appendChild(el("label", { class: "move-pick no-print" }, [
       el("input", { type: "checkbox", checked: state.chosen.includes(m.name) ? "checked" : null,
-        onchange: (e) => { if (e.target.checked) { if (!state.chosen.includes(m.name)) state.chosen.push(m.name); } else state.chosen = state.chosen.filter((n) => n !== m.name); save(); render(); } }),
+        onchange: (e) => {
+          if (e.target.checked) {
+            const takenChoiceCount = state.chosen.filter((n) => {
+              const mv = PB.moves.find((x) => x.name === n);
+              return mv && mv.type === "choice";
+            }).length;
+            const cap = moveSlotCap();
+            if (takenChoiceCount >= cap) {
+              e.target.checked = false;
+              alert(`You can only have ${cap} chosen move${cap === 1 ? "" : "s"} right now. Take a "Take another move" advancement to unlock more.`);
+              return;
+            }
+            if (!state.chosen.includes(m.name)) state.chosen.push(m.name);
+          } else {
+            state.chosen = state.chosen.filter((n) => n !== m.name);
+          }
+          save(); render();
+        } }),
       el("span", { text: "taken" })
     ]));
   }
@@ -270,13 +346,87 @@ function renderRight() {
   z.replaceChildren(...kids);
 }
 
+// GUIDE.md: "Spend 5 XP to take one advancement checkbox." Checking spends
+// the XP (blocked if you can't afford it); unchecking refunds it and reverts
+// any effect the box applied (stat raise, trained rank, extra move slot).
+function onAdvToggle(key, wantChecked, kind) {
+  if (wantChecked) {
+    if (state.xp < ADV_XP_COST) {
+      alert(`Not enough XP. This costs ${ADV_XP_COST} XP; you have ${state.xp}.`);
+      render(); // re-sync the checkbox visual back to unchecked
+      return;
+    }
+    state.xp -= ADV_XP_COST;
+    state.advChecked[key] = true;
+  } else {
+    state.xp += ADV_XP_COST;
+    state.advChecked[key] = false;
+    if (kind.isStat && state.advChoices[key]) {
+      state.stats[state.advChoices[key]] = Math.max(1, state.stats[state.advChoices[key]] - 1);
+      delete state.advChoices[key];
+    }
+    if (kind.isTrain && state.advChoices[key]) {
+      delete state.trainedRanks[state.advChoices[key]];
+      delete state.advChoices[key];
+    }
+    // isTakeMove: no stored effect to revert; moveSlotCap() recomputes live.
+    // Any already-chosen moves over the new cap are left alone, not stripped.
+  }
+  save(); render();
+}
+
+function applyStatRaise(key, statKey) {
+  if (!state.advChecked[key] || state.advChoices[key] === statKey) return;
+  if (state.advChoices[key]) state.stats[state.advChoices[key]] = Math.max(1, state.stats[state.advChoices[key]] - 1);
+  if (statKey) {
+    state.stats[statKey] = Math.min(PB.chassis.statCap, (state.stats[statKey] || 1) + 1);
+    state.advChoices[key] = statKey;
+  } else {
+    delete state.advChoices[key];
+  }
+  save(); render();
+}
+
+function applyTrainMove(key, moveName) {
+  if (!state.advChecked[key] || state.advChoices[key] === moveName) return;
+  if (state.advChoices[key]) delete state.trainedRanks[state.advChoices[key]];
+  if (moveName) {
+    state.trainedRanks[moveName] = 2;
+    state.advChoices[key] = moveName;
+  } else {
+    delete state.advChoices[key];
+  }
+  save(); render();
+}
+
 function advItem(text, key) {
-  return el("label", { class: "adv" }, [
-    el("input", { class: "no-print", type: "checkbox", checked: state.advChecked[key] ? "checked" : null,
-      onchange: (e) => { state.advChecked[key] = e.target.checked; save(); } }),
-    el("span", { class: "adv-box print-only", text: state.advChecked[key] ? "☑" : "☐" }),
-    el("span", { text })
-  ]);
+  const isStat = isStatRaiseText(text);
+  const isTrain = isTrainMoveText(text);
+  const isTakeMove = isTakeMoveText(text);
+  const checked = !!state.advChecked[key];
+  const kids = [
+    el("input", { class: "no-print", type: "checkbox", checked: checked ? "checked" : null,
+      onchange: (e) => onAdvToggle(key, e.target.checked, { isStat, isTrain, isTakeMove }) }),
+    el("span", { class: "adv-box print-only", text: checked ? "☑" : "☐" }),
+    el("span", { text: text + " " }),
+    el("span", { class: "adv-cost", text: `(${ADV_XP_COST} XP)` })
+  ];
+  if (checked && isStat) {
+    const chosenStat = state.advChoices[key] || "";
+    kids.push(el("select", { class: "no-print adv-picker", onchange: (e) => applyStatRaise(key, e.target.value) },
+      [el("option", { value: "", selected: !chosenStat ? "selected" : null, text: "choose stat…" })].concat(
+        STAT_KEYS.map((k) => el("option", { value: k, selected: chosenStat === k ? "selected" : null, text: `${k} (${state.stats[k]})` })))));
+    if (chosenStat) kids.push(el("span", { class: "adv-applied", text: `→ ${chosenStat} raised` }));
+  }
+  if (checked && isTrain) {
+    const rollableTaken = PB.moves.filter((mv) => state.chosen.includes(mv.name) && mv.results);
+    const chosenMove = state.advChoices[key] || "";
+    kids.push(el("select", { class: "no-print adv-picker", onchange: (e) => applyTrainMove(key, e.target.value) },
+      [el("option", { value: "", selected: !chosenMove ? "selected" : null, text: "choose a taken move…" })].concat(
+        rollableTaken.map((mv) => el("option", { value: mv.name, selected: chosenMove === mv.name ? "selected" : null, text: mv.name })))));
+    if (chosenMove) kids.push(el("span", { class: "adv-applied", text: `→ ${chosenMove} trained to 2` }));
+  }
+  return el("label", { class: "adv" }, kids);
 }
 
 function renderFooter() {
@@ -325,7 +475,16 @@ async function boot() {
   if (!res.ok) throw new Error(`could not load playbook ${id}`);
   PB = await res.json();
   storeKey = `stonesys:${PB.id}`;
-  state = (() => { const s = localStorage.getItem(storeKey); return s ? JSON.parse(s) : defaultState(PB); })();
+  state = (() => {
+    const s = localStorage.getItem(storeKey);
+    if (!s) return defaultState(PB);
+    const parsed = JSON.parse(s);
+    // normalize saves made before advChoices/trainedRanks/swapDone existed
+    parsed.advChoices = parsed.advChoices || {};
+    parsed.trainedRanks = parsed.trainedRanks || {};
+    if (parsed.swapDone === undefined) parsed.swapDone = null;
+    return parsed;
+  })();
   sp = (() => { const s = localStorage.getItem(SP_KEY); return s ? JSON.parse(s) : { player: 1, gm: 1 }; })();
 
   document.getElementById("loading").remove();
