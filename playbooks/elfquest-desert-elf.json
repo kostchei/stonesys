@@ -1,0 +1,136 @@
+{
+  "id": "elfquest-desert-elf",
+  "name": "The Desert Elf",
+  "concept": "You come from a far people — sun-baked, patient, settled around water in a land the forest elves have never seen. Chance or grief or a long journey brought you to the Hollow-Oak, and you stayed. You endure what would break them, and you see the things they have grown too used to notice. To the tribe you are half-marvel, half-stranger.",
+  "duty": "You are new here, from a people they barely believe in. Your patience and your outside eyes are gifts the tribe does not yet know how to value.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Suna", "Yef", "Kahdir", "Emrys", "Talith", "Osu", "Rahel", "Dune", "Seraf", "Miri", "Vasht", "Coro"],
+    "look": [
+      { "label": "Bearing", "options": ["serene", "unhurried to a fault", "watchful and still", "warm as noon sun"] },
+      { "label": "Look", "options": ["sun-dark skin, forest-pale now", "desert wrappings kept from home", "adopted forest greens over old habits", "eyes squinted against a sun that isn't there"] },
+      { "label": "Sign", "options": ["patterns of your people inked or worn", "a vessel of home-water long emptied", "a way of always finding shade", "seeds of a plant that won't grow here"] },
+      { "label": "Eyes", "options": ["deep and patient", "far-seeing", "kind", "measuring the season ahead"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 1, "DEX": 3, "CON": 4, "INT": 2, "WIS": 3, "CHA": 2 },
+    "anchor": { "stat": "CON", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "18+CON", "damage": "d6", "load": "6+STR" },
+  "gear": [
+    { "label": "Weapon", "options": ["a curved desert blade (d6)", "a sling and stones (d6)", "a light spear (d6)"] },
+    { "label": "Kit", "options": ["water-craft and sun-lore", "seeds, herbs, and a planter's patience", "a beast-caller's gentle hands"] },
+    { "label": "Home", "options": ["a token of your far people", "a grief you carried across the world", "a promise to return one day"] }
+  ],
+  "moves": [
+    {
+      "name": "Desert-Born",
+      "type": "signature",
+      "stat": "CON",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you endure a hardship or wrest survival from a hard land — hunger, cold, thirst, a long trial.",
+      "results": {
+        "success": "You come through where others would fail, and find what's needed to keep going.",
+        "failure": "Even your patience meets its match, and the failing costs you or those with you.",
+        "advantage": [
+          "Hold 1 Reserves (spend: bring another through the hardship with you / find plenty where there seemed none / sense the danger in the land before it strikes / a safe place to rest and recover).",
+          "Your calm steadies the whole group; they take a boost die to follow your example."
+        ],
+        "threat": [
+          "The trial costs you: a setback die until you truly rest.",
+          "What you found or endured has a price, or an owner, you didn't expect."
+        ],
+        "triumph": "You do not merely survive; you thrive where the tribe barely holds on.",
+        "despair": "The land, or your own body, betrays you at the worst moment."
+      },
+      "hold": {
+        "name": "Reserves",
+        "spend": [
+          "Carry another through the hardship alongside you.",
+          "Find water, forage, or shelter where there seemed to be none.",
+          "Sense a danger in the land before it reaches you.",
+          "Know a safe place to rest and recover."
+        ]
+      }
+    },
+    {
+      "name": "Stranger Among Kin",
+      "type": "fixed",
+      "trigger": "Because you come from a far and different people:",
+      "text": "You see what the forest elves have stopped noticing, and know things no one here was taught — take a boost die when your outsider's perspective is what's needed. But you are new, and half-believed; the tribe does not yet fully trust or understand you, and old customs here are a language you are still learning."
+    },
+    {
+      "name": "Sun-Lore",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you read the sky, the weather, the turning season, or the time by the light.",
+      "results": {
+        "success": "You know what the sky will do and when — the storm, the frost, the failing of the light.",
+        "failure": "This northern sky keeps a secret from you, and the not-knowing bites.",
+        "advantage": ["Enough foresight to warn and ready the whole tribe.", "You read a subtler sign others miss entirely."],
+        "threat": ["The weather is already turning faster than your reading.", "Your certainty makes the tribe act too soon or too late."],
+        "triumph": "You foretell the season's turn well enough to save the Holt real hardship.",
+        "despair": "You misread a strange northern sky, and lead the tribe wrong."
+      }
+    },
+    {
+      "name": "Gentle Hands",
+      "type": "choice",
+      "stat": "CHA",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you calm, call, or win over a beast — wolf, prey, or wild thing.",
+      "results": {
+        "success": "The creature settles, comes, or lets you near.",
+        "failure": "It spooks, bolts, or turns on you.",
+        "advantage": ["It trusts you enough to help or follow.", "You learn what it fears or wants."],
+        "threat": ["Calming this one drew the attention of others.", "It will remember you, for good or ill."],
+        "triumph": "The beast takes to you as though you were pack.",
+        "despair": "You misjudge the animal, and it is worse than wild."
+      }
+    },
+    {
+      "name": "The Long View",
+      "type": "choice",
+      "stat": "WIS",
+      "trigger": "When your people's patience lets you wait out a danger, a quarrel, or a hard season:",
+      "text": "Take a boost die to endure, to wait for the right moment, or to counsel patience where others would rush. Your far people learned long ago that the sun outlasts the storm, and so can you."
+    }
+  ],
+  "embedment": {
+    "bonds": [
+      "____ took me in when I came out of the wild a stranger; I will not forget it.",
+      "____ finds my ways foreign and a little funny, and I let them, for now.",
+      "I am teaching ____ the patience of my people, and learning the forest from them in trade.",
+      "____ asked about my old home, and truly listened; that made them family.",
+      "I carry a grief from my far people, and only ____ knows a piece of it."
+    ],
+    "communityTie": [
+      "The Hollow-Oak Holt is not my birth-tribe, but it is becoming my tribe; ____ made me believe that could happen.",
+      "When the season turns cruel, ____ trusts my sun-lore and my patience to see us through.",
+      "Some here still call me the stranger; ____ calls me by name."
+    ]
+  },
+  "advancement": {
+    "basic": [
+      "Take another Desert Elf move.",
+      "Take another Desert Elf move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Increase your maximum held Reserves by 1.",
+      "Bring a gift of your people: teach the Holt a craft, a plant, or a way of surviving they lacked.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "Take root: turn one elf who saw you as a stranger into true kin."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Become of the Holt: the tribe takes you fully as one of their own.",
+      "Bridge two peoples: open a way between the Hollow-Oak and your far tribe, founding a Bastion (a waystation between two worlds)."
+    ]
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "id": "darksun-trader-thief",
+  "name": "The Trader-Thief",
+  "concept": "You move the goods the houses cannot touch openly, and lift what isn't nailed down along the way. A house name at your back opens gates in every city. It also means a house owns a piece of you.",
+  "duty": "Everything is for sale, including you, and the trick is never letting anyone learn your price.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Jesh", "Corla", "Nim", "Balt", "Sika", "Renn", "Ova", "Dask", "Lera", "Fenn", "Ptal", "Wisa"],
+    "look": [
+      { "label": "Bearing", "options": ["easy and open", "quick-eyed", "unbothered", "always leaving"] },
+      { "label": "Dress", "options": ["a house sash worn or hidden", "travel-worn practical", "one good piece and rags", "whatever the crowd wears"] },
+      { "label": "Hands", "options": ["never still", "ringed and ink-marked", "callused and quick", "kept in sight to seem honest"] },
+      { "label": "Eyes", "options": ["friendly", "appraising", "guarded", "laughing"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 1, "DEX": 4, "CON": 2, "INT": 3, "WIS": 2, "CHA": 3 },
+    "anchor": { "stat": "DEX", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "16+CON", "damage": "d6", "load": "6+STR" },
+  "gear": [
+    { "label": "Blade", "options": ["a hidden knife (d6)", "a merchant's short sword (d6)", "a weighted cane (d6)"] },
+    { "label": "Kit", "options": ["a smuggler's false-bottom pack", "lockpicks and wax", "a set of honest-looking scales"] },
+    { "label": "Stake", "options": ["a purse of house credit", "a ledger of who owes whom", "a single rare trade-good"] }
+  ],
+  "moves": [
+    {
+      "name": "Sleight & Smuggle",
+      "type": "signature",
+      "stat": "DEX",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you move something past someone who would stop it — goods, a blade, or yourself.",
+      "results": {
+        "success": "It gets through, unseen or unquestioned.",
+        "failure": "You are caught in the act, or forced to abandon the thing to get clear.",
+        "advantage": [
+          "Hold 1 Angle (spend: a hidden pocket held just what you need / a guard here already owes you / you palmed something extra on the way / you have a clean exit ready).",
+          "You learn who really controls this gate, dock, or market."
+        ],
+        "threat": [
+          "Add 1 Heat: someone marks your face.",
+          "It costs a bribe, a favor, or a piece of the goods to get clear."
+        ],
+        "triumph": "You move something huge, and no one will ever know it was you.",
+        "despair": "Caught red-handed by exactly the wrong person."
+      },
+      "hold": {
+        "name": "Angles",
+        "spend": [
+          "A hidden pocket or cache holds just what you need.",
+          "Someone nearby already owes you and will look the other way.",
+          "You palmed something useful on the way through.",
+          "You have a clean exit prepared."
+        ]
+      }
+    },
+    {
+      "name": "House Name",
+      "type": "fixed",
+      "trigger": "When you invoke your merchant house for goods, credit, passage, or muscle (Invoke Patron, core.md):",
+      "text": "The house answers where it trades, and adds 1 Debt. The house always collects, and it does not forgive being embarrassed."
+    },
+    {
+      "name": "Appraise",
+      "type": "choice",
+      "stat": "INT",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you weigh a person, a good, or a deal for what it is truly worth.",
+      "results": {
+        "success": "You know its real value, and to whom it is worth the most.",
+        "failure": "You misjudge it, and someone profits from your mistake.",
+        "advantage": ["You spot the flaw, the fake, or the hidden owner.", "You know exactly what price will move them."],
+        "threat": ["Your interest tips someone off that this is valuable."],
+        "triumph": "You see the whole web of who wants this and why.",
+        "despair": "You badly overvalue a thing, and stake something real on it."
+      }
+    },
+    {
+      "name": "Haggle",
+      "type": "choice",
+      "stat": "CHA",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you drive a bargain with someone who has what you want.",
+      "results": {
+        "success": "You reach a deal you can live with.",
+        "failure": "There is no deal, or the price is one you will regret.",
+        "advantage": ["A better price.", "A favor or a piece of news thrown in.", "A standing arrangement for next time."],
+        "threat": ["You've insulted someone with reach.", "Word of the deal travels."],
+        "triumph": "You get everything you wanted and their goodwill besides.",
+        "despair": "The deal is a trap you just walked into."
+      }
+    },
+    {
+      "name": "Fast Hands",
+      "type": "choice",
+      "stat": "DEX",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you pick a lock or a pocket, slip a binding, or make something vanish.",
+      "results": {
+        "success": "You do it, clean and quick.",
+        "failure": "You fumble it, and someone notices.",
+        "advantage": ["No one saw a thing.", "You get a second small thing while you're at it."],
+        "threat": ["You leave a trace that points back to you.", "It takes longer than you have."],
+        "triumph": "You do it under their nose and they thank you for it.",
+        "despair": "A hand closes on your wrist."
+      }
+    },
+    {
+      "name": "Contacts",
+      "type": "choice",
+      "stat": "CHA",
+      "trigger": "When you arrive somewhere the house has ever done business:",
+      "text": "Name a contact you have here — a fence, a guide, a corrupt official, an old flame — and take a boost die dealing with them. The GM says what has changed since you last leaned on them."
+    }
+  ],
+  "embedment": {
+    "system": "patron",
+    "start": { "Bond": 1, "Debt": 2, "Heat": 0 },
+    "bonds": [
+      "____ has been my partner on jobs the house would never sanction.",
+      "I sold ____ out once to save my own skin, and they don't know it was me.",
+      "____ keeps my books honest, or honest enough, and I trust no one else with them.",
+      "____ thinks I can get the Legion the supplies it needs, and I've let them believe it.",
+      "I owe ____ a debt I cannot pay in coin."
+    ],
+    "communityTie": [
+      "You feed the Free Legion through channels only you can reach; ____ knows the house takes a cut.",
+      "The Legion tolerates your thieving because it eats; ____ has warned you what happens the day it doesn't.",
+      "Your house wants the Legion as a customer or a mark; ____ is the one you'd never let them touch."
+    ]
+  },
+  "tracks": [
+    { "name": "Bond", "min": 0, "max": 3, "start": 1, "note": "Standing with your merchant house (core.md)." },
+    { "name": "Debt", "min": 0, "max": 6, "start": 2, "note": "At 6 the house makes a major demand, then resets to 3." },
+    { "name": "Heat", "min": 0, "max": 4, "start": 0, "note": "Attention from marks, rivals, and the watch (core.md)." }
+  ],
+  "advancement": {
+    "basic": [
+      "Take another Trader-Thief move.",
+      "Take another Trader-Thief move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Increase your maximum held Angles by 1.",
+      "Build a route: name a smuggling road that is always open to you between two places.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "Buy down your Debt by 1, permanently, with a clever score."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Go independent: cut ties with the house, resolving the fallout in play, and set up on your own.",
+      "Found a trade-post: claim a Bastion facility (a market) for the Free Legion."
+    ]
+  }
+}

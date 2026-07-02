@@ -1,0 +1,156 @@
+{
+  "id": "darksun-defiler",
+  "name": "The Defiler",
+  "concept": "You take the fast road to power: you rip the life from the ground and burn it for magic. It works. It always works. That is the horror of it, and the temptation. The world is already ash; what is one more dead circle of dirt against the thing you need to do right now?",
+  "duty": "Every working leaves a scar on the world and a little more on you. The power is real. So is the cost, however far off it feels.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Voss", "Ackra", "Meru", "Sate", "Orn", "Lysa", "Dain", "Ux", "Perra", "Kael", "Zhu", "Ferran"],
+    "look": [
+      { "label": "Bearing", "options": ["hungry", "controlled", "haunted", "coldly certain"] },
+      { "label": "Dress", "options": ["scholar's robes gone ragged", "hidden among refugees", "scavenged finery", "ash-stained work clothes"] },
+      { "label": "Eyes", "options": ["fever-bright", "shadowed", "flat", "always calculating the cost"] },
+      { "label": "Mark", "options": ["ground dies where you sleep", "veins like dark roots on one hand", "a stillness where living things flinch away", "nothing yet"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 1, "DEX": 2, "CON": 3, "INT": 4, "WIS": 3, "CHA": 2 },
+    "anchor": { "stat": "INT", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "14+CON", "damage": "d6", "load": "6+STR" },
+  "gear": [
+    { "label": "Focus", "options": ["a blackwood staff (d6)", "a ring of dead bone", "a scarred grimoire"] },
+    { "label": "Cover", "options": ["a scholar's disguise", "a healer's guise (a cruel joke)", "a hood and nothing else"] },
+    { "label": "Burden", "options": ["your master's forbidden notes", "a tally of the circles you've killed", "the one working you swore never to use"] }
+  ],
+  "moves": [
+    {
+      "name": "Rip the Life",
+      "type": "signature",
+      "stat": "INT",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you tear arcane power from the living land around you — fast, potent, and merciless.",
+      "results": {
+        "success": "The working is stronger and quicker than any preserver could manage. But the ground dies in a circle around you.",
+        "failure": "You reach too greedily and get nothing but a spreading patch of ash and the attention it draws.",
+        "advantage": [
+          "The effect is larger or reaches further than you dared hope.",
+          "Spare yourself this time: you do NOT advance Defilement for this working.",
+          "You spare a patch of living ground you meant to burn."
+        ],
+        "threat": [
+          "The dying spreads past what you intended, or catches an ally in the wither.",
+          "A preserver, an elemental cleric, or the land's guardians feel the murder and turn toward you."
+        ],
+        "triumph": "Devastating: the working does something that should not be possible.",
+        "despair": "The hunger takes root in you. Advance Defilement by 2, and the GM shows you what you are becoming."
+      }
+    },
+    {
+      "name": "The Land Remembers",
+      "type": "fixed",
+      "trigger": "Whenever you draw power by defiling:",
+      "text": "Advance your Defilement track by 1 (unless you spend an advantage to avoid it). The withered ground marks where you have been, and anyone who reads it, or who has lost a home to defilers, will know exactly what walks with the Legion. At Defilement 4, the GM tells you what you have become, and it is not something the Legion can keep."
+    },
+    {
+      "name": "Overwhelming Force",
+      "type": "choice",
+      "stat": "INT",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you spend life-torn power on raw destruction.",
+      "results": {
+        "success": "You unleash a blast, a wave, a ruin that ends the threat in front of you.",
+        "failure": "It gutters, and you have killed a circle of ground for nothing.",
+        "advantage": ["Catch several enemies at once.", "Precise enough to spare who you choose."],
+        "threat": ["The blast takes ground, cover, or an ally you needed.", "Advance Defilement by 1 more."],
+        "triumph": "Total, terrible devastation.",
+        "despair": "The force turns, or does not stop when you tell it to."
+      }
+    },
+    {
+      "name": "Read the Weave",
+      "type": "choice",
+      "stat": "INT",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you study a magic, a ward, or a worked thing.",
+      "results": {
+        "success": "Ask the GM one: who made this? what does it cost to use? how is it bound, and how undone?",
+        "failure": "You misread it, and the GM tells you how that bites.",
+        "advantage": ["Ask another.", "You can borrow or copy a small part of it."],
+        "threat": ["Studying it leaves a trace the maker can feel.", "What you learn unsettles even you."],
+        "triumph": "You grasp it whole, enough to break or rebuild it.",
+        "despair": "The thing you studied was studying you."
+      }
+    },
+    {
+      "name": "Drain",
+      "type": "choice",
+      "stat": "CON",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you pull the life out of a living foe to feed yourself or your magic.",
+      "results": {
+        "success": "You sap their strength, and take some of it as your own — a wound closed, a working fed.",
+        "failure": "They resist, and the reaching leaves you exposed.",
+        "advantage": ["Take enough to share with an ally.", "They are left weak and slow."],
+        "threat": ["What you drink of them clings and sickens you.", "Advance Defilement by 1."],
+        "triumph": "You leave them a husk and stand renewed.",
+        "despair": "You take in more than a person should, and something of them takes root in you."
+      }
+    },
+    {
+      "name": "Cold Restraint",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "hard",
+      "trigger": "When you could solve everything by defiling, and you choose not to.",
+      "results": {
+        "success": "You hold the hunger back and find another way. Reduce Defilement by 1.",
+        "failure": "The temptation wins, or the harder path costs you dearly for refusing the easy one.",
+        "advantage": ["Someone whose trust you needed sees you refuse, and marks it."],
+        "threat": ["Refusing costs you: the working you wanted simply does not happen."],
+        "triumph": "You turn away from it so completely you frighten yourself; reduce Defilement by 2.",
+        "despair": "You refuse, and the refusal gets someone hurt, and the hunger whispers that it did not have to be this way."
+      }
+    }
+  ],
+  "embedment": {
+    "bonds": [
+      "____ has seen me defile and stayed anyway; I do not understand why.",
+      "____ lost their home to defilers, and does not know that I am one.",
+      "I am teaching ____ scraps of the art, telling myself I'll stop before the dangerous part.",
+      "____ watches my Defilement like a debt coming due, and they are right to.",
+      "I once spared a circle of ground because ____ asked me to, and I think about it still."
+    ],
+    "communityTie": [
+      "The Free Legion needs a battle-mage more than it fears one; ____ argued to let you march with them.",
+      "You hide the worst of what you do from the Legion; ____ is the only one who has guessed how bad it is.",
+      "The day the Legion learns what defiling truly costs, ____ will have to choose between you and them."
+    ]
+  },
+  "tracks": [
+    { "name": "Defilement", "min": 0, "max": 4, "start": 0, "note": "How far the hunger has taken root. At 4, you become something the Legion cannot keep. It does not heal on its own." }
+  ],
+  "advancement": {
+    "basic": [
+      "Take another Defiler move.",
+      "Take another Defiler move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Learn a Terrible Working: name a large defiling effect you can attempt at Daunting difficulty.",
+      "Grow numb to it: once per session, defile without advancing Defilement.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "A hard reckoning: through real sacrifice, reduce your Defilement by 1."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Renounce the art: forswear defiling for good, resolving the fallout in play, and begin the long road of a preserver.",
+      "Embrace it: give in to the hunger and become a power in your own right — likely leaving the Legion behind."
+    ]
+  }
+}

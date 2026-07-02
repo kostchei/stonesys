@@ -1,0 +1,157 @@
+{
+  "id": "lankhmar-duelist",
+  "name": "The Back-Alley Duelist",
+  "concept": "You are the best blade in a bad quarter, and everyone knows it — which is exactly the problem. Your reputation feeds you, shields the band, and draws every bravo who wants to be the one who put you down. You have turned a few square feet of foggy lane into a place men do not draw on your friends.",
+  "duty": "Your name is the band's wall. A wall is only as good as the last man who tested it and fell.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Silvren", "Dax", "the Gray Fox", "Ottavia", "Corm", "Blade-Kiss", "Renz", "Lisette", "Vasco", "the Cat", "Perrin", "Sable"],
+    "look": [
+      { "label": "Bearing", "options": ["insolent grace", "cold economy", "showy flourish", "watchful stillness"] },
+      { "label": "Dress", "options": ["threadbare finery", "practical and dark", "a duelist's slashed sleeves", "whatever's clean enough to be seen in"] },
+      { "label": "Blade", "options": ["a slender rapier", "a saber with a story", "sword and long dagger both", "a plain, wickedly kept blade"] },
+      { "label": "Mark", "options": ["a famous scar", "a duelist's guild-token you have no right to", "rings from those you've bested", "a reputation and nothing to show for it"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 2, "DEX": 4, "CON": 3, "INT": 2, "WIS": 3, "CHA": 1 },
+    "anchor": { "stat": "DEX", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "18+CON", "damage": "d8", "load": "6+STR" },
+  "gear": [
+    { "label": "Blade", "options": ["a fine rapier (d8)", "saber and main-gauche (d8)", "a plain sword kept razor-true (d8)"] },
+    { "label": "Guard", "options": ["a swirling cloak", "a buckler", "quickness and nerve, nothing more"] },
+    { "label": "Token", "options": ["a rival's blade you took", "a duelist's code you actually keep", "a debt of honor owed to you"] }
+  ],
+  "moves": [
+    {
+      "name": "Cross Blades",
+      "type": "signature",
+      "stat": "DEX",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you fight one or a few with the blade, up close and personal.",
+      "results": {
+        "success": "You have the better of them; press and they fall or flee.",
+        "failure": "The exchange goes against you; the GM says how it costs you.",
+        "advantage": [
+          "Hold 1 Flourish (spend: disarm or wound without killing / drive a foe back and seize ground / turn a blow meant for an ally / cow the onlookers with your skill).",
+          "You read your opponent's style and its one weakness."
+        ],
+        "threat": [
+          "You take a hit, or your guard is left open.",
+          "The fight draws a crowd, the watch, or a name you'd rather not fight."
+        ],
+        "triumph": "A single perfect stroke ends it, and the tale of it will spread.",
+        "despair": "You are badly wounded, or you kill someone you should not have."
+      },
+      "hold": {
+        "name": "Flourish",
+        "spend": [
+          "Disarm or wound your foe instead of killing them.",
+          "Drive a foe back and take the ground or the doorway.",
+          "Turn aside a blow meant for someone beside you.",
+          "Cow the onlookers with a display of pure skill."
+        ]
+      }
+    },
+    {
+      "name": "This Is Our Ground",
+      "type": "fixed",
+      "trigger": "On the band's own turf around the Black Cat, where your name is law:",
+      "text": "Lead the band's defense of its turf well and raise your Standing; let the turf be taken or your name be humbled and lower it. At high Standing, most bravos will not draw on you or yours here at all — your reputation does the fighting for you."
+    },
+    {
+      "name": "Duelist's Eye",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you size up a fighter or a fight before steel is drawn.",
+      "results": {
+        "success": "Ask the GM one: how good are they, truly? what are they hiding? what will they do first? Acting on it grants a boost die.",
+        "failure": "You misread them, and it shows once blades are out.",
+        "advantage": ["Ask another.", "You choose the ground the fight happens on."],
+        "threat": ["They saw you measuring them, and take offense."],
+        "triumph": "You know exactly how to beat them before you begin.",
+        "despair": "Your read is their bait."
+      }
+    },
+    {
+      "name": "Riposte",
+      "type": "choice",
+      "stat": "DEX",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you turn an enemy's attack and answer it in the same breath.",
+      "results": {
+        "success": "Their blow slides off and yours goes home.",
+        "failure": "You misjudge the timing and take the hit instead.",
+        "advantage": ["Leave them open for an ally.", "Take their weapon or their balance."],
+        "threat": ["Your counter commits you; you can't shift to a new foe."],
+        "triumph": "You turn their own attack into their undoing.",
+        "despair": "The feint was the real attack, and you fell for it."
+      }
+    },
+    {
+      "name": "Swagger",
+      "type": "choice",
+      "stat": "CHA",
+      "trigger": "When you trade on your fearsome name to warn off, provoke, or awe someone:",
+      "text": "Take a boost die to make them back down, lose their nerve, or fight you on your terms. Naming a duel you won that they witnessed grants a second boost die — but a reputation is a debt the whole city may one day call in."
+    },
+    {
+      "name": "Second's Honor",
+      "type": "choice",
+      "stat": "DEX",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you stand as a shield for someone who cannot fight for themselves.",
+      "results": {
+        "success": "No blade reaches them while you stand.",
+        "failure": "You are pressed too hard, or holding the line costs you dearly.",
+        "advantage": ["Hold 1 Flourish.", "Draw the attackers' whole attention onto you."],
+        "threat": ["You hold, but you're pinned and cannot leave them to help elsewhere."],
+        "triumph": "You make defending them look so costly the attackers give up.",
+        "despair": "You hold, and it is nearly the end of you."
+      }
+    }
+  ],
+  "embedment": {
+    "system": "bastion",
+    "start": { "Standing": 1 },
+    "bonds": [
+      "____ has stood at my back in a fight and not run; that is rarer than gold.",
+      "____ thinks my dueling will get us all killed one day, and may be right.",
+      "I am teaching ____ the blade, and fear the reputation it will hang on them.",
+      "____ once saw me lose a fight I should have won, and has never mentioned it.",
+      "I owe ____ a life; they pulled me out of a duel I could not win."
+    ],
+    "communityTie": [
+      "The Black Cat sleeps easier because bravos fear your name; ____ knows how thin that reputation wears.",
+      "When trouble comes to the turf, ____ comes to fetch you first.",
+      "You keep the quarter's peace with your blade, but ____ remembers the ones you've killed to do it."
+    ]
+  },
+  "tracks": [
+    { "name": "Standing", "min": 0, "max": 3, "start": 1, "note": "Your name's weight on the band's turf; how much the quarter defers to you." }
+  ],
+  "advancement": {
+    "basic": [
+      "Take another Duelist move.",
+      "Take another Duelist move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Increase your maximum held Flourish by 1.",
+      "Grow your legend: raise your Standing by 1 through a duel the whole quarter will retell.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "Master a signature stroke that is yours and no one else's."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Retire the blade: hang up your reputation and become someone new, resolving the fallout in play.",
+      "Open a school: found a Bastion (a fencing hall) where your name draws students and shields the band."
+    ]
+  }
+}

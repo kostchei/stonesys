@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StoneSys — Character Sheet</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="toolbar no-print">
+    <strong>StoneSys</strong>
+    <span id="pb-name"></span>
+    <span id="story-points" class="story-points"></span>
+    <button id="reset-btn" type="button">Reset character</button>
+    <button id="print-btn" type="button">Print A3</button>
+  </div>
+
+  <main id="sheet" class="sheet">
+    <header class="zone zone-header" id="zone-header"></header>
+    <section class="zone zone-left" id="zone-left"></section>
+    <section class="zone zone-center" id="zone-center"></section>
+    <section class="zone zone-right" id="zone-right"></section>
+    <footer class="zone zone-footer" id="zone-footer"></footer>
+  </main>
+
+  <div id="loading">Loading playbook&hellip;</div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

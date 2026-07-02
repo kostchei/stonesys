@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StoneSys — Blank Character Sheet</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* write-in lines for blank fields */
+    .fill { border: 0; border-bottom: 1px solid var(--line); background: transparent; font: inherit; width: 100%; }
+    .fill-lines { display: flex; flex-direction: column; gap: 14px; margin: 6px 0; }
+    .fill-lines .fill { width: 100%; }
+    .blank-move { border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px; margin-bottom: 8px; }
+    .blank-move .name-line { display: flex; gap: 8px; align-items: baseline; }
+    .blank-move textarea { width: 100%; min-height: 48px; border: 0; border-bottom: 1px solid var(--line); background: transparent; font: inherit; resize: vertical; }
+    .hint { font-size: 11px; color: #6a6258; font-style: italic; }
+    @media print { textarea { min-height: 60px; } }
+  </style>
+</head>
+<body>
+  <div class="toolbar no-print">
+    <strong>StoneSys</strong>
+    <span>— Blank sheet (Stonetop-compatible)</span>
+    <button id="print-btn" type="button">Print A3</button>
+    <a href="index.html" style="color:var(--paper);margin-left:8px;">Playbook app →</a>
+  </div>
+
+  <main class="sheet">
+    <header class="zone zone-header">
+      <div class="pb-title">
+        <input class="fill" style="font:bold 26px Georgia;max-width:280px" placeholder="playbook" />
+        <input class="char-name" placeholder="character name" />
+      </div>
+      <p class="hint">Look:</p>
+      <input class="fill" placeholder="bearing / dress / eyes / a telling detail" />
+      <p class="hint" style="margin-top:8px">What binds you to home (your duty, your people):</p>
+      <input class="fill" placeholder="why this place is yours to fight for" />
+    </header>
+
+    <section class="zone zone-left">
+      <h2>Stats</h2>
+      <p class="hint">Enter 1&ndash;5; modifier is value &minus; 2 (range &minus;1 to +3).</p>
+      <div class="stat-grid" id="stat-grid"></div>
+      <h2>Vitals</h2>
+      <div class="vital"><span class="vital-label">HP</span><input class="fill" style="max-width:120px" placeholder="cur / max" /></div>
+      <div class="vital"><span class="vital-label">Dmg</span><input class="fill" style="max-width:80px" placeholder="die" /></div>
+      <div class="vital"><span class="vital-label">Armor</span><input class="fill" style="max-width:80px" placeholder="0" /></div>
+      <div class="vital"><span class="vital-label">Load</span><input class="fill" style="max-width:80px" placeholder="6 + STR" /></div>
+      <div class="vital"><span class="vital-label">XP</span><input class="fill" style="max-width:80px" /></div>
+      <h2>Debilities</h2>
+      <p class="hint">Weak &middot; Shaky &middot; Sick &middot; Confused &middot; Scarred (circle when marked)</p>
+    </section>
+
+    <section class="zone zone-center">
+      <h2>Moves</h2>
+      <p class="hint no-print">Write each move; the roll buttons under Stats resolve 2d6 + modifier.</p>
+      <div id="blank-moves"></div>
+    </section>
+
+    <section class="zone zone-right">
+      <h2>Bonds</h2>
+      <div class="fill-lines" id="bond-lines"></div>
+      <h2>Home &amp; people</h2>
+      <p class="hint">The steading, the NPCs you owe or protect:</p>
+      <div class="fill-lines" id="home-lines"></div>
+    </section>
+
+    <footer class="zone zone-footer">
+      <div class="footer-col">
+        <h2>Gear &amp; provisions</h2>
+        <div class="fill-lines" id="gear-lines"></div>
+      </div>
+      <div class="footer-col">
+        <h2>Advancement</h2>
+        <p class="hint">Mark XP on a miss. Spend to improve.</p>
+        <div class="fill-lines" id="adv-lines"></div>
+      </div>
+    </footer>
+  </main>
+
+  <script type="module">
+    import { rollMove } from "./dice.js";
+    const STATS = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
+    function summary(r) {
+      const b = [r.success ? `SUCCESS (${r.successes})` : "FAILURE"];
+      if (r.advantages) b.push(`▲${r.advantages}`);
+      if (r.threats) b.push(`▼${r.threats}`);
+      if (r.triumphs) b.push(`◆${r.triumphs}`);
+      if (r.despairs) b.push(`✶${r.despairs}`);
+      return b.join("  ");
+    }
+    const grid = document.getElementById("stat-grid");
+    for (const k of STATS) {
+      const wrap = document.createElement("div");
+      wrap.className = "stat";
+      const out = document.createElement("span");
+      out.className = "stat-roll-out";
+      const input = document.createElement("input");
+      input.className = "stat-val"; input.type = "number"; input.min = "1"; input.max = "5";
+      const trained = document.createElement("label");
+      trained.className = "no-print"; trained.style.fontSize = "11px";
+      const tbox = document.createElement("input"); tbox.type = "checkbox"; tbox.checked = true;
+      trained.append(tbox, document.createTextNode(" have move"));
+      const diff = document.createElement("select");
+      diff.className = "no-print";
+      for (const d of ["simple", "easy", "average", "hard", "daunting", "formidable"]) {
+        const o = document.createElement("option"); o.value = d; o.textContent = d; if (d === "average") o.selected = true; diff.appendChild(o);
+      }
+      const btn = document.createElement("button");
+      btn.className = "roll-btn no-print"; btn.type = "button"; btn.textContent = "roll";
+      btn.addEventListener("click", () => {
+        const v = Number(input.value);
+        if (!v) { out.textContent = "set a value"; return; }
+        const r = rollMove({ stat: v, ranks: tbox.checked ? 1 : 0, difficulty: diff.value });
+        out.textContent = summary(r);
+        out.className = `stat-roll-out ${r.success ? "ok" : "bad"}`;
+      });
+      wrap.append(
+        Object.assign(document.createElement("div"), { className: "stat-name", textContent: k }),
+        input, trained, diff, btn, out
+      );
+      grid.appendChild(wrap);
+    }
+    // blank move slots
+    const moves = document.getElementById("blank-moves");
+    for (let i = 0; i < 6; i++) {
+      const m = document.createElement("div");
+      m.className = "blank-move";
+      const nameLine = document.createElement("div");
+      nameLine.className = "name-line";
+      const name = document.createElement("input");
+      name.className = "fill"; name.placeholder = "move name";
+      const stat = document.createElement("input");
+      stat.className = "fill"; stat.placeholder = "+stat"; stat.style.maxWidth = "70px";
+      nameLine.append(name, stat);
+      const body = document.createElement("textarea");
+      body.placeholder = "trigger; 10+ / 7-9 / 6- results";
+      m.append(nameLine, body);
+      moves.appendChild(m);
+    }
+    // repeated blank lines
+    function lines(id, n) {
+      const host = document.getElementById(id);
+      for (let i = 0; i < n; i++) {
+        const ln = document.createElement("input");
+        ln.className = "fill";
+        host.appendChild(ln);
+      }
+    }
+    lines("bond-lines", 5);
+    lines("home-lines", 4);
+    lines("gear-lines", 6);
+    lines("adv-lines", 8);
+    document.getElementById("print-btn").addEventListener("click", () => window.print());
+  </script>
+</body>
+</html>

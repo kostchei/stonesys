@@ -1,0 +1,157 @@
+{
+  "id": "darksun-gladiator",
+  "name": "The Mul Gladiator",
+  "concept": "Bred broad and tireless, raised to kill for a crowd's pleasure, you broke your chain in the pens and have been the Free Legion's edge ever since. The freed cheer you. You are not sure that is the same as being free.",
+  "duty": "When the Legion fights, they watch you first. Falter, and they falter; stand, and they stand.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Karth", "Brakt", "Oda", "Sull", "Vren", "Mara", "Dosk", "Tessa", "Garn", "Hule", "Pell", "Ruk"],
+    "look": [
+      { "label": "Build", "options": ["mountainous", "scarred all over", "lean and quick", "ox-shouldered"] },
+      { "label": "Bearing", "options": ["unhurried", "coiled", "grim", "unexpectedly gentle"] },
+      { "label": "Mark", "options": ["the pit-brand of the arena", "a champion's tally cut into one arm", "a broken slave-collar kept as a trophy", "no marks you will explain"] },
+      { "label": "Eyes", "options": ["flat and patient", "watchful", "tired", "burning"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 4, "DEX": 2, "CON": 3, "INT": 1, "WIS": 3, "CHA": 2 },
+    "anchor": { "stat": "STR", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "20+CON", "damage": "d8", "load": "8+STR" },
+  "gear": [
+    { "label": "Arena weapon", "options": ["a great obsidian blade (d8)", "a spiked gauntlet and net (d8)", "a bone-and-iron maul (d8)"] },
+    { "label": "Guard", "options": ["a battered shield", "scavenged chitin armor", "scars and speed, nothing more"] },
+    { "label": "Token", "options": ["a child's carving from the freed", "the key to your old shackles", "a dead pit-brother's blade"] }
+  ],
+  "moves": [
+    {
+      "name": "Crowd-Killer",
+      "type": "signature",
+      "stat": "STR",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you fight openly, where the Legion or the enemy can see you do it.",
+      "results": {
+        "success": "You cut down or overpower the foe in front of you.",
+        "failure": "You trade blows and come out worse; the GM says how it costs you.",
+        "advantage": [
+          "Hold 1 Momentum (spend: strike a second foe in reach / shrug off a blow that lands / hearten allies who saw you / seize the high or close ground).",
+          "Your foe gives ground, and others see it."
+        ],
+        "threat": [
+          "You take a hit, or leave an ally exposed.",
+          "The watching crowd's mood turns against you."
+        ],
+        "triumph": "Your example breaks the enemy's nerve; the fight tips.",
+        "despair": "You are badly wounded, or the old arena bloodlust takes you and will not stop."
+      },
+      "hold": {
+        "name": "Momentum",
+        "spend": [
+          "Strike a second foe within reach.",
+          "Shrug off a blow that would have landed.",
+          "Hearten the freed who saw you: they take a boost die.",
+          "Seize position: high ground, a chokepoint, or the space between an enemy and someone you guard."
+        ]
+      }
+    },
+    {
+      "name": "The Legion's Champion",
+      "type": "fixed",
+      "trigger": "When the Free Legion fights, the freed look to you first.",
+      "text": "Lead them well and raise your Standing with the Legion; fail or abandon them and lower it. At high Standing, once per fight you may spend nothing to let every freed fighter who can see you act as one."
+    },
+    {
+      "name": "Unbreakable",
+      "type": "choice",
+      "stat": "CON",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When exhaustion, heat, thirst, or pain would stop a lesser body.",
+      "results": {
+        "success": "You keep going where others drop.",
+        "failure": "Even you have limits, and you have just found one.",
+        "advantage": ["Carry or drag someone else through it too.", "You set a pace the Legion can follow."],
+        "threat": ["You keep going, but you will pay for it when you finally stop."],
+        "triumph": "You go on long past all reason, and it matters.",
+        "despair": "Your body fails at the worst possible moment."
+      }
+    },
+    {
+      "name": "Hold the Line",
+      "type": "choice",
+      "stat": "CON",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you set yourself between the enemy and the people behind you.",
+      "results": {
+        "success": "Nothing gets past you while you stand.",
+        "failure": "The line breaks, or holding it costs you dearly.",
+        "advantage": ["Hold 1 Momentum.", "Pull a wounded ally back behind you as you give ground slowly."],
+        "threat": ["You hold, but you are pinned and cannot leave.", "Something flanks the position."],
+        "triumph": "You hold so hard the enemy gives up the approach entirely.",
+        "despair": "You hold, and it is the last thing you do unless someone saves you."
+      }
+    },
+    {
+      "name": "Read the Fight",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you size up a fight or a fighter before it starts.",
+      "results": {
+        "success": "Ask the GM one: who is the real threat? who is afraid? what are they protecting? Acting on it grants a boost die.",
+        "failure": "You misjudge, and it shows once the blades are out.",
+        "advantage": ["Ask another question.", "Place the Legion's fighters where they will do the most good."],
+        "threat": ["Studying them, you missed something behind you."],
+        "triumph": "You see exactly how this fight ends, and how to make it end your way.",
+        "despair": "You walked your read straight into their trap."
+      }
+    },
+    {
+      "name": "Reputation",
+      "type": "choice",
+      "stat": "STR",
+      "trigger": "When you face down someone who has heard what you did in the pits:",
+      "text": "Take a boost die to cow, warn off, or stare down a foe with your name and your scars alone. Backing it with a clear, brutal example instead grants a second boost die — but the Legion is judged by what they see you do."
+    }
+  ],
+  "embedment": {
+    "system": "bastion",
+    "start": { "Standing": 1 },
+    "bonds": [
+      "____ broke their chain beside me in the pens; we do not speak of it, but it is there.",
+      "____ thinks I should lead the Legion outright, and I do not want it.",
+      "I am training ____ to fight, and I am terrified of what they will become.",
+      "____ saw me lose myself to the bloodlust once, and has watched me differently since.",
+      "____ owes their life to me, and I would spend mine for theirs."
+    ],
+    "communityTie": [
+      "The freed cheer you, but ____ remembers you were a killer for sport, and has not forgiven it.",
+      "When the Legion is afraid, ____ comes to find you first.",
+      "You stay for ____, more than for any dream of a free people."
+    ]
+  },
+  "tracks": [
+    { "name": "Standing", "min": 0, "max": 3, "start": 1, "note": "How much the Free Legion trusts and rallies to you." }
+  ],
+  "advancement": {
+    "basic": [
+      "Take another Gladiator move.",
+      "Take another Gladiator move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Increase your maximum held Momentum by 1.",
+      "Raise your Standing with the Legion by 1 through a deed they will tell stories about.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "Win over a doubter: turn one freed NPC who feared you into a loyal one."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Master the bloodlust: it is yours to spend now, not the other way around.",
+      "Found a fighting company: claim a Bastion facility (a training yard) within the Legion."
+    ]
+  }
+}

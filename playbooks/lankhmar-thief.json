@@ -1,0 +1,159 @@
+{
+  "id": "lankhmar-thief",
+  "name": "The Sanctioned Thief",
+  "concept": "You steal with a license. The Thieves' Guild takes its cut and, in return, no one is supposed to slit your throat for working their city. It is a good arrangement, so long as you never forget who truly owns your hands.",
+  "duty": "The Guild grants the right to steal and can revoke it with a word. Unsanctioned, you are just meat the city has not finished with yet.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Fisk", "Nella", "Cutter", "Ryse", "Ovid", "Sparrow", "Denn", "Isolde", "Prig", "Vael", "Moth", "Corliss"],
+    "look": [
+      { "label": "Bearing", "options": ["unremarkable by design", "cocky", "twitchy", "smooth as oil"] },
+      { "label": "Dress", "options": ["drab and quiet", "a dandy's stolen finery", "workman's clothes with deep pockets", "dark and close-fitting"] },
+      { "label": "Hands", "options": ["quick and sure", "scarred from close calls", "always gloved", "never empty for long"] },
+      { "label": "Guild mark", "options": ["a tattoo where clothes hide it", "a pass-token", "a scar the Guild gave as warning", "nothing you'll show a stranger"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 1, "DEX": 4, "CON": 3, "INT": 3, "WIS": 2, "CHA": 2 },
+    "anchor": { "stat": "DEX", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "16+CON", "damage": "d6", "load": "6+STR" },
+  "gear": [
+    { "label": "Tools", "options": ["a roll of picks and probes", "a grapple and silk line", "a glass-cutter and wax"] },
+    { "label": "Blade", "options": ["a thin dagger (d6)", "a weighted sap (d6, non-lethal)", "a hidden razor (d6)"] },
+    { "label": "Edge", "options": ["a map of the quarter's rooftops", "a bag of caltrops and smoke", "keys that fit more locks than they should"] }
+  ],
+  "moves": [
+    {
+      "name": "The Quiet Job",
+      "type": "signature",
+      "stat": "DEX",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you break in, lift a prize, and get out without raising the house.",
+      "results": {
+        "success": "You get the prize and get clear.",
+        "failure": "You get one but not the other — caught with the goods, or clear but empty-handed.",
+        "advantage": [
+          "Hold 1 Score (spend: you also grabbed something extra and valuable / you left no trace at all / you know a second way out / you spotted the trap before it sprung).",
+          "You learn the house's real secret — who they fear, what else they hide."
+        ],
+        "threat": [
+          "You leave a thread that leads back to the Black Cat.",
+          "Add 1 Heat: a witness, an alarm, or a name spoken."
+        ],
+        "triumph": "A perfect job — they won't even know they were robbed until it's far too late.",
+        "despair": "The job was bait, and the jaws are closing now."
+      },
+      "hold": {
+        "name": "Score",
+        "spend": [
+          "You grabbed something extra and valuable on the way.",
+          "You left no trace; no one knows a theft occurred.",
+          "You have a second, unwatched way out.",
+          "You spotted and beat a trap or guard before it mattered."
+        ]
+      }
+    },
+    {
+      "name": "Sanctioned",
+      "type": "fixed",
+      "trigger": "When you lean on your Guild standing for a fence, a safe rooftop, a name, or a blind eye (Invoke Patron, core.md):",
+      "text": "The Guild provides, and adds 1 Debt. Steal without sanction, cheat the Guild of its cut, or embarrass it, and you risk being declared unsanctioned — after which every knife in the city is licensed against you."
+    },
+    {
+      "name": "Cat-Foot",
+      "type": "choice",
+      "stat": "DEX",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you climb, balance, tumble, or move without a sound.",
+      "results": {
+        "success": "You go where you please, quiet and unseen.",
+        "failure": "You slip, or you're spotted at the worst moment.",
+        "advantage": ["Bring another along, just as quiet.", "You end up perfectly placed for what's next."],
+        "threat": ["You make it, but leave a mark or a sound behind you.", "You're committed; there's no going back the way you came."],
+        "triumph": "You move like the fog itself; no one will believe you were there.",
+        "despair": "You're seen by exactly the wrong pair of eyes."
+      }
+    },
+    {
+      "name": "Sleight",
+      "type": "choice",
+      "stat": "DEX",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you pick a pocket or a lock, palm a thing, or plant one on someone.",
+      "results": {
+        "success": "It's done, clean and unseen.",
+        "failure": "A hand closes on your wrist, or the lock defeats you noisily.",
+        "advantage": ["Grab a little extra while you're at it.", "They'll never suspect it was you."],
+        "threat": ["You leave a trace that points back.", "It takes longer than you have."],
+        "triumph": "You do it under their nose and they smile at you.",
+        "despair": "You're caught red-handed by someone who matters."
+      }
+    },
+    {
+      "name": "Case the Mark",
+      "type": "choice",
+      "stat": "INT",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you study a place or a person you mean to rob.",
+      "results": {
+        "success": "Ask the GM one: where's the prize? what guards it? when is it weakest?",
+        "failure": "You misjudge it, and the mistake waits for you inside.",
+        "advantage": ["Ask another.", "You find a way in no one else would think of."],
+        "threat": ["Someone noticed you casing the place.", "Your read is already going stale."],
+        "triumph": "You know the job cold, every guard and every gap.",
+        "despair": "While you cased them, they cased you."
+      }
+    },
+    {
+      "name": "Guild Ties",
+      "type": "choice",
+      "stat": "CHA",
+      "trigger": "When you need a fence, a forger, a lookout, or a name in a hurry:",
+      "text": "Name a Guild contact you can reach here and take a boost die dealing with them. The GM says what small price or gossip they attach to the favor."
+    }
+  ],
+  "embedment": {
+    "system": "patron",
+    "start": { "Bond": 1, "Debt": 2, "Heat": 0 },
+    "bonds": [
+      "____ has fenced for me since we were both children in the gutter.",
+      "____ took the fall for a job that was mine, and I still owe them for it.",
+      "The Guild told me to watch ____, and I have been lying about what I see.",
+      "____ thinks I can get us out of the cellar with one good score, and I've promised it.",
+      "I stole something from ____ once, and they've never known it was me."
+    ],
+    "communityTie": [
+      "The Black Cat eats when your jobs pay; ____ frets every time the Guild's cut comes due.",
+      "The Guild would love a set of eyes inside the band; ____ is the one you'll never sell.",
+      "Old Sabra keeps the den because your scores keep the rent paid; you both pretend not to know it."
+    ]
+  },
+  "tracks": [
+    { "name": "Bond", "min": 0, "max": 3, "start": 1, "note": "Standing with the Thieves' Guild (core.md)." },
+    { "name": "Debt", "min": 0, "max": 6, "start": 2, "note": "At 6 the Guild makes a major demand, then resets to 3." },
+    { "name": "Heat", "min": 0, "max": 4, "start": 0, "note": "Attention from the watch and your marks (core.md)." }
+  ],
+  "advancement": {
+    "basic": [
+      "Take another Thief move.",
+      "Take another Thief move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Increase your maximum held Score by 1.",
+      "Learn the rooftops and drains of a quarter so well you can never be truly cornered there.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "Buy down your Guild Debt by 1, permanently, with a fat cut."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Go unsanctioned on your own terms: cut ties with the Guild, resolving the fallout in play.",
+      "Rise in the Guild: become a master with a crew and a Bastion (a safehouse) of your own."
+    ]
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "id": "elfquest-troll-smith",
+  "name": "The Troll Weaponsmith",
+  "concept": "You are a troll, and trolls make the finest weapons in the world — everyone knows it, which is why the elves let you stay even though half of them will never trust a troll. You came to the Hollow-Oak as an outsider and, slowly, became something like kin. Your hammer keeps the tribe armed against a world that is closing in.",
+  "duty": "Your craft is why they keep you, and never quite why they trust you. Every blade you forge is a bond you're building, one strike at a time.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Grethka", "Bolg", "Ironjaw", "Muddle", "Krung", "Sootgrim", "Varra", "Hodd", "Ashk", "Dwerric", "Gnorl", "Torbek"],
+    "look": [
+      { "label": "Build", "options": ["squat and boulder-strong", "gnarled and enormous", "broad, scarred, and sooty", "surprisingly deft for all the bulk"] },
+      { "label": "Bearing", "options": ["gruff", "watchful of slights", "dryly patient", "prouder of the work than of anything"] },
+      { "label": "Craft-mark", "options": ["burn-scarred forearms", "a maker's brand on every blade", "hands that are half tool", "an apron of ancient leather"] },
+      { "label": "Eyes", "options": ["shrewd", "banked like coals", "quick to judge quality", "softer than the face lets on"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 4, "DEX": 2, "CON": 3, "INT": 3, "WIS": 2, "CHA": 1 },
+    "anchor": { "stat": "STR", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "20+CON", "damage": "d8", "load": "8+STR" },
+  "gear": [
+    { "label": "Tool-weapon", "options": ["a great smith's hammer (d8)", "a cleaver of your own making (d8)", "tongs and a heated bar (d6)"] },
+    { "label": "Forge", "options": ["a portable smithy and bellows", "a hoard of good metal", "rare troll-lore of metals"] },
+    { "label": "Keepsake", "options": ["the first blade you ever made", "a debt of iron owed by another troll", "a token from the elf who first spoke for you"] }
+  ],
+  "moves": [
+    {
+      "name": "At the Forge",
+      "type": "signature",
+      "stat": "STR",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you forge, mend, or improve arms and gear at a hot fire.",
+      "results": {
+        "success": "You make or mend the thing the tribe needs, and it is good work.",
+        "failure": "It won't come right — bad metal, a hidden flaw, or the work costs more than you have.",
+        "advantage": [
+          "Hold 1 Craftwork (spend: a masterwork edge — +1 damage or a boost die with it / a hidden feature built in / mend it fast, right now / enough to arm several of the tribe).",
+          "You learn something true about the metal, or about who made a blade before you."
+        ],
+        "threat": [
+          "It needs rare materials, or more time than you'll easily find.",
+          "The fire, the noise, or the smoke draws unwanted eyes."
+        ],
+        "triumph": "A masterwork that will outlive you and become a story the tribe tells.",
+        "despair": "The work fails and wastes precious metal, or the forge-fire brings danger down on the Holt."
+      },
+      "hold": {
+        "name": "Craftwork",
+        "spend": [
+          "A masterwork edge: +1 damage, or a boost die when the piece is used.",
+          "A hidden feature — a concealed blade, a catch, a mark only you know.",
+          "Mend it fast, right now, in the middle of trouble.",
+          "Turn out enough to arm several of the tribe at once."
+        ]
+      }
+    },
+    {
+      "name": "Troll-Made",
+      "type": "fixed",
+      "trigger": "Because trolls make the finest weapons, and you are a troll among elves:",
+      "text": "Your work is prized and famous; a blade of your making opens doors and earns respect. But your outsider-ness is never forgotten — some elves will always see the troll first and the kin second, and other trolls may name you a traitor for making arms for elves."
+    },
+    {
+      "name": "Troll-Strong",
+      "type": "choice",
+      "stat": "STR",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you put your massive strength to a task — a fight, a burden, a barred way.",
+      "results": {
+        "success": "Sheer strength carries the moment: the foe reels, the weight moves, the way opens.",
+        "failure": "Even you meet something that won't give, and it costs you.",
+        "advantage": ["Do it and keep something in reserve.", "Your show of force makes lesser things think about fleeing."],
+        "threat": ["You strain something, or break what you meant to move.", "The effort leaves you open."],
+        "triumph": "You do what no elf could, and they will not forget it.",
+        "despair": "You overreach, and the failure is as big as you are."
+      }
+    },
+    {
+      "name": "Hard to Hurt",
+      "type": "choice",
+      "stat": "CON",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When blows, cold, or hardship that would fell an elf come down on your troll-tough hide.",
+      "results": {
+        "success": "You shrug it off and keep standing.",
+        "failure": "Even troll-hide has its limit, and you've found it.",
+        "advantage": ["Shield a smaller ally behind your bulk.", "Set a wall the tribe can rally to."],
+        "threat": ["You take it now and stiffen up for it later."],
+        "triumph": "You wade through what should have stopped you cold.",
+        "despair": "Something gets through even you, and badly."
+      }
+    },
+    {
+      "name": "Know Your Metal",
+      "type": "choice",
+      "stat": "INT",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you examine a made thing — a blade, a lock, a mechanism, a hoard.",
+      "results": {
+        "success": "Ask the GM one: who made this and how well? what is it worth? where is it weak?",
+        "failure": "It fools even your eye, and that costs you.",
+        "advantage": ["Ask another.", "You know how to break it, or improve it."],
+        "threat": ["Handling it, you triggered or marked it."],
+        "triumph": "You read the whole history and secret of the thing.",
+        "despair": "You misjudge a made thing badly, and stake something on it."
+      }
+    }
+  ],
+  "embedment": {
+    "bonds": [
+      "____ was the first elf to speak for me, and I would forge a blade for their hand before any other.",
+      "____ still watches me like the troll I am, and I am slowly, stubbornly proving them wrong.",
+      "I am teaching ____ the craft, though trolls are not meant to share it.",
+      "____ carries a blade of my making, and while they hold it I feel bound to keep them alive.",
+      "I owe ____ for a kindness shown to an outsider who had earned none."
+    ],
+    "communityTie": [
+      "The Hollow-Oak Holt keeps you for your hammer; ____ is the one who keeps you for yourself.",
+      "When the tribe must fight, they fight with your work in their hands; ____ makes sure you know it matters.",
+      "Some in the Holt would still send the troll away; ____ stands between you and them."
+    ]
+  },
+  "advancement": {
+    "basic": [
+      "Take another Troll Weaponsmith move.",
+      "Take another Troll Weaponsmith move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Increase your maximum held Craftwork by 1.",
+      "Learn a lost forging: name a kind of masterwork (troll-steel, a shaped fitting) only you can make.",
+      "Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "Win a doubter: turn one elf who distrusts the troll into a friend."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Become truly kin: the tribe names you one of their own, troll or not.",
+      "Raise a great forge: found a Bastion (a smithy) that makes the Holt a power others come to for arms."
+    ]
+  }
+}

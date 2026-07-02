@@ -1,0 +1,160 @@
+{
+  "id": "darksun-preserver",
+  "name": "The Preserver",
+  "concept": "You learned the forbidden art the hard way: magic drawn so gently the ground still grows after. In a world of ash, that restraint makes you a heretic to the powerful and a hope to the desperate.",
+  "duty": "Every working is a choice. Take too much and the land dies a little; the easy path is always the defiler's.",
+  "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
+  "identity": {
+    "names": ["Ash", "Neral", "Sufa", "Daro", "Yelt", "Mira", "Cael", "Ossa", "Tamb", "Veil", "Rhea", "Kort"],
+    "look": [
+      { "label": "Bearing", "options": ["careful", "weary", "watchful", "gentle"] },
+      { "label": "Dress", "options": ["dust-colored robes", "a laborer's disguise", "scavenged finery", "nothing that marks a mage"] },
+      { "label": "Eyes", "options": ["patient", "haunted", "bright", "downcast"] },
+      { "label": "Tell", "options": ["ink-stained fingers", "a hidden focus-stone", "a burn that never healed", "a way of touching living things first"] }
+    ]
+  },
+  "stats": {
+    "default": { "STR": 1, "DEX": 2, "CON": 3, "INT": 4, "WIS": 3, "CHA": 2 },
+    "anchor": { "stat": "INT", "min": 3 },
+    "swaps": 2
+  },
+  "derived": { "hp": "14+CON", "damage": "d6", "load": "6+STR" },
+  "gear": [
+    { "label": "Focus", "options": ["a worn staff (d6)", "a ring of braided root", "a stone that hums near life"] },
+    { "label": "Cover", "options": ["a water-seller's kit", "a scribe's case", "a healer's satchel"] },
+    { "label": "Keepsake", "options": ["a seed from a living tree", "a list of the alliance's safe houses", "your teacher's last working, half-finished"] }
+  ],
+  "moves": [
+    {
+      "name": "Gentle Working",
+      "type": "signature",
+      "stat": "INT",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you shape arcane power while sparing the living land around you.",
+      "results": {
+        "success": "The working does what you intend, and the ground still lives.",
+        "failure": "The power will not come gently; to get anything you must reach for the defiler's way, or let it fail.",
+        "advantage": [
+          "Hold 1 Life (spend: extend or bend the effect / shield a bystander / sense nearby magic / leave no scar at all).",
+          "You learn something true about the magic in this place."
+        ],
+        "threat": [
+          "The effort costs you: take a setback die until you rest.",
+          "Your working flares where the wrong eyes can see it."
+        ],
+        "triumph": "The land itself leans into your working; the effect is greater and clean.",
+        "despair": "The power slips toward defiling. Mark a Scar, or the GM defiles the ground in your place."
+      },
+      "hold": {
+        "name": "Life",
+        "spend": [
+          "Extend, curve, or split the effect to reach what you first could not.",
+          "Throw a shield of living force over an ally in reach.",
+          "Sense the shape and source of magic around you.",
+          "Leave no defiled scar, even on a hard working."
+        ]
+      }
+    },
+    {
+      "name": "Veiled",
+      "type": "fixed",
+      "trigger": "Because you belong to a hidden alliance of preservers:",
+      "text": "You can find safe houses, fellow mages, and quiet aid where the alliance reaches (Invoke Patron, core.md). But every use risks exposing them; careless invocations raise Heat for the whole alliance, not just you."
+    },
+    {
+      "name": "Read the Weave",
+      "type": "choice",
+      "stat": "INT",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you study a magic, a ward, or a worked thing.",
+      "results": {
+        "success": "Ask the GM one: who made this? what does it cost to use? how is it bound, and how undone?",
+        "failure": "You misread it, and the GM tells you how that misreading bites.",
+        "advantage": ["Ask another question.", "You can borrow or copy a small part of the working."],
+        "threat": ["Studying it leaves a mark the maker can feel.", "What you learn unsettles you: setback on your next working here."],
+        "triumph": "You grasp the working whole, well enough to break or rebuild it.",
+        "despair": "The thing you studied was watching back."
+      }
+    },
+    {
+      "name": "Coax the Waste",
+      "type": "choice",
+      "stat": "WIS",
+      "trained": true,
+      "difficulty": "average",
+      "trigger": "When you search a dead land for the life still hiding in it.",
+      "results": {
+        "success": "You find water, forage, shade, or a living thing the waste was keeping secret.",
+        "failure": "There is nothing here, and looking has cost you time and strength.",
+        "advantage": ["Enough for the whole Legion, not just you.", "You spot the danger that guards it before it spots you."],
+        "threat": ["What you found is claimed, fouled, or watched.", "The search drew something hungry."],
+        "triumph": "You find a hidden seep or grove worth coming back to.",
+        "despair": "The only life here is something that should have stayed buried."
+      }
+    },
+    {
+      "name": "Ward",
+      "type": "choice",
+      "stat": "INT",
+      "trigger": "When you raise a protective working over a person, a camp, or a threshold:",
+      "text": "Name the harm it turns aside (a kind of magic, fire, prying eyes, the heat). It holds until it is overwhelmed or you let it fall. While it stands, those it guards take a boost die against that harm."
+    },
+    {
+      "name": "Quiet the Power",
+      "type": "choice",
+      "stat": "CON",
+      "trained": true,
+      "difficulty": "hard",
+      "trigger": "When backlash, a curse, or the pull toward defiling tries to take you.",
+      "results": {
+        "success": "You hold. The power does not have you, and the land is spared.",
+        "failure": "It takes its due: defile the ground, mark a Scar, or fall.",
+        "advantage": ["You shield another caught in the same backlash."],
+        "threat": ["You hold, but it leaves you shaking: setback until you rest."],
+        "triumph": "You turn the backlash into a clean, controlled release.",
+        "despair": "Something in you breaks a little toward the defiler's hunger."
+      }
+    }
+  ],
+  "embedment": {
+    "system": "patron",
+    "start": { "Bond": 1, "Debt": 1, "Heat": 1 },
+    "bonds": [
+      "____ saw me work magic and did not run. I owe them that trust.",
+      "____ thinks all magic is the same curse, and watches me for the day I prove them right.",
+      "I am teaching ____ the gentle way, in secret, against the alliance's rules.",
+      "____ knows a safe house I do not, and holds it over me.",
+      "I once defiled to save ____, and neither of us has spoken of it since."
+    ],
+    "communityTie": [
+      "The Free Legion needs water more than it fears magic; ____ keeps quiet about what you really are.",
+      "You hide among the freed because the alliance cast you out, or because ____ vouched for you.",
+      "The Legion's leaders would use your power as a weapon; ____ is the only one who argues for restraint."
+    ]
+  },
+  "tracks": [
+    { "name": "Bond", "min": 0, "max": 3, "start": 1, "note": "Standing with the preserver alliance (core.md)." },
+    { "name": "Debt", "min": 0, "max": 6, "start": 1, "note": "At 6 the alliance makes a major demand, then resets to 3." },
+    { "name": "Heat", "min": 0, "max": 4, "start": 1, "note": "Attention from templars and defilers (core.md)." },
+    { "name": "Scars", "min": 0, "max": 4, "start": 0, "note": "Times you reached for the defiler's way. They do not heal." }
+  ],
+  "advancement": {
+    "basic": [
+      "Take another Preserver move.",
+      "Take another Preserver move.",
+      "Take a move from another playbook.",
+      "Take a move from another playbook.",
+      "Increase your maximum held Life by 1.",
+      "Learn a Greater Working: name a large effect you can attempt at Daunting difficulty.",
+      "Train a working you lean on: it upgrades 2 dice to proficiency (never more than its stat).",
+      "Win the alliance's trust: clear 1 Debt and gain a standing safe house."
+    ],
+    "advanced": [
+      "Raise one stat by 1 (max 5). Rare, and only at a true turning point.",
+      "Erase a Scar through a hard pilgrimage and restitution to the land you wounded.",
+      "Take an apprentice and a holdfast: found a Bastion where the gentle art is taught."
+    ]
+  }
+}
