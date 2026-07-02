@@ -495,7 +495,7 @@ async function boot() {
   }
 
   const id = params.get("pb") || (urlImportState ? urlImportState.playbookId : null) || "the-beholden";
-  const res = await fetch(`../playbooks/${id}.json`);
+  const res = await fetch(`playbooks/${id}.json`);
   if (!res.ok) throw new Error(`could not load playbook ${id}`);
   PB = await res.json();
   storeKey = `stonesys:${PB.id}`;

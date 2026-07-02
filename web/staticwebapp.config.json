@@ -1,17 +1,12 @@
 {
   "navigationFallback": {
-    "rewrite": "/web/index.html",
-    "exclude": ["/playbooks/*.json", "/web/*.js", "/web/*.css", "/web/*.html"]
+    "rewrite": "/index.html",
+    "exclude": ["/playbooks/*.json", "/*.js", "/*.css", "/*.html"]
   },
   "routes": [
     {
-      "route": "/",
-      "redirect": "/web/index.html",
-      "statusCode": 302
-    },
-    {
       "route": "/web",
-      "redirect": "/web/index.html",
+      "redirect": "/index.html",
       "statusCode": 302
     }
   ],
