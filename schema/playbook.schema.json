@@ -106,7 +106,7 @@
           "trigger": { "type": "string" },
           "stat": { "type": "string", "enum": ["STR", "DEX", "CON", "INT", "WIS", "CHA"] },
           "trained": { "type": "boolean", "description": "True if acting through this move grants the 1-rank proficiency upgrade. Defaults true for rollable moves." },
-          "difficulty": { "type": "string", "enum": ["simple", "easy", "average", "hard", "daunting", "formidable"], "description": "Default task difficulty; the GM may adjust per fiction." },
+          "difficulty": { "type": "string", "enum": ["simple", "easy", "average", "hard", "daunting"], "description": "Default task difficulty (1-4 purple; 'simple' only for riskless chores); the GM may adjust per fiction." },
           "results": {
             "type": "object",
             "required": ["success"],

@@ -53,15 +53,24 @@ character: no skill list, minimal stat gain, moves as fictional approaches (not
 | Constant | Value |
 | --- | --- |
 | Stats | STR, DEX, CON, INT, WIS, CHA, rated `1-5` |
-| Pool | stat value = that many **ability dice** |
-| Skill | having a move grants **1 rank** = upgrade 1 ability die to proficiency. No skill list. Advancement may raise a move's upgrade to 2 (capped at its stat), rarely. |
-| Difficulty | GM sets challenge dice (`simple 0 … formidable 5`); default `average` (2) |
-| Read | net success/failure **and** net advantage/threat; triumph (proficiency) and despair (challenge) never cancel |
+| Pool (positive) | stat value = that many positive dice, **hard cap 5 per side**. Yellows (proficiency) come only from upgrading greens, never added; **max 2 yellow**. |
+| Skill | having a move grants **1 rank** = upgrade 1 green to yellow. No skill list. Advancement may raise a move to 2 upgrades — the yellow cap. |
+| Difficulty (negative) | GM sets `1-4` purple (`easy 1 … daunting 4`, default `average` 2; `simple 0` only for riskless chores). Reds (challenge) come only from upgrading purples; **max 2 red**. |
+| Risk rule | a **risky** roll (the default for moves) always carries **at least 1 yellow and 1 red** — upgrades happen even untrained, so triumph and despair are both always live |
+| Read | net success/failure **and** net advantage/threat; triumph (yellow) and despair (red) never cancel. Net advantage/threat is **bucketed into tiers**: 0 none / 1-2 minor / 3+ major, so every roll resolves to a bounded outcome |
 | Currency | per-move hold-and-spend **and** a shared Story Point pool (spend flips sides) |
 | Starting array | `{4, 3, 3, 2, 2, 1}`, archetype default + swap two (anchor-limited) |
 | Stat cap | `5`; stat gain is a rare advanced advance, not a routine pick |
 | Power tracks | optional per setting: Bond/Debt/Heat, Devotion/Favor/Wrath, Bastion Standing |
 | Harm | HP + damage die stay Stonetop-style; the dice engine resolves moves, not damage |
+
+Why the rails: triumph rate is purely a function of yellow count (2Y ≈ 16%/roll,
+a healthy spike rate; 5Y ≈ 35%, criticals stop meaning anything), and difficulty
+dice cannot counter it — only the yellow cap can. The 5-die side cap bounds
+advantage flood (a 2Y3G max pool averages ~+1.7 net advantage — one ripple per
+roll — where 3Y4G averages +3 and demands a paragraph per roll). At the cap, a
+2Y3G pool vs 2 difficulty succeeds ~87%, rhyming with Stonetop's +3 (91.7% any
+hit), with "success with net threat" playing the 7-9 role.
 
 ## 5. Data model
 
@@ -111,20 +120,25 @@ specialization.
 
 ## 6. Dice engine (`dice.js`)
 
-Pure, no DOM. Genesys narrative dice. Exports:
+Pure, no DOM. Genesys narrative dice with pool rails. Exports:
 
-- `DICE`, `DIFFICULTY`, `COLORS`: the standard face sets and difficulty map.
-- `buildPool({stat, ranks, difficulty, boost, setback, challengeUpgrades})` →
+- `DICE`, `DIFFICULTY`, `COLORS`: face sets and the `simple 0 … daunting 4` map.
+- `MAX_POOL_SIDE` (5), `MAX_YELLOW` (2), `MAX_RED` (2): the rails, defined once.
+- `buildPool({stat, ranks, difficulty, boost, setback, challengeUpgrades, risky})` →
   `{ability, proficiency, difficulty, challenge, boost, setback}` counts.
-  `ranks` upgrades ability→proficiency (capped at `stat`).
+  Positive side = stat clamped to 5; `ranks` upgrades green→yellow (max 2);
+  `challengeUpgrades` upgrades purple→red (max 2). `risky` (default `true`)
+  floors both upgrades at 1 and the opposition at 1 die.
 - `rollPool(pool, rng?)` → array of rolled faces.
-- `tally(faces)` → `{ success, successes, advantages, threats, triumphs, despairs }`.
-  Triumph counts as a success and despair as a failure; both also persist
-  uncancelled.
+- `sideTier(n)` → `"none" | "minor" | "major"` (0 / 1-2 / 3+).
+- `tally(faces)` → `{ success, successes, advantages, threats, advantageTier,
+  threatTier, triumphs, despairs }`. Triumph counts as a success and despair as
+  a failure; both also persist uncancelled.
 - `rollMove(opts, rng?)` → `{ pool, faces, ...tally }`.
 
-The node smoke test pins pool construction (lean: upgrades capped at the stat)
-and the cancellation rules (despair still drags a tie to failure).
+The node smoke test pins the rails (yellow/red caps, the risky floors, the
+5-die side cap), the difficulty ladder, the tier buckets, and the cancellation
+rules (despair still drags a tie to failure).
 
 ## 7. Web sheet (`app.js` + `index.html` + `styles.css`)
 

@@ -101,9 +101,14 @@
       trained.className = "no-print"; trained.style.fontSize = "11px";
       const tbox = document.createElement("input"); tbox.type = "checkbox"; tbox.checked = true;
       trained.append(tbox, document.createTextNode(" have move"));
+      const riskyLbl = document.createElement("label");
+      riskyLbl.className = "no-print"; riskyLbl.style.fontSize = "11px";
+      riskyLbl.title = "Risky rolls always carry at least 1 yellow and 1 red.";
+      const rbox = document.createElement("input"); rbox.type = "checkbox"; rbox.checked = true;
+      riskyLbl.append(rbox, document.createTextNode(" risky"));
       const diff = document.createElement("select");
       diff.className = "no-print";
-      for (const d of ["simple", "easy", "average", "hard", "daunting", "formidable"]) {
+      for (const d of ["simple", "easy", "average", "hard", "daunting"]) {
         const o = document.createElement("option"); o.value = d; o.textContent = d; if (d === "average") o.selected = true; diff.appendChild(o);
       }
       const btn = document.createElement("button");
@@ -111,13 +116,13 @@
       btn.addEventListener("click", () => {
         const v = Number(input.value);
         if (!v) { out.textContent = "set a value"; return; }
-        const r = rollMove({ stat: v, ranks: tbox.checked ? 1 : 0, difficulty: diff.value });
+        const r = rollMove({ stat: v, ranks: tbox.checked ? 1 : 0, difficulty: diff.value, risky: rbox.checked });
         out.textContent = summary(r);
         out.className = `stat-roll-out ${r.success ? "ok" : "bad"}`;
       });
       wrap.append(
         Object.assign(document.createElement("div"), { className: "stat-name", textContent: k }),
-        input, trained, diff, btn, out
+        input, trained, riskyLbl, diff, btn, out
       );
       grid.appendChild(wrap);
     }

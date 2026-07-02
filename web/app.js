@@ -1,7 +1,7 @@
 import { rollMove } from "./dice.js";
 
 const STAT_KEYS = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
-const DIFFS = ["simple", "easy", "average", "hard", "daunting", "formidable"];
+const DIFFS = ["simple", "easy", "average", "hard", "daunting"];
 const SP_KEY = "stonesys:storypoints";
 
 // ---------- tiny DOM helper ----------
@@ -96,8 +96,8 @@ function poolText(pool) {
 function resultSummary(r) {
   const bits = [];
   bits.push(r.success ? `SUCCESS (${r.successes})` : "FAILURE");
-  if (r.advantages) bits.push(`▲ ${r.advantages} advantage`);
-  if (r.threats) bits.push(`▼ ${r.threats} threat`);
+  if (r.advantages) bits.push(`▲ ${r.advantageTier} advantage (${r.advantages})`);
+  if (r.threats) bits.push(`▼ ${r.threatTier} threat (${r.threats})`);
   if (r.triumphs) bits.push(`◆ ${r.triumphs} triumph`);
   if (r.despairs) bits.push(`✶ ${r.despairs} despair`);
   return bits.join("  ·  ");
@@ -114,7 +114,8 @@ function renderLeft() {
         onchange: (e) => { let n = Math.max(1, Math.min(PB.chassis.statCap, Number(e.target.value) || 1)); state.stats[k] = n; e.target.value = String(n); save(); render(); } }),
       el("div", { class: "stat-dice", text: `${v} dice` }),
       el("button", { class: "roll-btn no-print", type: "button", text: "roll", onclick: () => {
-        const r = rollMove({ stat: v, ranks: 0, difficulty: "average" });
+        // bare check: plain green vs purple, no risk upgrades
+        const r = rollMove({ stat: v, ranks: 0, difficulty: "average", risky: false });
         out.textContent = resultSummary(r);
         out.className = `stat-roll-out ${r.success ? "ok" : "bad"}`;
       } }),
@@ -179,7 +180,7 @@ function renderMove(m) {
     // roll control
     const out = el("div", { class: "move-out" });
     let diff = m.difficulty || "average";
-    let boost = 0, setback = 0;
+    let boost = 0, setback = 0, risky = true;
     const diffSel = el("select", { class: "no-print", onchange: (e) => { diff = e.target.value; } },
       DIFFS.map((d) => el("option", { value: d, selected: d === diff ? "selected" : null, text: d })));
     const stepper = (label, get, set) => el("span", { class: "stepper" }, [
@@ -192,11 +193,15 @@ function renderMove(m) {
     const sChip = el("span", { class: "chip", text: "setback 0" });
     const controls = el("div", { class: "roll-controls no-print" }, [
       el("span", { text: "difficulty " }), diffSel,
+      el("label", { class: "risky-toggle", title: "Risky rolls always carry at least 1 yellow and 1 red — triumph and despair are both live." }, [
+        el("input", { type: "checkbox", checked: "checked", onchange: (e) => { risky = e.target.checked; } }),
+        el("span", { text: " risky" })
+      ]),
       el("span", { class: "stepper" }, [el("button", { type: "button", text: "−", onclick: () => { boost = Math.max(0, boost - 1); bChip.textContent = `boost ${boost}`; } }), bChip, el("button", { type: "button", text: "+", onclick: () => { boost++; bChip.textContent = `boost ${boost}`; } })]),
       el("span", { class: "stepper" }, [el("button", { type: "button", text: "−", onclick: () => { setback = Math.max(0, setback - 1); sChip.textContent = `setback ${setback}`; } }), sChip, el("button", { type: "button", text: "+", onclick: () => { setback++; sChip.textContent = `setback ${setback}`; } })]),
       el("button", { class: "roll-btn", type: "button", text: `Roll +${m.stat}`, onclick: () => {
         const ranks = m.trained === false ? 0 : 1;
-        const r = rollMove({ stat: state.stats[m.stat], ranks, difficulty: diff, boost, setback });
+        const r = rollMove({ stat: state.stats[m.stat], ranks, difficulty: diff, boost, setback, risky });
         const nodes = [
           el("div", { class: "roll-pool", text: poolText(r.pool) }),
           el("div", { class: `roll-verdict ${r.success ? "ok" : "bad"}`, text: resultSummary(r) }),

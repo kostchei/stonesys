@@ -30,17 +30,24 @@ game. To run an existing game, point the user at the blank sheet
 
 ## Chassis constants (do not vary)
 
-Genesys narrative dice on a lean, Stonetop-shaped character.
+Genesys narrative dice on a lean, Stonetop-shaped character, with pool rails.
 
-- Stats: STR, DEX, CON, INT, WIS, CHA, rated `1-5`. A stat = that many **ability
-  dice**.
-- Skill: having a move grants **1 rank** (upgrade 1 ability die to proficiency).
-  **No skill list.** Difficulty is challenge dice set by the GM (default
-  `average` = 2). Read net success/failure and advantage/threat; triumph and
-  despair never cancel.
+- Stats: STR, DEX, CON, INT, WIS, CHA, rated `1-5`. A stat = that many positive
+  dice. **Hard cap 5 dice per side.**
+- Skill: having a move grants **1 rank** (upgrade 1 green to yellow). **No skill
+  list.** Yellows come only from upgrades, never added — **max 2 yellow** (pins
+  triumph at ~16%/roll). Difficulty is `1-4` purple (`easy`…`daunting`, default
+  `average`; `simple` only for riskless chores); reds only from upgrades —
+  **max 2 red**.
+- Risk rule: a risky roll (the default for moves) always carries **at least 1
+  yellow and 1 red** — triumph and despair are both always live.
+- Read net success/failure and advantage/threat (bucketed 0 / 1-2 minor / 3+
+  major); triumph and despair never cancel.
 - Currency: per-move **hold-and-spend** plus a shared **Story Point** pool.
 - Starting array `{4, 3, 3, 2, 2, 1}`, stat cap `5`. **Stat gain is rare** — an
   Advanced advance, never a routine pick.
+- Move `difficulty` fields use only `easy | average | hard | daunting` (never
+  `formidable`; reserve `daunting` for the named "greater working" advances).
 - Set `chassis.resolution: "genesys-narrative"` on every playbook.
 
 ## Moves are fictional approaches, not specializations
