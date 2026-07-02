@@ -197,14 +197,15 @@ function renderMove(m) {
       el("button", { class: "roll-btn", type: "button", text: `Roll +${m.stat}`, onclick: () => {
         const ranks = m.trained === false ? 0 : 1;
         const r = rollMove({ stat: state.stats[m.stat], ranks, difficulty: diff, boost, setback });
-        out.replaceChildren(
+        const nodes = [
           el("div", { class: "roll-pool", text: poolText(r.pool) }),
           el("div", { class: `roll-verdict ${r.success ? "ok" : "bad"}`, text: resultSummary(r) }),
-          r.success ? el("div", { class: "roll-result", text: res.success }) : (res.failure ? el("div", { class: "roll-result", text: res.failure }) : null),
-          r.triumphs && res.triumph ? el("div", { class: "r-triumph", text: "◆ " + res.triumph }) : null,
-          r.despairs && res.despair ? el("div", { class: "r-despair", text: "✶ " + res.despair }) : null,
-          !r.success ? el("button", { class: "xp-btn", type: "button", text: "mark XP", onclick: () => { state.xp += 1; save(); render(); } }) : null
-        );
+          el("div", { class: "roll-result", text: r.success ? res.success : (res.failure || "You don't. The GM makes a move.") })
+        ];
+        if (r.triumphs && res.triumph) nodes.push(el("div", { class: "r-triumph", text: "◆ " + res.triumph }));
+        if (r.despairs && res.despair) nodes.push(el("div", { class: "r-despair", text: "✶ " + res.despair }));
+        if (!r.success) nodes.push(el("button", { class: "xp-btn", type: "button", text: "mark XP", onclick: () => { state.xp += 1; save(); render(); } }));
+        out.replaceChildren(...nodes);
       } })
     ]);
     wrap.appendChild(controls);
