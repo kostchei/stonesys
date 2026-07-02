@@ -278,3 +278,48 @@ body {
   word-break: break-all;
   line-height: 1.3;
 }
+
+/* ============ PLAYBOOK SELECTOR SCREEN ============ */
+.playbook-list-container {
+  max-height: 380px;
+  overflow-y: auto;
+  margin: 16px 0;
+  padding-right: 8px;
+}
+.setting-group {
+  margin-bottom: 24px;
+}
+.setting-group:last-child {
+  margin-bottom: 0;
+}
+.setting-title {
+  font-family: var(--header-font);
+  font-size: 1.1em;
+  font-weight: bold;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+.playbook-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+}
+.playbook-btn {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 10px 8px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+}
+.playbook-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}

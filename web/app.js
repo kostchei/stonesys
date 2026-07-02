@@ -2,6 +2,7 @@ import { rollMove } from "./dice.js";
 import { getAccessToken, saveCharacterToDrive, listDriveFiles, loadFromDrive } from "./drive.js";
 
 const CLIENT_ID_KEY = "stonesys:gdrive_client_id";
+const ACTIVE_PB_KEY = "stonesys:active_playbook";
 
 const STAT_KEYS = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
 const DIFFS = ["simple", "easy", "average", "hard", "daunting"];
@@ -494,7 +495,21 @@ async function boot() {
     }
   }
 
-  const id = params.get("pb") || (urlImportState ? urlImportState.playbookId : null) || "the-beholden";
+  // Determine which playbook to load
+  let id = params.get("pb") || (urlImportState ? urlImportState.playbookId : null);
+  let showSelectorOnBoot = false;
+  
+  if (!id) {
+    id = localStorage.getItem(ACTIVE_PB_KEY);
+    if (!id) {
+      id = "the-beholden";
+      showSelectorOnBoot = true; // Show selector overlay immediately on first boot
+    }
+  }
+  
+  // Save current active playbook ID
+  localStorage.setItem(ACTIVE_PB_KEY, id);
+
   const res = await fetch(`playbooks/${id}.json`);
   if (!res.ok) throw new Error(`could not load playbook ${id}`);
   PB = await res.json();
@@ -637,6 +652,61 @@ async function boot() {
   document.getElementById("loader-close-btn").addEventListener("click", () => {
     loaderModal.style.display = "none";
   });
+
+  // Playbook Selector Modal wire up
+  const pbSelectModal = document.getElementById("playbook-select-modal");
+  const pbListContainer = document.getElementById("playbook-list-container");
+  const pbCloseBtn = document.getElementById("playbook-select-close-btn");
+  
+  if (showSelectorOnBoot) {
+    pbCloseBtn.style.display = "none"; // Hide cancel button if we don't have an active playbook loaded
+  } else {
+    pbCloseBtn.style.display = "inline-block";
+  }
+
+  const openPlaybookSelector = async () => {
+    try {
+      const idxRes = await fetch("playbooks/index.json");
+      if (!idxRes.ok) throw new Error("Could not load playbooks list");
+      const indexData = await idxRes.json();
+      
+      pbListContainer.replaceChildren();
+      indexData.playsets.forEach((set) => {
+        const group = el("div", { class: "setting-group" }, [
+          el("div", { class: "setting-title", text: set.setting })
+        ]);
+        
+        const grid = el("div", { class: "playbook-grid" });
+        set.playbooks.forEach((p) => {
+          const btn = el("button", { class: "playbook-btn", text: p.name, type: "button" });
+          btn.addEventListener("click", () => {
+            localStorage.setItem(ACTIVE_PB_KEY, p.id);
+            window.location.search = `?pb=${p.id}`;
+          });
+          grid.appendChild(btn);
+        });
+        
+        group.appendChild(grid);
+        pbListContainer.appendChild(group);
+      });
+      pbSelectModal.style.display = "flex";
+    } catch (err) {
+      alert("Error loading playbooks: " + err.message);
+    }
+  };
+
+  document.getElementById("change-pb-btn").addEventListener("click", () => {
+    pbCloseBtn.style.display = "inline-block"; // Allow cancel if opened manually
+    openPlaybookSelector();
+  });
+  
+  pbCloseBtn.addEventListener("click", () => {
+    pbSelectModal.style.display = "none";
+  });
+
+  if (showSelectorOnBoot) {
+    openPlaybookSelector();
+  }
 
   const bootLoading = document.getElementById("loading");
   if (bootLoading) bootLoading.style.display = "none";

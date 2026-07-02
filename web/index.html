@@ -12,6 +12,7 @@
     <strong>StoneSys</strong>
     <span id="pb-name"></span>
     <span id="story-points" class="story-points"></span>
+    <button id="change-pb-btn" type="button">Change Playbook</button>
     <button id="gdrive-save-btn" type="button">Save to Drive</button>
     <button id="gdrive-load-btn" type="button">Load from Drive</button>
     <button id="gdrive-settings-btn" type="button">⚙ Settings</button>
@@ -57,6 +58,17 @@
       <div id="gdrive-file-list" class="file-list"></div>
       <div class="modal-actions">
         <button id="loader-close-btn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="playbook-select-modal" class="modal-overlay no-print" style="display: none;">
+    <div class="modal-content" style="max-width: 620px; width: 90%;">
+      <h3>Choose Your Playbook</h3>
+      <p class="hint">Select a campaign setting and playbook to begin creating your character:</p>
+      <div id="playbook-list-container" class="playbook-list-container"></div>
+      <div class="modal-actions">
+        <button id="playbook-select-close-btn" type="button">Cancel</button>
       </div>
     </div>
   </div>
