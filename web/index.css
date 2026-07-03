@@ -10,18 +10,18 @@
   --bg-card: #fffefb;      /* near-white card, lifts off the pale page */
   --bg-sidebar: #f1ebdd;   /* faintly darker panel */
   --border-color: #cabfa6; /* warm hairline */
-  --text-main: #1c1a17;    /* ink */
-  --text-muted: #6a6258;   /* muted brown-grey */
+  --text-main: #000000;    /* black text */
+  --text-muted: #3a352c;   /* dark, readable */
   --accent-color: #6b4f2a; /* sheet brown */
   --accent-hover: #8a6a3a; /* lighter brown */
 
   /* Dice Colors (kept — semantic, match the sheet's dice) */
-  --color-ability: #10B981; /* Green */
-  --color-proficiency: #FBBF24; /* Yellow */
-  --color-boost: #3B82F6; /* Blue */
-  --color-difficulty: #8B5CF6; /* Purple */
-  --color-challenge: #EF4444; /* Red */
-  --color-setback: #374151; /* Charcoal */
+  --color-ability: #00B84D;     /* bright green */
+  --color-proficiency: #FFC400; /* bright yellow */
+  --color-boost: #1E6FFF;         /* bright blue */
+  --color-difficulty: #9333EA; /* bright purple */
+  --color-challenge: #FF2D2D;   /* bright red */
+  --color-setback: #1f2430;       /* the black one */
 
   --transition-fast: 0.15s ease;
   --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);

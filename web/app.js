@@ -504,6 +504,8 @@ function bundleArchetypeToPlaybook(id) {
   if (Array.isArray(arch.instincts) && arch.instincts.length) {
     moves.push({ name: "Instincts", type: "fixed", trigger: "", text: arch.instincts.join(" · ") });
   }
+  const gearText = Array.isArray(arch.gear) ? arch.gear.join(" · ") : (arch.gear || "");
+  if (gearText) moves.push({ name: "Gear", type: "fixed", trigger: "", text: gearText });
 
   const statCap = 5;
   return {
