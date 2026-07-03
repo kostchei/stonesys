@@ -1,6 +1,6 @@
 {
   "id": "elfquest-chief",
-  "name": "The Chief",
+  "name": "Chieftain",
   "concept": "The tribe is yours to lead, which means it is yours to keep alive. Every mouth, every cub, every quarrel and hunt and hard winter comes home to you. You did not ask to carry them all, or perhaps you fought for the right. Either way the lodge is yours now, and the weight of it never sets down.",
   "duty": "Lead, and they live; falter, and they scatter or starve. The tribe's fate is the measure of you, and it is never off your shoulders.",
   "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },

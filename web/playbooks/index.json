@@ -42,15 +42,15 @@
       "steading": "steadings/elfquest-hollow-oak.md",
       "style": "village (bonds + tribe, no power tracks)",
       "playbooks": [
-        { "id": "elfquest-troll-smith", "name": "The Troll Weaponsmith" },
-        { "id": "elfquest-desert-elf", "name": "The Desert Elf" },
-        { "id": "elfquest-chief", "name": "The Chief" },
-        { "id": "elfquest-healer", "name": "The Healer" },
-        { "id": "elfquest-tree-shaper", "name": "The Tree-Shaper" },
-        { "id": "elfquest-dreamweaver", "name": "The Dreamweaver" },
-        { "id": "elfquest-stargazer", "name": "The Stargazer" },
-        { "id": "elfquest-hunter", "name": "The Master Hunter" },
-        { "id": "elfquest-rockshaper", "name": "The Rockshaper" }
+        { "id": "elfquest-troll-smith", "name": "Troll Weaponsmith" },
+        { "id": "elfquest-desert-elf", "name": "Desert Elf" },
+        { "id": "elfquest-chief", "name": "Chieftain" },
+        { "id": "elfquest-healer", "name": "Healer" },
+        { "id": "elfquest-tree-shaper", "name": "Tree-Shaper" },
+        { "id": "elfquest-dreamweaver", "name": "Dreamweaver" },
+        { "id": "elfquest-stargazer", "name": "Stargazer" },
+        { "id": "elfquest-hunter", "name": "Master Hunter" },
+        { "id": "elfquest-rockshaper", "name": "Rockshaper" }
       ]
     }
   ]

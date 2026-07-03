@@ -1,6 +1,6 @@
 {
   "id": "elfquest-tree-shaper",
-  "name": "The Tree-Shaper",
+  "name": "Tree-Shaper",
   "concept": "The living wood answers you. Under your hands a sapling becomes a shelter, a branch becomes a bow, a wall of thorn rises between the tribe and the dark. You did not learn this so much as remember it, the way the forest remembers you. The Mother Tree itself is half your doing, and half your teacher.",
   "duty": "The green is not a tool but a partner; it gives as you give, and it remembers every cut. Shape with the forest, never merely against it.",
   "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },

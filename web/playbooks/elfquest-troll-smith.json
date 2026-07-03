@@ -1,6 +1,6 @@
 {
   "id": "elfquest-troll-smith",
-  "name": "The Troll Weaponsmith",
+  "name": "Troll Weaponsmith",
   "concept": "You are a troll, and trolls make the finest weapons in the world — everyone knows it, which is why the elves let you stay even though half of them will never trust a troll. You came to the Hollow-Oak as an outsider and, slowly, became something like kin. Your hammer keeps the tribe armed against a world that is closing in.",
   "duty": "Your craft is why they keep you, and never quite why they trust you. Every blade you forge is a bond you're building, one strike at a time.",
   "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },

@@ -1,6 +1,6 @@
 {
   "id": "elfquest-healer",
-  "name": "The Healer",
+  "name": "Healer",
   "concept": "Yours is the magic of the living body — to knit the torn, cool the fever, coax a failing heart to beat on. In a small tribe pressed by a hard world, that gift is the thin line between the Holt and the long silence. They cannot lose you, and every one of them knows it, and so do you.",
   "duty": "Your hands are the tribe's shield against the wounds of the hunt and the wasting of the cold. What you can heal, you must; what you cannot, you carry.",
   "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },

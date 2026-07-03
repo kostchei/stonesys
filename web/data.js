@@ -15,10 +15,10 @@ const CAMPAIGNS_DATA = [
         "hp": 20,
         "damage_die": "d6",
         "stats": {
-          "STR": 2,
+          "STR": 3,
           "DEX": 2,
           "CON": 2,
-          "INT": 2,
+          "INT": 1,
           "WIS": 4,
           "CHA": 3
         },
@@ -303,10 +303,10 @@ const CAMPAIGNS_DATA = [
         "hp": 18,
         "damage_die": "d6",
         "stats": {
-          "STR": 2,
+          "STR": 3,
           "DEX": 2,
           "CON": 2,
-          "INT": 2,
+          "INT": 1,
           "WIS": 3,
           "CHA": 4
         },
@@ -376,10 +376,10 @@ const CAMPAIGNS_DATA = [
         "damage_die": "d8",
         "stats": {
           "STR": 3,
-          "DEX": 2,
+          "DEX": 3,
           "CON": 2,
           "INT": 2,
-          "WIS": 2,
+          "WIS": 1,
           "CHA": 4
         },
         "backgrounds": [
@@ -447,7 +447,7 @@ const CAMPAIGNS_DATA = [
         "hp": 18,
         "damage_die": "d8",
         "stats": {
-          "STR": 2,
+          "STR": 3,
           "DEX": 3,
           "CON": 2,
           "INT": 2,
@@ -591,8 +591,8 @@ const CAMPAIGNS_DATA = [
         "hp": 16,
         "damage_die": "d6",
         "stats": {
-          "STR": 3,
-          "DEX": 2,
+          "STR": 4,
+          "DEX": 3,
           "CON": 2,
           "INT": 1,
           "WIS": 2,
@@ -677,7 +677,7 @@ const CAMPAIGNS_DATA = [
           "CON": 3,
           "INT": 2,
           "WIS": 2,
-          "CHA": 2
+          "CHA": 1
         },
         "backgrounds": [
           {
@@ -736,7 +736,7 @@ const CAMPAIGNS_DATA = [
           "DEX": 4,
           "CON": 2,
           "INT": 3,
-          "WIS": 2,
+          "WIS": 1,
           "CHA": 3
         },
         "backgrounds": [
@@ -794,7 +794,7 @@ const CAMPAIGNS_DATA = [
         "stats": {
           "STR": 2,
           "DEX": 2,
-          "CON": 2,
+          "CON": 1,
           "INT": 4,
           "WIS": 3,
           "CHA": 3
@@ -855,7 +855,7 @@ const CAMPAIGNS_DATA = [
           "STR": 2,
           "DEX": 2,
           "CON": 3,
-          "INT": 2,
+          "INT": 1,
           "WIS": 4,
           "CHA": 3
         },
@@ -913,11 +913,11 @@ const CAMPAIGNS_DATA = [
         "damage_die": "d10",
         "stats": {
           "STR": 4,
-          "DEX": 2,
-          "CON": 4,
+          "DEX": 3,
+          "CON": 3,
           "INT": 2,
           "WIS": 2,
-          "CHA": 2
+          "CHA": 1
         },
         "backgrounds": [
           {
@@ -976,7 +976,7 @@ const CAMPAIGNS_DATA = [
           "DEX": 3,
           "CON": 2,
           "INT": 3,
-          "WIS": 3,
+          "WIS": 2,
           "CHA": 4
         },
         "backgrounds": [
@@ -1037,7 +1037,7 @@ const CAMPAIGNS_DATA = [
           "CON": 2,
           "INT": 3,
           "WIS": 3,
-          "CHA": 2
+          "CHA": 1
         },
         "backgrounds": [
           {
@@ -1092,12 +1092,12 @@ const CAMPAIGNS_DATA = [
         "hp": 18,
         "damage_die": "d6",
         "stats": {
-          "STR": 2,
+          "STR": 3,
           "DEX": 2,
           "CON": 2,
           "INT": 4,
-          "WIS": 2,
-          "CHA": 4
+          "WIS": 1,
+          "CHA": 3
         },
         "backgrounds": [
           {
@@ -1157,7 +1157,7 @@ const CAMPAIGNS_DATA = [
           "CON": 3,
           "INT": 2,
           "WIS": 4,
-          "CHA": 2
+          "CHA": 1
         },
         "backgrounds": [
           {
@@ -1223,7 +1223,7 @@ const CAMPAIGNS_DATA = [
         "stats": {
           "STR": 4,
           "DEX": 3,
-          "CON": 4,
+          "CON": 3,
           "INT": 1,
           "WIS": 2,
           "CHA": 2
@@ -1285,7 +1285,7 @@ const CAMPAIGNS_DATA = [
           "DEX": 2,
           "CON": 3,
           "INT": 2,
-          "WIS": 2,
+          "WIS": 1,
           "CHA": 4
         },
         "backgrounds": [
@@ -1341,12 +1341,12 @@ const CAMPAIGNS_DATA = [
         "hp": 16,
         "damage_die": "d4",
         "stats": {
-          "STR": 2,
+          "STR": 3,
           "DEX": 2,
           "CON": 2,
           "INT": 4,
-          "WIS": 4,
-          "CHA": 2
+          "WIS": 3,
+          "CHA": 1
         },
         "backgrounds": [
           {
@@ -1405,7 +1405,7 @@ const CAMPAIGNS_DATA = [
           "DEX": 2,
           "CON": 3,
           "INT": 4,
-          "WIS": 2,
+          "WIS": 1,
           "CHA": 3
         },
         "backgrounds": [
@@ -1466,7 +1466,7 @@ const CAMPAIGNS_DATA = [
           "CON": 2,
           "INT": 3,
           "WIS": 4,
-          "CHA": 2
+          "CHA": 1
         },
         "backgrounds": [
           {
@@ -1525,7 +1525,7 @@ const CAMPAIGNS_DATA = [
           "DEX": 2,
           "CON": 3,
           "INT": 3,
-          "WIS": 2,
+          "WIS": 1,
           "CHA": 4
         },
         "backgrounds": [
@@ -1586,7 +1586,7 @@ const CAMPAIGNS_DATA = [
           "CON": 3,
           "INT": 2,
           "WIS": 4,
-          "CHA": 2
+          "CHA": 1
         },
         "backgrounds": [
           {
@@ -1646,7 +1646,7 @@ const CAMPAIGNS_DATA = [
           "CON": 3,
           "INT": 2,
           "WIS": 3,
-          "CHA": 2
+          "CHA": 1
         },
         "backgrounds": [
           {
@@ -1701,12 +1701,12 @@ const CAMPAIGNS_DATA = [
         "hp": 24,
         "damage_die": "d8",
         "stats": {
-          "STR": 3,
+          "STR": 4,
           "DEX": 3,
           "CON": 3,
           "INT": 2,
-          "WIS": 2,
-          "CHA": 3
+          "WIS": 1,
+          "CHA": 2
         },
         "backgrounds": [
           {
@@ -1759,13 +1759,13 @@ const CAMPAIGNS_DATA = [
   },
   {
     "id": "elfquest",
-    "name": "Elfquest Tribal Fantasy",
+    "name": "Elfquest",
     "tagline": "Prehistoric Elf Survival",
     "description": "Play as tribal elves in a prehistoric world of wolves, spirits, and human tribes. Ride giant wolves, communicate through telepathic Sending, and protect your holt from fire, wild beasts, and superstitious humans.",
     "mechanics": "Focuses on Wolf Bonding (riding and fighting alongside pack wolves), 'Sending' telepathy, Flesh-Shaping healing, and tribal bonds without formal power-structure tracks.",
     "archetypes": [
       {
-        "name": "The Wolfrider",
+        "name": "Wolfrider",
         "duty": "To hunt with the pack, protect the tribe's territory, and run with the wolves.",
         "hp": 22,
         "damage_die": "d8",
@@ -1774,7 +1774,7 @@ const CAMPAIGNS_DATA = [
           "DEX": 4,
           "CON": 3,
           "INT": 2,
-          "WIS": 3,
+          "WIS": 2,
           "CHA": 1
         },
         "backgrounds": [
@@ -1825,7 +1825,7 @@ const CAMPAIGNS_DATA = [
         "gear": "Bone spear (close/thrown, d8 damage), leather furs, hunting horn, wolf saddle, dried meat rations."
       },
       {
-        "name": "The Chief",
+        "name": "Chieftain",
         "duty": "To lead the Wolfriders through hardship, preserve their way, and make the hard choices.",
         "hp": 20,
         "damage_die": "d8",
@@ -1833,9 +1833,9 @@ const CAMPAIGNS_DATA = [
           "STR": 3,
           "DEX": 3,
           "CON": 2,
-          "INT": 2,
-          "WIS": 3,
-          "CHA": 5
+          "INT": 1,
+          "WIS": 2,
+          "CHA": 4
         },
         "backgrounds": [
           {
@@ -1885,7 +1885,7 @@ const CAMPAIGNS_DATA = [
         "gear": "Chief's iron sword (passed down; close, d8 damage, +2 damage), leather vest, chief's band, water skin."
       },
       {
-        "name": "The Stargazer",
+        "name": "Stargazer",
         "duty": "To read the stars, remember the High Ones' origins, and guide the tribe's spirit.",
         "hp": 14,
         "damage_die": "d4",
@@ -1893,7 +1893,7 @@ const CAMPAIGNS_DATA = [
           "STR": 1,
           "DEX": 2,
           "CON": 2,
-          "INT": 5,
+          "INT": 4,
           "WIS": 3,
           "CHA": 3
         },
@@ -1945,7 +1945,7 @@ const CAMPAIGNS_DATA = [
         "gear": "Wooden staff with crystal tip (close, d4 damage), scroll of star maps, crystal shard, warm furs, water skin."
       },
       {
-        "name": "The Healer",
+        "name": "Healer",
         "duty": "To heal wounds, mend broken bones, and maintain the tribe's physical vitality.",
         "hp": 16,
         "damage_die": "d4",
@@ -1955,7 +1955,7 @@ const CAMPAIGNS_DATA = [
           "CON": 2,
           "INT": 3,
           "WIS": 4,
-          "CHA": 3
+          "CHA": 2
         },
         "backgrounds": [
           {
@@ -2005,7 +2005,7 @@ const CAMPAIGNS_DATA = [
         "gear": "Bronze scalpel (hand, d4 damage), bag of dried herbs, bandages, jar of honey, water skin."
       },
       {
-        "name": "The Glider",
+        "name": "Glider",
         "duty": "To preserve the ancient mountain stronghold and hover in isolation.",
         "hp": 18,
         "damage_die": "d6",
@@ -2015,7 +2015,7 @@ const CAMPAIGNS_DATA = [
           "CON": 2,
           "INT": 3,
           "WIS": 4,
-          "CHA": 2
+          "CHA": 1
         },
         "backgrounds": [
           {
@@ -2065,17 +2065,17 @@ const CAMPAIGNS_DATA = [
         "gear": "Polished stone dagger (hand, d6 damage), silk robes, ancient coin, collection of feathers, water skin."
       },
       {
-        "name": "The Preserver sprite",
+        "name": "Preserver Sprite",
         "duty": "To wrap things in protective webbing and preserve the tribe's treasures.",
         "hp": 12,
         "damage_die": "d4",
         "stats": {
           "STR": 1,
-          "DEX": 5,
-          "CON": 2,
+          "DEX": 4,
+          "CON": 3,
           "INT": 2,
           "WIS": 2,
-          "CHA": 4
+          "CHA": 3
         },
         "backgrounds": [
           {
@@ -2125,7 +2125,7 @@ const CAMPAIGNS_DATA = [
         "gear": "Pointed pin (hand, d4 damage), bag of sweet berries, spool of sprite thread, collection of colorful pebbles."
       },
       {
-        "name": "The Rock-Shaper",
+        "name": "Rock-Shaper",
         "duty": "To mold solid stone like clay for shelter, tools, and defenses.",
         "hp": 24,
         "damage_die": "d8",
@@ -2135,7 +2135,7 @@ const CAMPAIGNS_DATA = [
           "CON": 3,
           "INT": 3,
           "WIS": 2,
-          "CHA": 2
+          "CHA": 1
         },
         "backgrounds": [
           {
@@ -2185,7 +2185,7 @@ const CAMPAIGNS_DATA = [
         "gear": "Stone hammer (close, d8 damage), bag of clay, 3 uncut gemstones, leather apron, water skin."
       },
       {
-        "name": "The Sun-Folk Villager",
+        "name": "Sun-Folk Villager",
         "duty": "To cultivate the oasis, maintain the peace of Sorrow's End, and heal disputes.",
         "hp": 18,
         "damage_die": "d6",
@@ -2193,7 +2193,7 @@ const CAMPAIGNS_DATA = [
           "STR": 2,
           "DEX": 2,
           "CON": 3,
-          "INT": 2,
+          "INT": 1,
           "WIS": 3,
           "CHA": 4
         },
@@ -2245,17 +2245,17 @@ const CAMPAIGNS_DATA = [
         "gear": "Bronze knife (hand, d6 damage), potter's clay, 3 clay water jars, colorful sash, desert cloak."
       },
       {
-        "name": "The Huntress",
+        "name": "Huntress",
         "duty": "To secure game for the tribe, scout the boundaries, and strike from cover.",
         "hp": 18,
         "damage_die": "d8",
         "stats": {
-          "STR": 2,
-          "DEX": 5,
+          "STR": 3,
+          "DEX": 4,
           "CON": 2,
           "INT": 2,
           "WIS": 3,
-          "CHA": 2
+          "CHA": 1
         },
         "backgrounds": [
           {

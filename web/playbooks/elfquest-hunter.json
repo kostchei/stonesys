@@ -1,6 +1,6 @@
 {
   "id": "elfquest-hunter",
-  "name": "The Master Hunter",
+  "name": "Master Hunter",
   "concept": "You feed the tribe and guard its edges, running the wild with a bond-wolf at your side and a bow that does not miss. The hunt is not sport to you; it is life and death for every mouth in the Holt. You know the wood the way you know your own heartbeat, and the wolf that runs with you knows your soul.",
   "duty": "The tribe eats because you hunt, and sleeps because you watch. The wild is your charge, and your bond-wolf your other half.",
   "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },

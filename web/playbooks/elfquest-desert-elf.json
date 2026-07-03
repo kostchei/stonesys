@@ -1,6 +1,6 @@
 {
   "id": "elfquest-desert-elf",
-  "name": "The Desert Elf",
+  "name": "Desert Elf",
   "concept": "You come from a far people — sun-baked, patient, settled around water in a land the forest elves have never seen. Chance or grief or a long journey brought you to the Hollow-Oak, and you stayed. You endure what would break them, and you see the things they have grown too used to notice. To the tribe you are half-marvel, half-stranger.",
   "duty": "You are new here, from a people they barely believe in. Your patience and your outside eyes are gifts the tribe does not yet know how to value.",
   "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },

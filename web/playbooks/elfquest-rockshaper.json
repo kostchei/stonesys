@@ -1,6 +1,6 @@
 {
   "id": "elfquest-rockshaper",
-  "name": "The Rockshaper",
+  "name": "Rockshaper",
   "concept": "Stone answers you as wood answers the tree-shaper — it flows under your hands like clay, then sets hard as a mountain's root. You raise walls where the tribe needs shelter, open ways through the living rock, and feel the deep bones of the earth. It is slow, deep, patient magic, and it has made you a little like the stone itself.",
   "duty": "The stone is patient and it does not forget; shape it with respect, for what you raise will outlast you, and what you break may not be mended.",
   "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },

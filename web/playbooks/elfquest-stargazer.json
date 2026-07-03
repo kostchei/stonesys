@@ -1,6 +1,6 @@
 {
   "id": "elfquest-stargazer",
-  "name": "The Stargazer",
+  "name": "Stargazer",
   "concept": "You hold the tribe's memory and read the world's patterns — the wheel of the stars, the old lore, the signs that others walk past. You know the histories no one else recalls and glimpse, sometimes, the shape of what is coming. In a tribe fighting to survive the present, you are the one still watching the long dark and the far light.",
   "duty": "You carry what the tribe would otherwise forget, and see the storms before they break. Knowledge is a weight, and foresight a lonely one.",
   "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },

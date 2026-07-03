@@ -1,6 +1,6 @@
 {
   "id": "elfquest-dreamweaver",
-  "name": "The Dreamweaver",
+  "name": "Dreamweaver",
   "concept": "The tribe's silent voices are always with you — the wordless sending that binds elf to elf — and you hear them more deeply than anyone. You walk in dreams, soothe troubled spirits, and weave many minds into one. You are the tribe's shared heart made flesh, which is a gift and a burden that never quiets.",
   "duty": "You hold the tribe's inner life — its dreams, griefs, and silent bonds. What passes between minds passes through you, and you cannot fully close the door.",
   "chassis": { "resolution": "genesys-narrative", "array": [4, 3, 3, 2, 2, 1], "statCap": 5 },
