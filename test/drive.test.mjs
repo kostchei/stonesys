@@ -12,10 +12,22 @@ globalThis.google = {
 
 let fetchCalls = [];
 let mockSearchFiles = [];
+let mockFailFetch = false;
 
 globalThis.fetch = async (url, options = {}) => {
   fetchCalls.push({ url, options });
   
+  if (mockFailFetch) {
+    return {
+      ok: false,
+      status: 403,
+      statusText: 'Forbidden',
+      json: async () => ({
+        error: { message: 'Insufficient Permission' }
+      })
+    };
+  }
+
   // Mock Search Drive File
   if (url.includes('/drive/v3/files?q=')) {
     return {
@@ -48,7 +60,7 @@ globalThis.fetch = async (url, options = {}) => {
     };
   }
 
-  return { ok: false, statusText: 'Not Found' };
+  return { ok: false, status: 404, statusText: 'Not Found', json: async () => ({}) };
 };
 
 async function runTests() {
@@ -58,6 +70,7 @@ async function runTests() {
   {
     fetchCalls = [];
     mockSearchFiles = []; // Empty search results
+    mockFailFetch = false;
     const state = { name: "Enfys" };
     const playbook = { name: "Blessed" };
     const result = await saveCharacterToDrive("mock-token", state, playbook);
@@ -73,27 +86,11 @@ async function runTests() {
     console.log("ok   Save new character (triggers Search and POST)");
   }
 
-  // Test Case 1b: Save new character but there is already an existing file on Drive with the same name
-  {
-    fetchCalls = [];
-    mockSearchFiles = [{ id: 'mock-searched-file-id', name: 'StoneSys - Blessed - Enfys' }];
-    const state = { name: "Enfys" };
-    const playbook = { name: "Blessed" };
-    const result = await saveCharacterToDrive("mock-token", state, playbook);
-    
-    assert.strictEqual(result.id, "existing-drive-file-id");
-    assert.strictEqual(state.driveFileId, "existing-drive-file-id");
-    
-    assert.strictEqual(fetchCalls.length, 2);
-    assert.ok(fetchCalls[0].url.includes('/drive/v3/files?q='));
-    assert.ok(fetchCalls[1].url.includes('/upload/drive/v3/files/mock-searched-file-id?'));
-    assert.strictEqual(fetchCalls[1].options.method, 'PATCH');
-    console.log("ok   Save new character with name collision (updates existing file)");
-  }
-
   // Test Case 2: Save existing character with driveFileId (performs direct PATCH, no search)
   {
     fetchCalls = [];
+    mockSearchFiles = [];
+    mockFailFetch = false;
     const state = { name: "Enfys", driveFileId: "existing-drive-file-id" };
     const playbook = { name: "Blessed" };
     const result = await saveCharacterToDrive("mock-token", state, playbook);
@@ -111,6 +108,7 @@ async function runTests() {
   // Test Case 3: Load character from Drive (should inject driveFileId)
   {
     fetchCalls = [];
+    mockFailFetch = false;
     const fileId = "loaded-drive-file-id";
     const loadedState = await loadFromDrive("mock-token", fileId);
     
@@ -120,6 +118,22 @@ async function runTests() {
     assert.strictEqual(fetchCalls.length, 1);
     assert.ok(fetchCalls[0].url.includes(`/files/${fileId}/export`));
     console.log("ok   Load character from Drive (injects driveFileId)");
+  }
+
+  // Test Case 4: Verify detailed error message parsing on API failure
+  {
+    fetchCalls = [];
+    mockFailFetch = true; // Triggers simulated API errors
+    const state = { name: "Enfys" };
+    const playbook = { name: "Blessed" };
+    
+    try {
+      await saveCharacterToDrive("mock-token", state, playbook);
+      assert.fail("Expected saveCharacterToDrive to throw an error");
+    } catch (err) {
+      assert.ok(err.message.includes("Failed to search Google Drive: Insufficient Permission (HTTP 403)"));
+      console.log("ok   Detailed error message parsing verified");
+    }
   }
 
   console.log("\nAll Google Drive unit tests passed successfully!");

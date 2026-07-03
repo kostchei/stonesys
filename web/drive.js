@@ -96,6 +96,19 @@ function generateCharacterHtml(state, playbook) {
 </html>`;
 }
 
+// Helper to extract detailed Google Drive API error messages
+async function getErrorDetails(res) {
+  try {
+    const errData = await res.json();
+    if (errData && errData.error && errData.error.message) {
+      return `${errData.error.message} (HTTP ${res.status})`;
+    }
+    return `HTTP ${res.status}: ${JSON.stringify(errData)}`;
+  } catch (e) {
+    return res.statusText || `HTTP Status ${res.status}`;
+  }
+}
+
 // Search for an existing document with the character name
 async function searchDriveFile(accessToken, name) {
   const q = encodeURIComponent(`name = '${name.replace(/'/g, "\\'")}' and mimeType = 'application/vnd.google-apps.document' and trashed = false`);
@@ -105,7 +118,8 @@ async function searchDriveFile(accessToken, name) {
     headers: { 'Authorization': `Bearer ${accessToken}` }
   });
   if (!res.ok) {
-    throw new Error("Failed to search Google Drive: " + res.statusText);
+    const details = await getErrorDetails(res);
+    throw new Error("Failed to search Google Drive: " + details);
   }
   const data = await res.json();
   return data.files && data.files.length > 0 ? data.files[0] : null;
@@ -149,7 +163,8 @@ async function uploadFile(accessToken, name, htmlContent, fileId = null) {
   });
   
   if (!res.ok) {
-    throw new Error(`Failed to save to Google Drive: ${res.statusText}`);
+    const details = await getErrorDetails(res);
+    throw new Error(`Failed to save to Google Drive: ${details}`);
   }
   return await res.json();
 }
@@ -182,7 +197,8 @@ export async function listDriveFiles(accessToken) {
     headers: { 'Authorization': `Bearer ${accessToken}` }
   });
   if (!res.ok) {
-    throw new Error("Failed to list files from Google Drive: " + res.statusText);
+    const details = await getErrorDetails(res);
+    throw new Error("Failed to list files from Google Drive: " + details);
   }
   const data = await res.json();
   return data.files || [];
@@ -196,7 +212,8 @@ export async function loadFromDrive(accessToken, fileId) {
     headers: { 'Authorization': `Bearer ${accessToken}` }
   });
   if (!res.ok) {
-    throw new Error("Failed to read Google Document data: " + res.statusText);
+    const details = await getErrorDetails(res);
+    throw new Error("Failed to read Google Document data: " + details);
   }
   const html = await res.text();
   
