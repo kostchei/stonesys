@@ -137,7 +137,12 @@ window.addEventListener('DOMContentLoaded', () => {
   
   document.getElementById("print-playbook-btn").addEventListener("click", () => {
     if (activeArchetype) {
-      window.open(`playbook.html?pb=${activeArchetype.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`, '_blank');
+      const characters = getSavedCharacters();
+      const existing = characters.find(character => character.id === currentCharacterId);
+      const snapshot = createCharacterSnapshot(existing);
+      const slug = activeArchetype.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      localStorage.setItem(`stonesys:${slug}`, JSON.stringify(snapshot));
+      window.open(`playbook.html?pb=${slug}`, '_blank');
     }
   });
 
@@ -155,10 +160,24 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     
     document.getElementById("loading").style.display = "block";
-    getAccessToken(clientId, async (token) => {
+        getAccessToken(clientId, async (token) => {
       try {
-        const snapshot = createCharacterSnapshot();
-        await saveCharacterToDrive(token, snapshot, activeArchetype);
+        const characters = getSavedCharacters();
+        const existing = characters.find(character => character.id === currentCharacterId);
+        const snapshot = createCharacterSnapshot(existing);
+        const result = await saveCharacterToDrive(token, snapshot, activeArchetype);
+        
+        if (result && result.id) {
+          snapshot.driveFileId = result.id;
+          const nextCharacters = existing
+            ? characters.map(character => character.id === snapshot.id ? snapshot : character)
+            : characters.concat(snapshot);
+          
+          currentCharacterId = snapshot.id;
+          writeSavedCharacters(nextCharacters);
+          renderSavedCharacters();
+        }
+        
         alert("Character sheet successfully saved to Google Drive!");
       } catch (e) {
         alert("Failed to save to Google Drive: " + e.message);
@@ -908,10 +927,12 @@ function removeXpSpend(entryId) {
 function createCharacterSnapshot(existing) {
   const now = new Date().toISOString();
   const characterName = document.getElementById('character-name-input').value.trim();
+  const characters = getSavedCharacters();
+  const activeExisting = existing || characters.find(c => c.id === currentCharacterId);
   
   return {
     version: 1,
-    id: existing && existing.id ? existing.id : makeId(),
+    id: activeExisting && activeExisting.id ? activeExisting.id : (currentCharacterId || makeId()),
     name: characterName || `${activeArchetype.name} Character`,
     campaignId: activeCampaign.id,
     campaignName: activeCampaign.name,
@@ -927,8 +948,9 @@ function createCharacterSnapshot(existing) {
     gear: document.getElementById('gear-text').value,
     steadingUpgrades: document.getElementById('steading-upgrades-text').value,
     notes: document.getElementById('character-notes-text').value,
-    createdAt: existing && existing.createdAt ? existing.createdAt : now,
-    updatedAt: now
+    createdAt: activeExisting && activeExisting.createdAt ? activeExisting.createdAt : now,
+    updatedAt: now,
+    driveFileId: activeExisting && activeExisting.driveFileId ? activeExisting.driveFileId : null
   };
 }
 

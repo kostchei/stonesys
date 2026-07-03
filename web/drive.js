@@ -159,11 +159,18 @@ export async function saveCharacterToDrive(accessToken, state, playbook) {
   const docName = `StoneSys - ${playbook.name} - ${state.name || 'Unnamed'}`;
   const html = generateCharacterHtml(state, playbook);
   
-  // Search for existing file
-  const existing = await searchDriveFile(accessToken, docName);
-  const fileId = existing ? existing.id : null;
+  // Try to use existing driveFileId first, or fallback to name search
+  let fileId = state.driveFileId || null;
+  if (!fileId) {
+    const existing = await searchDriveFile(accessToken, docName);
+    fileId = existing ? existing.id : null;
+  }
   
-  return await uploadFile(accessToken, docName, html, fileId);
+  const result = await uploadFile(accessToken, docName, html, fileId);
+  if (result && result.id) {
+    state.driveFileId = result.id;
+  }
+  return result;
 }
 
 // Fetch all Stonetop/StoneSys Google Docs in the user's Drive
@@ -202,7 +209,9 @@ export async function loadFromDrive(accessToken, fileId) {
   try {
     const b64 = match[1];
     const decoded = decodeURIComponent(escape(atob(b64)));
-    return JSON.parse(decoded);
+    const parsed = JSON.parse(decoded);
+    parsed.driveFileId = fileId;
+    return parsed;
   } catch (e) {
     throw new Error("Failed to parse character data from document: " + e.message);
   }

@@ -742,7 +742,11 @@ async function boot() {
         }
         // Save playbookId inside state so url importing knows which file to fetch
         state.playbookId = id;
-        await saveCharacterToDrive(accessToken, state, PB);
+        const result = await saveCharacterToDrive(accessToken, state, PB);
+        if (result && result.id) {
+          state.driveFileId = result.id;
+          save();
+        }
         alert("Character saved to Google Drive successfully!");
       } catch (err) {
         alert("Error saving to Drive: " + err.message);
