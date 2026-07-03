@@ -60,11 +60,11 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Veil",
-            "description": "When you wrap yourself or another in a subtle veil, spend 1 Stock and choose 1: A type of being you name (including \"people\") will tend to ignore your presence People will perceive you as someone else, though you must wear something of an individual's in order to impersonate them When your deception comes under scrutiny, roll INT: on success with Advantage, the veil holds, and no one is the wiser; on success with Threat, the veil holds, but there is further scrutiny or a complication (GM's choice). WARDS & BINDINGS When you mark a boundary with sacred signs, spend 1 Stock and describe who or what they affect (using no more words than your level). Also, choose whether the affected beings are repelled or trapped by the signs. When your wards or bindings are first tested, roll INT: on success with Advantage, they will hold as long as the signs remain unmarred (and the affected creature can do nothing to affect them directly); on success with Threat, they hold for now but may be overcome through might or will."
+            "description": "When you wrap yourself or another in a subtle veil, spend 1 Stock and choose 1: A type of being you name (including \"people\") will tend to ignore your presence People will perceive you as someone else, though you must wear something of an individual's in order to impersonate them When your deception comes under scrutiny, roll INT: on success with Advantage, the veil holds, and no one is the wiser; on success with Threat, the veil holds, but there is further scrutiny or a complication (GM's choice)."
           },
           {
             "name": "Wards & Bindings",
-            "description": "Core Stonetop move: Wards & Bindings."
+            "description": "When you mark a boundary with sacred signs, spend 1 Stock and describe who or what they affect (using no more words than your level). Also, choose whether the affected beings are repelled or trapped by the signs. When your wards or bindings are first tested, roll INT: on success with Advantage, they will hold as long as the signs remain unmarred (and the affected creature can do nothing to affect them directly); on success with Threat, they hold for now but may be overcome through might or will."
           },
           {
             "name": "Wild Soul",
@@ -87,6 +87,10 @@ const CAMPAIGNS_DATA = [
             "description": "Once per season, when you oversee the sacred rites, hold 1 Favor. If you also sacrifice 1 Surplus, hold 4 Favor instead. Spend Favor in lieu of Stock, 1-for-1. When you publicly sacrifice something or someone much-loved, either clear a steading debility or add 1 blue Boost die when the steading next rolls Fortunes. 44"
           },
           {
+            "name": "Improved Stat",
+            "description": "Each time you take this move, increase one of your stats by 1 (to a max of +2)."
+          },
+          {
             "name": "Voice of the Earth Mother",
             "description": "When you speak on behalf of Danu, natural beasts and spirits of the wild respect your authority. All but the most headstrong will do as you command, even against their instincts. IMPROVED ST AT Each time you take this move, increase one of your stats by 1 (to a max of +2)."
           },
@@ -104,11 +108,11 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Suck the Poison Out",
-            "description": "When you draw a malady from a patient's body, mind, or soul, spend 1 Stock and roll WIS: on success with Advantage, you remove the malady and can safely discard it or store it in your sacred pouch (taking the space of 1 Stock) to study or inflict on another; on success with Threat, you remove it, but choose 1: Your patient suffers lingering harm or trauma You suffer some of the malady's effects It will be harmful and dangerous to discard SUPERIOR ST AT (Requires level 6+) Increase one of your by +1 (to a max of +3)."
+            "description": "When you draw a malady from a patient's body, mind, or soul, spend 1 Stock and roll WIS: on success with Advantage, you remove the malady and can safely discard it or store it in your sacred pouch (taking the space of 1 Stock) to study or inflict on another; on success with Threat, you remove it, but choose 1: Your patient suffers lingering harm or trauma You suffer some of the malady's effects It will be harmful and dangerous to discard"
           },
           {
             "name": "Superior Stat",
-            "description": "Increase one of your stats by +1 (to a max of +3)."
+            "description": "Increase one of your by +1 (to a max of +3)."
           }
         ],
         "gear": "is crude +0 +1 x =1 piercing +2 x =2 piercing Olwin, your anointed lover Fates-wise, beautiful, passionate, magical HP 6; Armor 1 (shield) HPHP Max. 6Max. 6 Damage iron spear d6 (close, thrown) Instinct to lack discretion ä Perform a divination ä Speak a (dire) prophecy ä Make a big deal about something Cost tenderness, respect; Loyalty Pick 1 on each line: he she they betrothed true love ceremonial complicated contary dramatic passionate tormented rites of... blood fire sacred union Seren the Eldest Exceptional, story-wise, insightful, frail, magical HP 3; Armor 0 HPHP Max. 3Max. 3 Damage walking stick d4 (close) Instinct to hew to tradition ä Consult the spirits, or abjure them ä Spin a tale to make a point ä Use shame and guilt as leverage Cost deference, good sense shown; Loyalty Pick 1 on each line: he she they dismissed pitied feared venerated cagey friendly but firm imperious rites of... iron secret naming winter Initiates of Danu Blessed, if you took the Initiate background, then you chose 2 or 3 of the following as your fellow initiates. Mark those you picked and treat them as followers. Cross off the others. Enfys, the acolyte Bird-wise, innocent, magical, well-informed HP 6; Armor 0 HPHP Max. 6Max. 6 Damage bronze knife d4 (hand) Instinct to get distracted ä Speak with birds ä Ask a difficult question ä Wander off Cost knowledge, secret lore; Loyalty Pick 1 on each line: he she they just a child on the cusp a young adult carefully chosen marked by Danu orphaned carefree curious moody secretive Afon, a fellow initiate Fae-wise, devious, magical, self-sufficient, stealthy HP 8; Armor 2 (0 vs. iron) Damage bronze hatchet d6 (hand) Instinct to act impulsively ä Weave a minor glamor ä Appear or disappear unexpectedly ä Speak an uncomfortable truth Cost wonder, joy; Loyalty Pick 1 on each line: he she they comes and goes in the Wood a hut near town aloof bawdy and lewd unnerving rites of... ecstasy intoxication moonlight Gwendyl, your mentor Herb-wise, gossipy, tireless, healer, magical HP 6; Armor 0 HPHP Max. 6Max. 6 Damage iron knife d6 (hand) Instinct to take offense ä Tend to the sick, injured, women in labor ä Weave a talisman of fertility or good luck ä Point out a flaw in a person or plan Cost consideration, affection; Loyalty Pick 1 on each line: he she they a big family has taken you in lives alone blunt demanding put upon suffers no fools rites of... earth & soil mourning petition ORDER FOLLOWERS When you direct them to make a move and they do so, build a follower pool from tags: 1 green Ability die if a useful tag applies, upgrade it once if the follower is exceptional, and add 1 black Setback die if a tag gets in the way. When they are without orders or they act on their own initiative, the GM says what they do and how it goes. STRENGTHEN YOUR BOND When you pay their cost and you haven't done so recently, they hold 1 Loyalty (max 3). Spend their Loyalty 1-for-1 to have them: Overcome their fear to do as you say Resist acting on their instinct/tags/traits Do something they don't want to do (as long as it's not abhorrent or suicidal)"
@@ -151,11 +155,11 @@ const CAMPAIGNS_DATA = [
         "choice_moves": [
           {
             "name": "Ambush",
-            "description": "Core Stonetop move: Ambush."
+            "description": "When you get the drop on a nearby foe, you can deal your damage, or you can roll DEX. On success with Advantage, deal damage and pick 2; on success with Threat, deal damage and pick 1: Deal +1d4 damage; Stop them from making noise/raising an alarm; Slip away before they can react; Create an opportunity (you or an ally adds 1 blue Boost die to the next roll to act on it)."
           },
           {
             "name": "Skill at Arms",
-            "description": "When you wield a weapon with speed and grace, roll DEX to Clash (instead of STR). PARRY & RIPOSTE (Requires Skill at Arms) When you Defend with a weapon that you can wield quickly, you can spend 1 Readiness to both halve an attack's effects/damage and strike back at the attacker (deal your damage with 1 black Setback die), instead of spending 1 Readiness for each."
+            "description": "When you wield a weapon with speed and grace, roll DEX to Clash (instead of STR)."
           },
           {
             "name": "Danger Sense",
@@ -171,7 +175,7 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Parry & Riposte",
-            "description": "Core Stonetop move: Parry & Riposte."
+            "description": "When you Defend with a weapon that you can wield quickly, you can spend 1 Readiness to both halve an attack's effects/damage and strike back at the attacker (deal your damage with 1 black Setback die), instead of spending 1 Readiness for each."
           },
           {
             "name": "Silver Tongued",
@@ -198,6 +202,10 @@ const CAMPAIGNS_DATA = [
             "description": "When you perform sleight of hand on an unwary mark, you succeed and no one's the wiser. If you're being watched, roll DEX: on success with Advantage, you succeed and no one's the wiser; on success with Threat, you succeed OR no one's the wiser (your choice)."
           },
           {
+            "name": "Improved Stat",
+            "description": "Each time you take this move, increase one of your stats by 1 (to a max of +2)."
+          },
+          {
             "name": "Battle Dancer",
             "description": "When you roll DEX to Clash, on a Triumph you deal your damage, avoid your enemy's attack, and impress/embarrass/overawe your foes."
           },
@@ -219,11 +227,11 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Slippery",
-            "description": "When you roll to escape being caught or controlled, treat failure as success with Threat. On a Triumph, say how you turn the tables or use the circumstances to your 1 blue Boost die. SUPERIOR ST AT (Requires level 6+) Increase one of your by +1 (to a max of +3)."
+            "description": "When you roll to escape being caught or controlled, treat failure as success with Threat. On a Triumph, say how you turn the tables or use the circumstances to your 1 blue Boost die."
           },
           {
             "name": "Superior Stat",
-            "description": "Increase one of your stats by +1 (to a max of +3)."
+            "description": "Increase one of your by +1 (to a max of +3)."
           }
         ],
         "gear": "is crude +0 +1 x =1 piercing +2 x =2 piercing Tall tales Someone like you gets into all sorts of trouble, whether you mean to or not. Mix and match the following to come up with a couple of your more memorable adventures, and write them down in the space at the bottom of this column. There was that time that you… (choose 1 per tale) … got lost in (choose 1) the Great Wood the Flats the Steplands Ferrier's Fen the Foothills the Huffel Peaks … were on watch when the crinwin raided … dared each other to explore the Ruined Tower … managed to rile up a small band of Hillfolk … braved the Labyrinth, just a little … stole that crazy old man's book … went poking about the old Barrow Mounds And you ended up… (choose 1 or 2 per tale) … running for your life from … landing a well-placed blow … interrupting a strange, creepy gathering … stumbling on a beast, bigger'n anything … with a sack full of treasure … getting to fight them for you … face to face with a ghost/Fae/demon … finding those strange old runes … getting to know that fine-looking fellow/ lady/person/couple But all you've got left to show for it is… … a story no one believes. … a nasty scar; wanna see? … the occasional nightmare. … this map with runes no one can read. … this key that opens who-knows-what. Introductions Wait here for everyone else. When everyone's ready, take turns introducing your characters. When someone reveals something and you want to know more, ask them about it. When someone asks you a question, answer it truthfully. 11 On your first turn, introduce yourself by name, pronouns, background, origin, and appearance. 22 On your second turn, describe your special possessions and how you contribute to the village (beyond working the fields). 33 On your third turn, tell us your tall tales. Feel free to embellish and exaggerate to the other players, but always answer the GM truthfully. 44 On your next turn, answer one of the following, naming one or more NPCs who live in Stonetop. Who is your closest kin? Who holds the reins to your heart? Whose respect means the world to you? To whom do you owe a debt that cannot be repaid? 55 Go around again. Answer another question from 4, or pass. When everyone has passed, go on. 66 On your next turn, ask your fellow PCs one of these. When others ask you, answer as you like. Which one of you joined me in my latest hijinx? Which one of you brings your problems to me? Which one of you saved my bacon, mor'n once? Which one of you trusts me not one bit? 77 Go around again. Ask another question from 6, or pass. When everyone has passed, go on. 88 Add your home to the steading playbook. When everyone is done, let spring break forth! Player's Agenda Portray a compelling character Engage with the fictional world Play to find out what happens Player's Principles Begin and end with the fiction Connect with the other PCs Show us what's important to you Have goals and pursue them Be bold, take risks Embrace difficulty, setback, and failure Participate in worldbuilding Build on what others have said Give others a chance to shine Participate in the conversation When in doubt... Visualize the situation Ask the GM for clarification What do you want? What's your goal? Consider your strengths and weaknesses Look to others for ideas Go with the obvious choice, the interesting choice, the meaningful choice... not always the \"right\" choice (remember, you get XP on a failure!) Triggering moves If you want to do it, then do it in the fiction. Tell us how you do it, what it looks like. Be specific. But remember: if you do it in the fiction, then you have to do it. \"I rush past the hagr to grab the glowing sword\" and the GM says that's Defy Danger with DEX. It's okay to say, \"Oh, really? I guess I don't do that.\" But if you want to rush past the hagr, make with the dice. Hold and spend When a move says, \"hold X Currency (until/ while/so long as __),\" then note the Currency you hold and spend it as described by the move. Spending held Currency usually means you just do it, no roll required. Sometimes, though, spending held Currency will allow you to trigger a move (and thus roll) when otherwise you just couldn't have done it. Followers Name Tags HPHP exceptional group Max. HP Armor Damage Instinct Moves ä ä ä Cost Loyalty Gear Notes Name Tags HPHP exceptional group Max. HP Armor Damage Instinct Moves ä ä ä Cost Loyalty Gear Notes"
@@ -265,7 +273,7 @@ const CAMPAIGNS_DATA = [
         "signature_moves": [
           {
             "name": "Dangerous",
-            "description": "Core Stonetop move: Dangerous."
+            "description": "When you deal damage, you add 1 blue Boost die to your next roll against that target."
           },
           {
             "name": "Hard to Kill",
@@ -275,11 +283,51 @@ const CAMPAIGNS_DATA = [
         "choice_moves": [
           {
             "name": "Armored",
-            "description": "Core Stonetop move: Armored."
+            "description": "When you carry a shield, mark only 44 (instead of 44 44). Also, you can ignore the cumbersome tag on any armor you wear. If you take this move at the start of play, add an iron hauberk, bronze cuirass, or scale coat to your inventory (all are 2 armor, warm, cumbersome)."
           },
           {
             "name": "Uncanny Reflexes",
             "description": "When you are unarmored and carrying a normal or light load, incoming damage rolls that you could dodge or roll with add 1 black Setback die."
+          },
+          {
+            "name": "Payback",
+            "description": "When you deal damage to a foe that has harmed you or one of your allies, deal +1d4 damage."
+          },
+          {
+            "name": "Relentless",
+            "description": "When you Clash and your foe survives, you add 1 blue Boost die the next time you Clash with them."
+          },
+          {
+            "name": "Seasoned Warrior",
+            "description": "Take a move from the Fox, Marshal, Ranger, or Seeker playbooks, for which you otherwise qualify. You can pick from a different playbook each time. (You can't pick Improved Stat or Superior Stat.)"
+          },
+          {
+            "name": "Situational Awareness",
+            "description": "When you Seek Insight, add the following to the list of questions you can ask: Who or what here is the biggest threat? What is my enemy's true position? What here can I use as a weapon? When a fight breaks out, ask the GM 1 question that you could ask when Seeking Insight."
+          },
+          {
+            "name": "Unfettered",
+            "description": "When you are subject to physical or mental restraint, you may mark a debility to immediately break free of that restraint."
+          },
+          {
+            "name": "Terror on the Field",
+            "description": "When you reduce a foe to 0 HP, describe how you take them out. If you fell them in a particularly brutal or impressive manner, their allies are impressed, dismayed, or frightened and respond accordingly."
+          },
+          {
+            "name": "Frosty",
+            "description": "When you Defy Danger by keeping calm and carrying on, on success with Advantage you can also ask the GM a question that you could ask when Seeking Insight. You add 1 blue Boost die to your next move to act on the answer."
+          },
+          {
+            "name": "Guardian",
+            "description": "When you Defend, hold 1 extra Readiness. Even on failure, hold 1 Readiness (plus whatever the GM says)."
+          },
+          {
+            "name": "Improved Stat",
+            "description": "Each time you take this move, increase one of your stats by 1 (to a max of +2)."
+          },
+          {
+            "name": "Intimidating",
+            "description": "When you Persuade using violence or threats, you add 1 blue Boost die. 44"
           },
           {
             "name": "Bringer of Ruin",
@@ -299,15 +347,15 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Steadfast Guardian",
-            "description": "Core Stonetop move: Steadfast Guardian."
+            "description": "While you hold Readiness (from Defend), you can always suffer the damage/effects of an attack instead of your ward; no need to spend Readiness, you can just do it."
           },
           {
             "name": "Stone Cold",
-            "description": "When you Defy Danger (or Struggle as One) by keeping calm and carrying on, treat failure as success with Threat. SUPERIOR S TAT (Requires level 6+) Increase one of your by +1 (to a max of +3)."
+            "description": "When you Defy Danger (or Struggle as One) by keeping calm and carrying on, treat failure as success with Threat."
           },
           {
             "name": "Superior Stat",
-            "description": "Increase one of your stats by +1 (to a max of +3)."
+            "description": "Increase one of your by +1 (to a max of +3)."
           }
         ],
         "gear": "is crude +0 +1 x =1 piercing +2 x =2 piercing A history of violence Just about everyone here talks about the time you… (pick 1 or 2) … drove off a thunder drake that got too close to town. … killed that hagr in the Foothills. … slew a dozen crinwin in one battle. … tossed those adventurers out of town. … bested Ivan, the scariest bandit in Brennan's gang, the Claws. … dragged yourself (and another?) into town, bleeding from a dozen wounds. … were struck by lightning and woke up covered in these marks. But folks are less keen to discuss… (pick 1 or 2) … the look in your eye when you spilled all that blood. … those hard cases who showed up looking for you. … the shouting matches between you and your love. … the time you spent as one of Brennan's Claws. … what happened to Urbgen, even if he did have it coming. … your uncontrollable seizures, where you claw those weird marks in the dirt. What keeps you up at night? (pick 1 or 2) That thrice-damned temper of yours. The worry that someone's coming after you. The feeling that the crinwin are getting bolder. Wondering what Brennan's up to, now that he's the marshal of Marshedge. Dark visions of things moving in the earth, restless, whispering, and hungry. The question of who'll look after your family when you get yourself killed. The worry that they'll all learn the truth about you, sooner or later. Introductions Wait here for everyone else. When everyone's ready, take turns introducing your characters. When someone reveals something and you want to know more, ask them about it. When someone asks you a question, answer it truthfully. 11 On your first turn, introduce yourself by name, pronouns, background, origin, and appearance. 22 On your second turn, describe your special possessions and how you contribute to the village (beyond working the fields). 33 On your third turn, tell us about your history of violence, and what keeps you up at night. 44 On your next turn, answer one of the following, naming one or more NPCs who live in Stonetop. Who is your closest kin? Who is your lover/spouse/betrothed? Who most needs/deserves your protection? Whose forgiveness do you strive to earn? 55 Go around again. Answer another question from 4, or pass. When everyone has passed, go on. 66 On your next turn, ask your fellow PCs one of these. When others ask you, answer as you like. Which one of you once dragged me home, bleeding and unconscious? Which one of you can I trust to always have my back? Which one of you has stayed my hand? Which one of you has traded blows with me? 77 Go around again. Ask another question from 6, or pass. When everyone has passed, go on. 88 Add your home to the steading playbook. When everyone is done, let spring break forth! Player's Agenda Portray a compelling character Engage with the fictional world Play to find out what happens Player's Principles Begin and end with the fiction Connect with the other PCs Show us what's important to you Have goals and pursue them Be bold, take risks Embrace difficulty, setback, and failure Participate in worldbuilding Build on what others have said Give others a chance to shine Participate in the conversation When in doubt... Visualize the situation Ask the GM for clarification What do you want? What's your goal? Consider your strengths and weaknesses Look to others for ideas Go with the obvious choice, the interesting choice, the meaningful choice... not always the \"right\" choice (remember, you get XP on a failure!) Triggering moves If you want to do it, then do it in the fiction. Tell us how you do it, what it looks like. Be specific. But remember: if you do it in the fiction, then you have to do it. \"I rush past the hagr to grab the glowing sword\" and the GM says that's Defy Danger with DEX. It's okay to say, \"Oh, really? I guess I don't do that.\" But if you want to rush past the hagr, make with the dice. Hold and spend When a move says, \"hold X Currency (until/ while/so long as __),\" then note the Currency you hold and spend it as described by the move. Spending held Currency usually means you just do it, no roll required. Sometimes, though, spending held Currency will allow you to trigger a move (and thus roll) when otherwise you just couldn't have done it. Followers Name Tags HPHP exceptional group Max. HP Armor Damage Instinct Moves ä ä ä Cost Loyalty Gear Notes Name Tags HPHP exceptional group Max. HP Armor Damage Instinct Moves ä ä ä Cost Loyalty Gear Notes"
@@ -391,11 +439,43 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Break Bread",
-            "description": "When you share a proper meal with someone and each of you eats their fill, each of you recovers 1d8 (extra) HP . B ULWARK When you Defend, you can spend 1 Readiness to stand fast, holding your position despite what befalls you. 44"
+            "description": "When you share a proper meal with someone and each of you eats their fill, each of you recovers 1d8 (extra) HP ."
           },
           {
             "name": "Bulwark",
-            "description": "Core Stonetop move: Bulwark."
+            "description": "When you Defend, you can spend 1 Readiness to stand fast, holding your position despite what befalls you. 44"
+          },
+          {
+            "name": "Castigate",
+            "description": "When you Censure someone, your voice deals 1d4 damage to them (near, loud, ignores armor)."
+          },
+          {
+            "name": "For the Greater Good",
+            "description": "When you Persuade someone to act in defense of their community or civilization at large, you add 1 blue Boost die."
+          },
+          {
+            "name": "Hound of Aratis",
+            "description": "When you Seek Insight, you can always ask \"What here is tainted by chaos?\" for free, even on failure."
+          },
+          {
+            "name": "Like a Dog with a Bone",
+            "description": "When you attack something you know to be tainted by chaos, deal +1d6 damage. IMPROVED ST AT Each time you take this move, increase one of your stats by 1 (to a max of +2)."
+          },
+          {
+            "name": "Improved Stat",
+            "description": "Each time you take this move, increase one of your stats by 1 (to a max of +2)."
+          },
+          {
+            "name": "Knowledge is Power",
+            "description": "When you succeed with Advantage on Know Things, you or an ally add 1 blue Boost die to the next roll to act on what you learn."
+          },
+          {
+            "name": "Many Hands Make Light Work",
+            "description": "When you jump in to help another character who just rolled, tell us how and ask the GM what else is required or what the consequences will be. If you accept, add 1 blue Boost die to your ally's roll."
+          },
+          {
+            "name": "A Bundle of Sticks Unbroken",
+            "description": "When you Struggle as One, you and one ally of your choice add 1 blue Boost die."
           },
           {
             "name": "A Mighty Rampart",
@@ -415,7 +495,7 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Mirrorshield",
-            "description": "When you Defend with a shield, you can spend 1 Readiness to intercept a magical force and redirect it to a different target (or none). SUPERIOR ST AT (Requires level 6+) Increase one of your stats by +1 (to a max of +3)."
+            "description": "When you Defend with a shield, you can spend 1 Readiness to intercept a magical force and redirect it to a different target (or none)."
           },
           {
             "name": "The Tower Eternal",
@@ -511,7 +591,27 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Rise Like the Sun",
-            "description": "When you draw attention to yourself by word or deed, roll CHA: on success with Advantage, everyone turns and looks, and you hold their gaze as long as you keep giving them reason to look; on success with Threat, everyone turns and looks."
+            "description": "When you draw attention to yourself by word or deed, roll CHA: on success with Advantage, everyone turns and looks, and you hold their gaze as long as you keep giving them reason to look; on success with Threat, everyone turns and looks. SPRING'"
+          },
+          {
+            "name": "Spring's First Thaw",
+            "description": "When you spend time (an hour at least, maybe more) seeking to stir hope, kindness, or mercy in an NPC, roll CHA: on success with Advantage, you light a fire deep within them and effect a lasting change; on success with Threat, you kindle goodness in their heart for now, but they will eventually return to their old ways; on failure, their heart hardens and, whatever else the GM says, you can't use this move on them again."
+          },
+          {
+            "name": "Fire Within",
+            "description": "When you are in darkness, you are able to see by the light of your inner fire. When you take damage from cold or fire, reduce that damage by 2."
+          },
+          {
+            "name": "Guiding Light",
+            "description": "When you lead one or more NPCs through danger, roll CHA: on success with Advantage, you all make it through (Helior be praised); on success with Threat, the GM will tell you what's required to get everyone through safely. HELIOR'"
+          },
+          {
+            "name": "Helior's Unblinking Eye",
+            "description": "When you stare into the sun long enough to lose your vision, name a person or place that you know and roll WIS: on success with Advantage, you briefly glimpse your subject as if from a great height, and choose 2 from the list below; on success with Threat, you briefly glimpse your subject as if from a great height, and choose 1: The glimpse lasts as long as you wish Your point of view shifts to very close range You recover your vision quickly"
+          },
+          {
+            "name": "Improved Stat",
+            "description": "Each time you take this move, increase one of your stats by 1 (to a max of +2). 44"
           },
           {
             "name": "Wielder of the White Flame",
@@ -531,15 +631,15 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Hungry Flames",
-            "description": "When you deal damage with a holy light, you deal +1d6 damage and your target is engulfed in holy light and flames. LIGHT , MORE LIGHT (Requires level 6+ and Consecrated Flame) When you consecrate a flame, it burns brighter than normal. A rushlight or candle illuminates to reach range, an oil lamp, lantern, or torch out to near range, and a bullseye lantern out to far range. SUPERIOR ST AT (Requires level 6+) Increase one of your by +1 (to a max of +3)."
+            "description": "When you deal damage with a holy light, you deal +1d6 damage and your target is engulfed in holy light and flames."
           },
           {
             "name": "Light, More Light",
-            "description": "Core Stonetop move: Light, More Light."
+            "description": "When you consecrate a flame, it burns brighter than normal. A rushlight or candle illuminates to reach range, an oil lamp, lantern, or torch out to near range, and a bullseye lantern out to far range."
           },
           {
             "name": "Superior Stat",
-            "description": "Increase one of your stats by +1 (to a max of +3)."
+            "description": "Increase one of your by +1 (to a max of +3)."
           }
         ],
         "gear": "is crude +0 +1 x =1 piercing +2 x =2 piercing Praise the day You are the appointed servant of Helior the Daybringer, god of the sun and light, beacon of hope and mercy. The worship of Helior is… (choose 1) … ancient, widespread, and well-known … most common in Lygos and the south … a new thing, still unheard of by many … an old thing, forgotten by most … widely persecuted He is worshipped through… (choose 1 or 2) … solemn hymns … serene meditation … joyful song … ascetic denial … fervent dancing … formal ceremonies … drugs & intoxicants … pain & sacrifice In Stonetop's Pavilion of the Gods, Helior's shrine has… (choose 1) … the place of highest honor, even if Tor is more popular … been well-tended and given due respect … recently been restored/established, perhaps by you … seen better days, for certain Your predecessor, the previous Lightbearer… (choose 2 or 3) … lived long ago, a figure of legend … was martyred for their faith … died facing a mighty sorcerer or demon … wrote many works of sublime beauty … faced one of the Things Below … died in their bed, peacefully … ascended bodily into the heavens … was reincarnated—as you You came into your powers… (choose 1) … through years of study and devotion … when your predecessor passed them on … suddenly, at a moment of great need. … after a visitation from Helior or one of his servants … when you first laid eyes upon the _______ Introductions Wait here for everyone else. When everyone's ready, take turns introducing your characters. When someone reveals something and you want to know more, ask them about it. When someone asks you a question, answer it truthfully. 11 On your first turn, introduce yourself by name, pronouns, background, origin, and appearance. 22 On your second turn, describe your special possessions and how you contribute to the village (beyond working the fields). 33 On your third turn, praise the day! T ell us of Helior, his worship and his shrine. Tell us, too, of the prior Lightbearer and how you gained your powers. 44 On your next turn, answer one of the following, naming one or more NPCs who live in Stonetop. Who is your closest kin? Who fans the flames of your heart? Whose kindness and generosity warm your soul? Who needs Helior's light, badly? 55 Go around again. Answer another question from 4, or pass. When everyone has passed, go on. 66 On your next turn, ask your fellow PCs one of these. When others ask you, answer as you like. Which one of you is an old and dear friend? Which one of you shares my faith? Which one of you scoffs at mercy and hope? Which one of you will need my guidance soon? 77 Go around again. Ask another question from 6, or pass. When everyone has passed, go on. 88 Add your home to the steading playbook. When everyone is done, let spring break forth! Invocations Lightbearer, you start knowing 2 Invocations. Each time you reach an even-numbered level, learn 1 new Invocation. While one Invocation is ongoing, you can't use another. You can end an Invocation whenever you wish, and it will end immediately if your holy light is extinguished. An Invocation's range is equal to that of its light source. BATH OF HEALING LIGHT Cup your hands around your light and focus it. Your patient... (pick 2): Regains 5 HP (can pick this twice) Clears a debility (can pick this twice) Has one of their problematic wounds stabilized Recovers from a minor condition (drunk, etc.) Reduced: pick only 1 (instead of 2). Empowered: add these to your possible choices: Regains 10 HP (can pick this twice) Fully recovers from a problematic wound Is cured of a dire affliction, poison, or disease BLINDING LIGHT (ongoing) Your light blazes. Any in range who look at it are temporarily blinded. Those not looking at it directly must avert their eyes. You are unaffected. Reduced: the light flares only for a moment. Empowered: if you wish, your allies are unaffected. CLEANSING LIGHT Your light flares, dispelling magical effects within range. Potent, lasting magics are merely suppressed, and slowly return to power once removed from your light. Reduced: potent, lasting magics are unaffected; other magical effects are merely suppressed. Empowered: the invocation is ongoing; while it lasts, any magical effects created in or brought into range are dispelled/suppressed. COLD LIGHT OF DAY (ongoing) All in your light appears as it really is, without the benefit of illusion, shapeshifting, or disguise. Reduced: it lasts only a few moments, just long enough to glimpse the truth. Empowered: illusions in the light are dispelled and shapeshifters in the light are momentarily stunned. DANCING LIGHT (ongoing) Your light takes to the air, floating as you direct it, untethered from its fuel. You can move it anywhere that you can see it, and even change its shape or color. Reduced: it dims, reducing its range by one step. Empowered: you can use another Invocation through the Dancing Light while it is ongoing. GO BACK TO THE SHADOW Spirits of darkness in your light take 2d8 damage (ignores armor). Roll damage for each spirit separately. A spirit reduced to 0 HP is either banished from this world or back to whatever tethers it here. Reduced: affected spirits take only 1d8 damage. Empowered: a spirit reduced to 0 HP is either utterly destroyed OR it's banished from the world and anything tethering it here is destroyed (GM's choice). HOLD BACK THE DARKNESS (ongoing) Spirits and creatures of darkness are repelled by your light and cannot approach. The cowardly or mindless flee outright. Those forced into range of your light deal damage with 1 black Setback die. Reduced: you must maintain an unbroken litany of prayers in order to maintain the effect. Empowered: affected entities that are forced into range of your light are vulnerable to mundane weapons, their supernatural defenses suppressed. MOTH TO A FLAME (ongoing) Name an individual or type of mortal creature. They gaze raptly at your light and will follow it, slowly. The effect ends if they take damage. Reduced: it lasts only briefly OR only some of the named creatures are affected (GM's choice). Empowered: the effect continues for a few moments after they first take damage. Taking damage a second time ends the effect immediately. TERRIBLE AS THE DAWN (ongoing) Name an individual or type of mortal creature. Your light fills them with dread, causing them to recoil and back away. The cowardly flee outright. Reduced: all mortal creatures but you are affected, including your allies. Empowered: even the brave must cower or flee. WARMTH OF THE SUN (ongoing) While in your light, you and your allies are free of fear and doubt, and unharmed by extreme cold. Reduced: only one person in the light is protected. Empowered: the light also protects from necromantic and life-draining effects."
@@ -581,7 +681,7 @@ const CAMPAIGNS_DATA = [
         "signature_moves": [
           {
             "name": "Crew",
-            "description": "Each time you take this move, pick 1. You can also choose to reselect their Instinct and Cost. Select 2 new tags for your Crew Increase their damage die from d6 to d8 Increase their max HP by 2 each"
+            "description": "You've got a crew of stalwarts, six or so residents of Stonetop with some steel to them. See the Crew insert for details."
           },
           {
             "name": "Logistics",
@@ -599,11 +699,11 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Stentorian",
-            "description": "When you raise your voice, it carries far and cuts through even the din of battle. When you go into battle, hold 2 Command. Spend 1 Command to shout an order or warning and pick 1: PCs add 1 blue Boost die to their next roll to do as you say You add 1 blue Boost die to Order Followers or Deploy T AKE THE MEASURE When you size someone up, ask their player one of the questions below and get an honest answer. If they fear or respect you (their call), you can ask another question. You can't use this move on them again until your relationship significantly changes. Can I trust them (to ______ )? What do they intend to do? How are they most useful/dangerous? What weakness of theirs can I exploit?"
+            "description": "When you raise your voice, it carries far and cuts through even the din of battle. When you go into battle, hold 2 Command. Spend 1 Command to shout an order or warning and pick 1: PCs add 1 blue Boost die to their next roll to do as you say You add 1 blue Boost die to Order Followers or Deploy"
           },
           {
             "name": "Take the Measure",
-            "description": "Core Stonetop move: Take the Measure."
+            "description": "When you size someone up, ask their player one of the questions below and get an honest answer. If they fear or respect you (their call), you can ask another question. You can't use this move on them again until your relationship significantly changes. Can I trust them (to ______ )? What do they intend to do? How are they most useful/dangerous? What weakness of theirs can I exploit?"
           },
           {
             "name": "We Happy Few",
@@ -615,7 +715,7 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Veteran Crew",
-            "description": "Core Stonetop move: Veteran Crew."
+            "description": "Each time you take this move, pick 1. You can also choose to reselect their Instinct and Cost. Select 2 new tags for your Crew Increase their damage die from d6 to d8 Increase their max HP by 2 each"
           },
           {
             "name": "Front Line Leader",
@@ -636,6 +736,18 @@ const CAMPAIGNS_DATA = [
           {
             "name": "Shield Wall",
             "description": "When you have your crew form a shield wall, they Defend with 1 blue Boost die and on any success they hold +2 Readiness (instead of the usual +1 for shields). As long as they maintain formation, they can go on the offensive without losing Readiness."
+          },
+          {
+            "name": "Arts of War",
+            "description": "Take a move from the Fox, Heavy, Judge, Ranger, or Seeker playbooks, for which you otherwise qualify. You can pick from a different playbook each time. You can't take Improved Stat or Superior Stat. 44"
+          },
+          {
+            "name": "Improved Stat",
+            "description": "Each time you take this move, increase one of your stats by 1 (to a max of +2)."
+          },
+          {
+            "name": "Prepare a Welcome",
+            "description": "When you have your allies fortify a position and lie in wait for battle, hold 1 Surprise if you're rushed or 2 Surprises if you can take your time. Once battle is joined, spend 1 Surprise to reveal a ploy, defense, or dirty trick you prepared in advance and roll INT: on success with Advantage, it works as well as can be expected, and you've still got a few tricks up your sleeve—regain 1 Surprise; on success with Threat, it works as well as can be expected."
           },
           {
             "name": "Battlefield Grace",
@@ -659,7 +771,7 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Peace Through Strength",
-            "description": "When you stand ready to fight alongside like-minded allies, anything capable of fear recognizes you as a serious threat and treats you accordingly. SUPERIOR ST AT (Requires level 6+) Increase one of your stats by +1 (to a max of +3)."
+            "description": "When you stand ready to fight alongside like-minded allies, anything capable of fear recognizes you as a serious threat and treats you accordingly."
           },
           {
             "name": "Superior Stat",
@@ -705,7 +817,7 @@ const CAMPAIGNS_DATA = [
         "signature_moves": [
           {
             "name": "Home on the Range",
-            "description": "When a journey requires you to Defy Danger or Struggle as One, treat failure as success with Threat. IMPROVED S TAT Each time you take this move, increase one of your stats by 1 (to a max of +2). MENT AL MAP You can always retrace your steps and can accurately gauge distances and directions. You might not know the way forward but can always find your way back. When you think back on a place you've been, you can Seek Insight retroactively, as if you were still there."
+            "description": "When a journey requires you to Defy Danger or Struggle as One, treat failure as success with Threat."
           }
         ],
         "choice_moves": [
@@ -715,11 +827,11 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Sniff Out Corruption",
-            "description": "When you Seek Insight, you can ask, \"What here stinks of the unnatural?\" for free, even on failure. ST ALKER When you carry a normal or light load and move with care, you make no noise and leave no sign of your passing. When you hide yourself in a natural environment, you remain unseen until you draw attention to yourself, move positions, or attack."
+            "description": "When you Seek Insight, you can ask, \"What here stinks of the unnatural?\" for free, even on failure."
           },
           {
             "name": "Stalker",
-            "description": "Core Stonetop move: Stalker."
+            "description": "When you carry a normal or light load and move with care, you make no noise and leave no sign of your passing. When you hide yourself in a natural environment, you remain unseen until you draw attention to yourself, move positions, or attack."
           },
           {
             "name": "Survivalist",
@@ -739,7 +851,7 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Mental Map",
-            "description": "Core Stonetop move: Mental Map."
+            "description": "You can always retrace your steps and can accurately gauge distances and directions. You might not know the way forward but can always find your way back. When you think back on a place you've been, you can Seek Insight retroactively, as if you were still there."
           },
           {
             "name": "Naturalist",
@@ -758,20 +870,28 @@ const CAMPAIGNS_DATA = [
             "description": "When you lead your people to Pull Together or Deploy beyond sight of home, you add 1 blue Boost die."
           },
           {
+            "name": "Worldly",
+            "description": "Take a move from the Blessed, Fox, Heavy, Marshal, or Seeker playbooks, for which you otherwise qualify. You can pick from a different playbook each time. You can't pick Improved Stat or Superior Stat."
+          },
+          {
+            "name": "Improved Stat",
+            "description": "Each time you take this move, increase one of your stats by 1 (to a max of +2)."
+          },
+          {
             "name": "Alpha",
             "description": "When you assert dominance over another (beast, spirit, Fae, or person), roll WIS: on any success, they must pick 1 from the list below; on success with Advantage, you also add 1 blue Boost die to your next roll against them. Accept your authority, at least for now Slink away or flee, then avoid you Fight you for dominance"
           },
           {
             "name": "Beast of Legend",
-            "description": "Each time you take this move, pick 1: They are exceptional (and upgrade the follower pool once instead of rolling 1 green Ability die) They get +4 HP and +1 armor They develop some unique ability or trait CONST ANT VIGILANCE (Requires level 6+) Unless you're dazed, you're never caught off guard— not even when asleep or if you fail. When you intercept a sudden threat (to yourself or an ally), you add 1 blue Boost die to whatever move you make."
+            "description": "Each time you take this move, pick 1: They are exceptional (and upgrade the follower pool once instead of rolling 1 green Ability die) They get +4 HP and +1 armor They develop some unique ability or trait"
           },
           {
             "name": "Constant Vigilance",
-            "description": "Core Stonetop move: Constant Vigilance."
+            "description": "Unless you're dazed, you're never caught off guard— not even when asleep or if you fail. When you intercept a sudden threat (to yourself or an ally), you add 1 blue Boost die to whatever move you make."
           },
           {
             "name": "Giant Slayer",
-            "description": "When you strike at a weak spot of a large or huge creature, you deal another +2 damage (+4 total). SUPERIOR ST AT (Requires level 6+) Increase one of your by +1 (to a max of +3)."
+            "description": "When you strike at a weak spot of a large or huge creature, you deal another +2 damage (+4 total)."
           },
           {
             "name": "Trailblazer",
@@ -783,7 +903,7 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Superior Stat",
-            "description": "Increase one of your stats by +1 (to a max of +3)."
+            "description": "Increase one of your by +1 (to a max of +3)."
           }
         ],
         "gear": "is crude +0 +1 x =1 piercing +2 x =2 piercing Something wicked this way comes You know firsthand that trouble is out there, and like it or not, one of these days the folk of Stonetop are going to have to face it. What is it that you're so worried about? (choose 1) A dark, unwholesome presence lurking in the Great Wood A strange, furtive figure seen near the Ruined Tower Something big & savage stalking the northern foothills Whatever's made the lizard-like suarachan of Ferrier's Fen so bold That of which the Hillfolk refuse to speak Then, answer at least 3 of the following questions about this threat: What, exactly, do you think it is? What did you see, and how close did you have to get to see it? Whom or what have you lost to it? What did it leave behind? What do you think it wants? Who refuses to believe you? Who can tell you more, if you can only convince them? Introductions Wait here for everyone else. When everyone's ready, take turns introducing your characters. When someone reveals something and you want to know more, ask them about it. When someone asks you a question, answer it truthfully. 11 On your first turn, introduce yourself by name, pronouns, background, origin, and appearance. 22 On your second turn, describe your special possessions and how you contribute to the village (beyond working the fields). 33 On your third turn, tell us what you're worried about (see \"Something wicked this way comes\"). 44 On your next turn, answer one of the following, naming one or more NPCs who live in Stonetop. Who is your closest kin? To whom do you always return home? Who would be lost without you? Who has much to learn from you? 55 Go around again. Answer another question from 4, or pass. When everyone has passed, go on. 66 On your next turn, ask your fellow PCs one of these. When others ask you, answer as you like. Which one of you fears the wider world? Which one of you has shown me great beauty? Which one of you have I caught sometimes staring out at the horizon? Which one of you lacked the stomach to put something out if its misery? 77 Go around again. Ask another question from 6, or pass. When everyone has passed, go on. 88 Add your home to the steading playbook. When everyone is done, let spring break forth! Instinct Pick 1. To bully and threaten To make mischief To fill its belly To startle and panic To get distracted To run rampant To give chase Cost Pick 1. Loyalty Play, grooming, training, affection Time off on its own, free to roam Cozy quarters, comfort, ample food Each time you take Beast of Legend, pick 1: They are exceptional (see Order Followers below) They get +4 HP and +1 armor They develop a unique ability or trait Animal Companion Ranger, you are accompanied by a beast, with whom you have bonded deeply and communicate without words. Treat it as a follower. Type Pick 1. Bird (falcon, eagle, owl, buzzard, magpie, ) HP 5; Armor 1 (size); Damage d4 (hand) Pick 4 more: Improved damage die (d6) +4 HP +1 armor (agility) attack-bird cautious clever fast mimic sharp-eyed stealthy thieving 44 tiny tireless Critter (cat, fox, possum, raccoon, weasel, ) HP 5; Armor 1 (size); Damage d4 (hand) Pick 5 more: +4 HP +1 armor (agility) agile adorable annoying burrowing cautious clever climber dextrous keen-eared keen-eyed keen-nosed quick stealthy stinky 44 tiny thieving Brute (bear, boar, wolverine, aurochs, drake, ) HP 12; Armor 0; Damage d6 (hand) Pick 3 more: +1 armor (hide, scales, etc.) Damage is +2 damage, forceful Damage is messy, 1 piercing large (+4 HP , +1 damage, +close) easy-going fearless gluttonous keen-nosed powerful protective quick terrifying 44 tough Predator (hound, wolf, cougar, drake, ) HP 8; Armor 0; Damage d8 (hand, grabby) Pick 3 more: +4 HP +1 armor (hide) Damage is messy, 1 piercing agile climber clever enduring fast 44 fierce keen-eared keen-eyed pack-hunter keen-nosed patient powerful stealthy terrifying Steed (horse, mule, ) HP 12; Armor 0; Damage d6+1 (hand, close) Pick 4 more: +4 HP +1 armor (hide) Damage is +2 damage, forceful aggressive agile beautiful calm clever hardy keen-nosed 44 large powerful swift ORDER FOLLOWERS When you direct them to make a move and they do so, build a follower pool from tags: 1 green Ability die if a useful tag applies, upgrade it once if the follower is exceptional, and add 1 black Setback die if a tag gets in the way. When they are without orders or they act on their own initiative, the GM says what they do and how it goes. STRENGTHEN YOUR BOND When you pay their cost and you haven't done so recently, they hold 1 Loyalty (max 3). Spend their Loyalty 1-for-1 to have them: Overcome their fear to do as you say Resist acting on their instinct/tags/traits Do something they don't want to do (as long as it's not abhorrent or suicidal) LOYAL TO THE END When your companion is at 0 HP, roll a flat check, adding 1 blue Boost die if it holds Loyalty: on success with Advantage, it'll be fine once it regains any HP; on success with Threat, it gets the injured tag; on failure, it's injured and will die soon unless someone saves it. Name Damage tags HPHP Max. [Max. [ ]] ArmorArmor See TypeSee Type DamageDamage See TypeSee Type"
@@ -834,6 +954,54 @@ const CAMPAIGNS_DATA = [
         ],
         "choice_moves": [
           {
+            "name": "Quick Study",
+            "description": "When you study something magical that should take months to understand, it instead takes mere weeks. If it should take weeks, it takes days. If it should take days, it takes only a few hours."
+          },
+          {
+            "name": "Safety First",
+            "description": "When you spend an hour or so preparing your mystical defenses, hold 2 Protection. When you are affected by harmful magic, spend 1 Protection either to add 1 blue Boost die to any roll to resist it or to halve its damage/effects."
+          },
+          {
+            "name": "Sage Advice",
+            "description": "When another PC asks you for guidance, they add 1 blue Boost die to their next roll to follow your advice. 44"
+          },
+          {
+            "name": "Well Versed",
+            "description": "Mark 1 topic, in addition to the one noted in your Background. Each additional time you take this move, mark 2 more topics. The Last Door, death, and the undead The civilizations of humanity The Fae and their strange ways The Makers and their arts The primordial powers The Things Below The wild world and its spirits When you Know Things about one of your topics, you can ask the GM a follow-up question of your choice (even on failure). 44"
+          },
+          {
+            "name": "Work With What You've Got",
+            "description": "When you cleverly use your environment to harm or impede your foe(s), roll INT: on success with Advantage, pick 2; on success with Threat, pick 1: Interrupt or thwart their action(s) Create an opportunity that adds 1 blue Boost die to you or an ally on the next roll to exploit it Deal damage appropriate to the source (d4 for bruises/scrapes, d6 for bloodshed, d8 if it'd break bones, d10 if it'd kill a common person)"
+          },
+          {
+            "name": "Initiate of the Secret Arts",
+            "description": "You have a \"Sacred Pouch\" (3 Stock, magical), as per the Blessed, but with no remarkable traits. Each time you take this move, choose a Blessed move for which you otherwise qualify. (You can't take Improved Stat or Superior Stat.)"
+          },
+          {
+            "name": "Let's Make a Deal",
+            "description": "When you Seek Insight, add \"What do they really want or need?\" to the list of questions. When you Persuade by offering them something that you know they want or need, turn one Threat into one Advantage on a successful roll."
+          },
+          {
+            "name": "Logbook",
+            "description": "You have a logbook (2 uses, slow) that doesn't take up space in your inventory. When you (and only you) consult your logbook and expend a use, you can ignore a Know Things roll you just made and treat the result as success with Advantage. When the Seasons Change, reset your logbook to 2 uses."
+          },
+          {
+            "name": "Magpie",
+            "description": "When you Have What You Need, you can produce something strange, specific, maybe even valuable or a little bit magical, but if you do, tell us where you got it and 2 of the following: How it's not quite right, but maybe it'll do? The trouble you caused back home by getting it Why using it will draw unwanted attention That it's the only thing like this that you've got, and why it'll only work the one time"
+          },
+          {
+            "name": "Never at a Loss",
+            "description": "When you Know Things and fail, you may choose to not mark XP . If you don't mark XP , the worst that happens is that the GM tells you nothing interesting or useful about the subject, but instead tells you how you could learn more."
+          },
+          {
+            "name": "Polyglot",
+            "description": "When you first encounter a living language in play, describe your proficiency with it (if any) and how you came to acquire it. When you Know Things about any script, text, runes or symbols that you encounter, you add 1 blue Boost die."
+          },
+          {
+            "name": "Cryptologist",
+            "description": "When you study encoded, forgotten, or arcane marks or writing, roll INT: on success with Advantage, you can fully decipher them in just a few minutes; on success with Threat, you get the gist in a few minutes, but fully deciphering them will take you an hour or so."
+          },
+          {
             "name": "Arcane Adept",
             "description": "When you wish to invent a spell or magical effect, detail its workings with the GM and Make a Plan to invent it. If you like, pick one requirement and ask the GM to provide an alternative (for example \"first you must ____\" could become \"first you must ____, or it will take months\")."
           },
@@ -843,7 +1011,7 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Improvise",
-            "description": "When you wish to use an arcanum's move or option without having unlocked it, ask the GM what fool risk(s) it requires and/or what consequence(s) you'll incur. If you go for it, roll INT: on any success, you get it to work this once—trigger the move or use the option as if you'd unlocked it; and on success with Advantage, also mark one step towards unlocking the arcanum's mysteries. SUPERIOR ST AT (Requires level 6+) Increase one of your stats by +1 (to a max of +3)."
+            "description": "When you wish to use an arcanum's move or option without having unlocked it, ask the GM what fool risk(s) it requires and/or what consequence(s) you'll incur. If you go for it, roll INT: on any success, you get it to work this once—trigger the move or use the option as if you'd unlocked it; and on success with Advantage, also mark one step towards unlocking the arcanum's mysteries."
           },
           {
             "name": "Mind Over Magic",
@@ -901,11 +1069,11 @@ const CAMPAIGNS_DATA = [
         "signature_moves": [
           {
             "name": "Anger is a Gift",
-            "description": "Core Stonetop move: Anger is a Gift."
+            "description": "When you burn with righteous anger, hold 2 Resolve. You can spend your Resolve 1-for-1 to: Set aside fear and doubt to do what must be done; Act suddenly, catching them off-guard; Inspire allies or bystanders to follow your lead; Strike hard (deal +1d4 damage and forceful tag); Keep your footing, position, or course despite what befalls you."
           },
           {
             "name": "Potential for Greatness",
-            "description": "Core Stonetop move: Potential for Greatness."
+            "description": "Once per level, when you roll a stat and get success with Advantage (or a Triumph), mark one of the following: Increase the stat you rolled by 1, to a max of +2; Increase your max HP by 4; Gain an additional starting/advancement move of your choice."
           }
         ],
         "choice_moves": [
@@ -939,7 +1107,7 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Big Damn Hero",
-            "description": "* (Requires level 6+; replaces In Over Your Head) When you first leap into danger to protect someone, don't roll to Defend. Instead, treat it as success with Advantage. When you Defend, you can spend 1 Readiness to lock eyes with an attacker; they add 1 black Setback die to damage rolls against you and your ward for the rest of the fight. SUPERIOR ST AT (Requires all 6 marks in Potential for Greatness) Increase one of your by +1 (to a max of +3)."
+            "description": "* (Requires level 6+; replaces In Over Your Head) When you first leap into danger to protect someone, don't roll to Defend. Instead, treat it as success with Advantage. When you Defend, you can spend 1 Readiness to lock eyes with an attacker; they add 1 black Setback die to damage rolls against you and your ward for the rest of the fight."
           },
           {
             "name": "Undaunted",
@@ -947,7 +1115,7 @@ const CAMPAIGNS_DATA = [
           },
           {
             "name": "Superior Stat (Potential for Greatness)",
-            "description": "Increase one of your stats by +1 (to a max of +3)."
+            "description": "Increase one of your by +1 (to a max of +3)."
           }
         ],
         "gear": "is crude +0 +1 x =1 piercing +2 x =2 piercing Fear & anger What do you fear most? (choose 1, maybe 2) Fire, burning, the smell of charred flesh That they won't take you seriously That you really aren't cut out for this The death of your family or loved ones Being alone and helpless Violence, bloodshed, and pain Monsters What you're capable of What you must do What makes you burn with righteous anger? (choose 2, maybe 3) Bullying, slavery, and oppression Wanton cruelty and unnecessary suffering Injustice and inequality Cowardice, treachery, and selfishness The despoiling of beauty and innocence Threats to your loved ones Violence to children, animals, the innocent Perversions of nature When did your fear or anger last cause you trouble? What did you do? How did it turn out? Introductions Wait here for everyone else. When everyone's ready, take turns introducing your characters. When someone reveals something and you want to know more, ask them about it. When someone asks you a question, answer it truthfully. 11 On your first turn, introduce yourself by name, pronouns, background, origin, and appearance. 22 On your second turn, describe your special possessions and how you contribute to the village (beyond working the fields). 33 On your third turn, tell us of your fear & anger, and of the last time they caused you trouble. 44 On your next turn, answer one of the following, naming one or more NPCs who live in Stonetop. Whose heart do you hope to win? Who is counting on you? Who quietly understands the path you are on? Who do you intend to prove wrong? 55 Go around again. Answer another question from 4, or pass. When everyone has passed, go on. 66 On your next turn, ask your fellow PCs one of these. When others ask you, answer as you like. Which one of you is my closest, truest friend? Which one of you believes in me, despite it all? Which one of you has promised to teach me? Which one of you have I hurt, through what I have done or what I've failed to do? 77 Go around again. Ask another question from 6, or pass. When everyone has passed, go on. 88 Add your home to the steading playbook. When everyone is done, let spring break forth! Player's Agenda Portray a compelling character Engage with the fictional world Play to find out what happens Player's Principles Begin and end with the fiction Connect with the other PCs Show us what's important to you Have goals and pursue them Be bold, take risks Embrace difficulty, setback, and failure Participate in worldbuilding Build on what others have said Give others a chance to shine Participate in the conversation When in doubt... Visualize the situation Ask the GM for clarification What do you want? What's your goal? Consider your strengths and weaknesses Look to others for ideas Go with the obvious choice, the interesting choice, the meaningful choice... not always the \"right\" choice (remember, you get XP on a failure!) Triggering moves If you want to do it, then do it in the fiction. Tell us how you do it, what it looks like. Be specific. But remember: if you do it in the fiction, then you have to do it. \"I rush past the hagr to grab the glowing sword\" and the GM says that's Defy Danger with DEX. It's okay to say, \"Oh, really? I guess I don't do that.\" But if you want to rush past the hagr, make with the dice. Hold and spend When a move says, \"hold X Currency (until/ while/so long as __),\" then note the Currency you hold and spend it as described by the move. Spending held Currency usually means you just do it, no roll required. Sometimes, though, spending held Currency will allow you to trigger a move (and thus roll) when otherwise you just couldn't have done it. Followers Name Tags HPHP exceptional group Max. HP Armor Damage Instinct Moves ä ä ä Cost Loyalty Gear Notes Name Tags HPHP exceptional group Max. HP Armor Damage Instinct Moves ä ä ä Cost Loyalty Gear Notes"
