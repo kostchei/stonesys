@@ -76,6 +76,11 @@
 
   <div id="loading">Loading playbook&hellip;</div>
 
+  <!-- Campaign data bundle (defines CAMPAIGNS_DATA). Loaded so the sheet can
+       render archetypes that live only in the bundle (e.g. the Stonetop set)
+       and have no per-file playbook JSON. -->
+  <script src="data.js"></script>
+  <script>window.CAMPAIGNS_DATA = (typeof CAMPAIGNS_DATA !== "undefined") ? CAMPAIGNS_DATA : null;</script>
   <script type="module" src="app.js"></script>
 </body>
 </html>

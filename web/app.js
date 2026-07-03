@@ -479,6 +479,48 @@ function renderStoryPoints() {
   );
 }
 
+// The one loader: resolve a playbook id (a slugified archetype name) against
+// the CAMPAIGNS_DATA bundle and adapt that archetype into the shape the sheet
+// renderers expect. This is the single source of truth for every campaign.
+// Returns null if no matching archetype is found.
+function slugify(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
+
+function bundleArchetypeToPlaybook(id) {
+  const bundle = (typeof window !== "undefined" && window.CAMPAIGNS_DATA) || null;
+  if (!bundle) return null;
+  let arch = null, campaign = null;
+  for (const c of bundle) {
+    const found = (c.archetypes || []).find((a) => slugify(a.name) === id);
+    if (found) { arch = found; campaign = c; break; }
+  }
+  if (!arch) return null;
+
+  const moves = [];
+  (arch.signature_moves || []).forEach((m) => moves.push({ name: m.name, type: "signature", trigger: "", text: m.description || "" }));
+  (arch.choice_moves || []).forEach((m) => moves.push({ name: m.name, type: "choice", trigger: "", text: m.description || "" }));
+  // Surface backgrounds and instincts (which the sheet has no dedicated slot
+  // for) as always-on reference entries so nothing is lost.
+  (arch.backgrounds || []).forEach((b) => moves.push({ name: `Background — ${b.name}`, type: "fixed", trigger: "", text: b.description || "" }));
+  if (Array.isArray(arch.instincts) && arch.instincts.length) {
+    moves.push({ name: "Instincts", type: "fixed", trigger: "", text: arch.instincts.join(" · ") });
+  }
+
+  const statCap = 5;
+  return {
+    id,
+    name: arch.name,
+    concept: campaign ? `${campaign.name} — ${campaign.tagline || ""}`.trim() : "",
+    duty: arch.duty || "",
+    chassis: { resolution: "genesys-narrative", array: [4, 3, 3, 2, 2, 1], statCap },
+    identity: { names: [], look: [] },
+    stats: { default: { ...arch.stats }, anchor: null, swaps: 0 },
+    derived: { hp: String(arch.hp ?? 0), damage: arch.damage_die || "d6", load: arch.load || "—" },
+    gear: [],
+    moves,
+    advancement: { basic: [], advanced: [] }
+  };
+}
+
 // ---------- boot ----------
 async function boot() {
   const params = new URLSearchParams(location.search);
@@ -502,7 +544,9 @@ async function boot() {
   if (!id) {
     id = localStorage.getItem(ACTIVE_PB_KEY);
     if (!id) {
-      id = "the-beholden";
+      // Default to the first archetype of the first campaign in the bundle.
+      const firstArch = window.CAMPAIGNS_DATA?.[0]?.archetypes?.[0];
+      id = firstArch ? slugify(firstArch.name) : "";
       showSelectorOnBoot = true; // Show selector overlay immediately on first boot
     }
   }
@@ -510,9 +554,11 @@ async function boot() {
   // Save current active playbook ID
   localStorage.setItem(ACTIVE_PB_KEY, id);
 
-  const res = await fetch(`playbooks/${id}.json`);
-  if (!res.ok) throw new Error(`could not load playbook ${id}`);
-  PB = await res.json();
+  // Single source of truth: every archetype is loaded from the CAMPAIGNS_DATA
+  // bundle (data.js) and adapted to the sheet's shape. No per-file fetch, no
+  // fallback — the bundle is the one complete, consistent set of all campaigns.
+  PB = bundleArchetypeToPlaybook(id);
+  if (!PB) throw new Error(`could not load playbook "${id}" from the campaign data`);
   storeKey = `stonesys:${PB.id}`;
   
   state = (() => {
@@ -666,26 +712,26 @@ async function boot() {
 
   const openPlaybookSelector = async () => {
     try {
-      const idxRes = await fetch("playbooks/index.json");
-      if (!idxRes.ok) throw new Error("Could not load playbooks list");
-      const indexData = await idxRes.json();
-      
+      const bundle = (window.CAMPAIGNS_DATA) || null;
+      if (!bundle) throw new Error("campaign data not loaded");
+
       pbListContainer.replaceChildren();
-      indexData.playsets.forEach((set) => {
+      bundle.forEach((campaign) => {
         const group = el("div", { class: "setting-group" }, [
-          el("div", { class: "setting-title", text: set.setting })
+          el("div", { class: "setting-title", text: campaign.name })
         ]);
-        
+
         const grid = el("div", { class: "playbook-grid" });
-        set.playbooks.forEach((p) => {
-          const btn = el("button", { class: "playbook-btn", text: p.name, type: "button" });
+        (campaign.archetypes || []).forEach((arch) => {
+          const pid = slugify(arch.name);
+          const btn = el("button", { class: "playbook-btn", text: arch.name, type: "button" });
           btn.addEventListener("click", () => {
-            localStorage.setItem(ACTIVE_PB_KEY, p.id);
-            window.location.search = `?pb=${p.id}`;
+            localStorage.setItem(ACTIVE_PB_KEY, pid);
+            window.location.search = `?pb=${pid}`;
           });
           grid.appendChild(btn);
         });
-        
+
         group.appendChild(grid);
         pbListContainer.appendChild(group);
       });
