@@ -1,6 +1,7 @@
 // StoneSys JS Application logic
 import { getAccessToken, saveCharacterToDrive, listDriveFiles, loadFromDrive } from "./drive.js";
 import { getMoveGroups, validateStartingChoices } from "./move-groups.js";
+import { generateName } from "./name-generators.js";
 
 // Application State
 let activeCampaign = null;
@@ -144,6 +145,49 @@ window.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem(`stonesys:${slug}`, JSON.stringify(snapshot));
       window.open(`playbook.html?pb=${slug}`, '_blank');
     }
+  });
+
+  document.getElementById("generate-character-btn").addEventListener("click", () => {
+    if (!activeArchetype) return;
+
+    // 1. Generate name
+    const nameInput = document.getElementById('character-name-input');
+    nameInput.value = generateName(activeCampaign ? activeCampaign.id : 'stonetop');
+
+    // 2. Randomize stats using getCreationStatPool and shuffle
+    const pool = getCreationStatPool();
+    const shuffledNames = shuffleStats(STAT_NAMES);
+    const sortedPool = pool.slice().sort((a, b) => b - a);
+    currentStats = {};
+    shuffledNames.forEach((statName, index) => {
+      currentStats[statName] = sortedPool[index] || 2;
+    });
+    renderStats(currentStats);
+
+    // 3. Randomize background
+    const bgRadios = Array.from(document.querySelectorAll('input[name="archetype-background"]'));
+    if (bgRadios.length > 0) {
+      bgRadios.forEach(r => r.checked = false);
+      const randBg = bgRadios[Math.floor(Math.random() * bgRadios.length)];
+      randBg.checked = true;
+    }
+
+    // 4. Randomize starting moves
+    const startingCheckboxes = Array.from(document.querySelectorAll('.choice-move-checkbox[data-move-stage="starting"]'));
+    startingCheckboxes.forEach(cb => cb.checked = false);
+    const shuffledCbs = shuffleStats(startingCheckboxes);
+    const groups = getMoveGroups(activeArchetype, activeCampaign);
+    for (const cb of shuffledCbs) {
+      cb.checked = true;
+      const currentSelected = Array.from(document.querySelectorAll('.choice-move-checkbox[data-move-stage="starting"]:checked')).map(input => input.value);
+      const result = validateStartingChoices(groups, currentSelected, { requireComplete: false });
+      if (!result.ok) {
+        cb.checked = false;
+      }
+    }
+
+    updateStatRuleNote();
+    setSaveStatus('Unsaved randomized changes.');
   });
 
   // Save to Google Drive

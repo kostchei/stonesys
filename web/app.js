@@ -1,6 +1,8 @@
 import { rollMove } from "./dice.js";
 import { getAccessToken, saveCharacterToDrive, listDriveFiles, loadFromDrive } from "./drive.js";
 import { getMoveGroups, validateStartingChoices } from "./move-groups.js";
+import { generateName } from "./name-generators.js";
+
 
 const CLIENT_ID_KEY = "stonesys:gdrive_client_id";
 const ACTIVE_PB_KEY = "stonesys:active_playbook";
@@ -627,6 +629,7 @@ function bundleArchetypeToPlaybook(id) {
   const statCap = 5;
   return {
     id,
+    campaignId: campaign ? campaign.id : "stonetop",
     name: arch.name,
     concept: campaign ? `${campaign.name} — ${campaign.tagline || ""}`.trim() : "",
     duty: arch.duty || "",
@@ -886,6 +889,25 @@ async function boot() {
   if (bootLoading) bootLoading.style.display = "none";
   
   document.getElementById("reset-btn").addEventListener("click", () => { if (confirm("Reset this character to the playbook defaults?")) { state = defaultState(PB); save(); render(); } });
+  document.getElementById("generate-btn").addEventListener("click", () => {
+    state.name = generateName(PB.campaignId || "stonetop");
+    if (PB.identity && Array.isArray(PB.identity.look)) {
+      PB.identity.look.forEach((l) => {
+        if (l.options && l.options.length) {
+          state.look[l.label] = l.options[Math.floor(Math.random() * l.options.length)];
+        }
+      });
+    }
+    if (Array.isArray(PB.gear)) {
+      PB.gear.forEach((g) => {
+        if (g.options && g.options.length) {
+          state.gear[g.label] = g.options[Math.floor(Math.random() * g.options.length)];
+        }
+      });
+    }
+    save();
+    render();
+  });
   document.getElementById("print-btn").addEventListener("click", () => window.print());
   renderStoryPoints();
   render();
