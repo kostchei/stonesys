@@ -6,47 +6,47 @@ const CAMPAIGN_SUPPLEMENTS = {
     startingSlots: 1,
     startingRuleLabel: "Choose one wild psionic talent",
     byArchetype: {
-      "The Gladiator": {
+      "Gladiator": {
         starting: ["Wild Talent: Kinetic Push", "Wild Talent: Body Control", "Wild Talent: Heat Endurance", "Wild Talent: Mind Blank", "Wild Talent: Threat Sense", "Wild Talent: Pain Lock"],
         advancement: ["Psionic Discipline: Psychokinesis", "Psionic Discipline: Psychometabolism", "Arena Mind-Feint", "Harden a psionic defense", "Learn a psionic attack mode", "Body as Weapon", "Read an opponent's intent", "Ignore the pain command", "Break a mental hold", "Crowd-Fueled Focus"],
         level6: ["Mastered Wild Talent", "Psionic Duelist", "Mind over the Arena", "Break the Beast's Will", "Shield a Company Mind", "Awaken a Latent Talent", "Stand Before the Sorcerer-King"]
       },
-      "The Templar": {
+      "Templar": {
         starting: ["Wild Talent: Telepathic Nudge", "Wild Talent: Object Reading", "Wild Talent: Empathic Reading", "Wild Talent: Mind Blank", "Wild Talent: Commanding Glare", "Wild Talent: Sense Treachery"],
         advancement: ["Psionic Discipline: Telepathy", "Psionic Discipline: Clairsentience", "Harden a psionic defense", "Hide your talent from templar scrutiny", "Read an obsidian memory shard", "Compel a hesitant witness", "Mask a thought before inspection", "Brand a mind with authority", "Interrogate through the Way", "Borrow a bureau secret"],
         level6: ["Open the Inner Way", "Defy the Sorcerer-King's Gaze", "Seal a Thought-Crime", "Command a Court Mind", "Imperial Psionic Writ", "Shield a Company Mind", "Awaken a Latent Talent"]
       },
-      "The Preserver": {
+      "Preserver": {
         starting: ["Wild Talent: Sense Life", "Wild Talent: Object Reading", "Wild Talent: Far Hearing", "Wild Talent: Empathic Reading", "Wild Talent: Gentle Touch", "Wild Talent: Green Memory"],
         advancement: ["Psionic Discipline: Clairsentience", "Psionic Discipline: Telepathy", "Train with a Way tutor", "Read an obsidian memory shard", "Hide your talent from templar scrutiny", "Hear the life-web", "Soothe a frightened mind", "Preserve a fading memory", "Sense defiling scars", "Quiet the spell's footprint"],
         level6: ["Mastered Wild Talent", "Open the Inner Way", "Garden of the Mind", "Restore a Burned Memory", "Shield a Company Mind", "Awaken a Latent Talent", "Defy the Sorcerer-King's Gaze"]
       },
-      "The Defiler": {
+      "Defiler": {
         starting: ["Wild Talent: Kinetic Push", "Wild Talent: Heat Endurance", "Wild Talent: Mind Blank", "Wild Talent: Telepathic Nudge", "Wild Talent: Drain Echo", "Wild Talent: Withering Glance"],
         advancement: ["Psionic Discipline: Psychokinesis", "Psionic Discipline: Telepathy", "Learn a psionic attack mode", "Hide your talent from templar scrutiny", "Harden a psionic defense", "Overpower a lesser mind", "Feed focus from fear", "Leave a false mental trail", "Read a victim's last panic", "Burn through a ward"],
         level6: ["Mastered Wild Talent", "Open the Inner Way", "Defy the Sorcerer-King's Gaze", "Mind over the Waste", "Black Sun Thought", "Awaken a Latent Talent", "Break a Company Mind"]
       },
-      "The Psionicist": {
+      "Psionicist": {
         starting: ["Wild Talent: Telepathic Nudge", "Wild Talent: Sense Life", "Wild Talent: Kinetic Push", "Wild Talent: Body Control", "Wild Talent: Object Reading", "Wild Talent: Far Hearing", "Wild Talent: Empathic Reading", "Wild Talent: Heat Endurance", "Wild Talent: Mind Blank"],
         advancement: ["Psionic Discipline: Clairsentience", "Psionic Discipline: Psychokinesis", "Psionic Discipline: Psychometabolism", "Psionic Discipline: Psychoportation", "Psionic Discipline: Telepathy", "Train with a Way tutor", "Harden a psionic defense", "Learn a psionic attack mode", "Read an obsidian memory shard", "Open a second talent"],
         level6: ["Mastered Wild Talent", "Open the Inner Way", "Psionic Duelist", "Mind over the Waste", "Shield a Company Mind", "Awaken a Latent Talent", "Walk the Unseen Way"]
       },
-      "The Dune Trader": {
+      "Dune Trader": {
         starting: ["Wild Talent: Empathic Reading", "Wild Talent: Object Reading", "Wild Talent: Far Hearing", "Wild Talent: Telepathic Nudge", "Wild Talent: Sense Water Debt", "Wild Talent: Coin Memory"],
         advancement: ["Psionic Discipline: Clairsentience", "Psionic Discipline: Telepathy", "Read an obsidian memory shard", "Hide your talent from templar scrutiny", "Harden a psionic defense", "Know the buyer's hunger", "Sense an ambush price", "Whisper across a caravan", "Seal a bargain in the Way", "Map a market rumor"],
         level6: ["Mastered Wild Talent", "Open the Inner Way", "Ledger in Every Mind", "Shield a Caravan Mind", "Awaken a Latent Talent", "Defy the Sorcerer-King's Gaze", "Mind over the Trade Road"]
       },
-      "The Elemental Priest": {
+      "Elemental Priest": {
         starting: ["Wild Talent: Sense Life", "Wild Talent: Heat Endurance", "Wild Talent: Body Control", "Wild Talent: Mind Blank", "Wild Talent: Elemental Murmur", "Wild Talent: Water Memory"],
         advancement: ["Psionic Discipline: Psychometabolism", "Psionic Discipline: Clairsentience", "Train with a Way tutor", "Harden a psionic defense", "Hear an elemental omen", "Endure the killing sun", "Still panic with a prayer", "Sense poison in the body", "Carry a spark through silence", "Read the ash of a place"],
         level6: ["Mastered Wild Talent", "Open the Inner Way", "Elemental Mind-Vessel", "Mind over the Waste", "Shield a Company Mind", "Awaken a Latent Talent", "Speak Where No Voice Carries"]
       },
-      "The Wasteland Scout": {
+      "Wasteland Scout": {
         starting: ["Wild Talent: Sense Life", "Wild Talent: Far Hearing", "Wild Talent: Heat Endurance", "Wild Talent: Mind Blank", "Wild Talent: Dust-Sense", "Wild Talent: Predator's Stillness"],
         advancement: ["Psionic Discipline: Clairsentience", "Psionic Discipline: Psychoportation", "Harden a psionic defense", "Read an obsidian memory shard", "Hide your talent from templar scrutiny", "Hear pursuit through stone", "Sense water under sand", "Leave no mental spoor", "Follow a fading life-sign", "Run beyond thirst"],
         level6: ["Mastered Wild Talent", "Mind over the Waste", "Open the Inner Way", "Walk Between Heat-Shimmers", "Shield a Company Mind", "Awaken a Latent Talent", "Defy the Sorcerer-King's Gaze"]
       },
-      "The Rebellious Slave": {
+      "Rebellious Slave": {
         starting: ["Wild Talent: Mind Blank", "Wild Talent: Body Control", "Wild Talent: Empathic Reading", "Wild Talent: Kinetic Push", "Wild Talent: Chain-Snap Focus", "Wild Talent: Hope-Spark"],
         advancement: ["Psionic Discipline: Psychometabolism", "Psionic Discipline: Telepathy", "Harden a psionic defense", "Learn a psionic attack mode", "Hide your talent from templar scrutiny", "Break a master's command", "Share courage silently", "Turn pain into motion", "Awaken a comrade's talent", "Remember the name they stole"],
         level6: ["Mastered Wild Talent", "Open the Inner Way", "Shield a Company Mind", "Awaken a Latent Talent", "Break the Collar in the Mind", "Defy the Sorcerer-King's Gaze", "Mind over the Slave-Pits"]
@@ -58,47 +58,47 @@ const CAMPAIGN_SUPPLEMENTS = {
     startingSlots: 1,
     startingRuleLabel: "Choose one god, guildmaster, or weird patron",
     byArchetype: {
-      "The Bravo": {
+      "Bravo": {
         starting: ["Weird Patron: Ningauble of the Seven Eyes", "Weird Patron: Sheelba of the Eyeless Face", "God: Kos of Dooms", "Guildmaster: A Black-Toga Factor", "Guildmaster: A Duel Yard Backer", "God: The Red God of Knives"],
         advancement: ["Favor from Ningauble", "Errand for Sheelba", "Black-Toga Legal Fiction", "Temple Debt Marker", "Duelist's Witness", "Watch Sergeant's Blind Eye", "Insult That Must Be Answered", "Noble's Dirty Favor", "Old Overlord Rumor", "Street Champion's Claim"],
         level6: ["Audience with Ningauble", "Summons from Sheelba", "A God Walks in Lankhmar", "Patron's Impossible Price", "The City Itself Takes Notice", "Champion of a Street God", "Duel at the Gods' Door"]
       },
-      "The Thief": {
+      "Thief": {
         starting: ["Weird Patron: Ningauble of the Seven Eyes", "Guildmaster: A Thieves' Guild Whisperer", "Guildmaster: A Black-Toga Factor", "God: Mog the Spider God", "God: The Gods of Lankhmar", "Guildmaster: A Roof-Runner Crew"],
         advancement: ["Guild Password", "Rat-Run Escape", "Bazaar Fence Network", "Favor from Ningauble", "Spider-Cult Safehouse", "Black-Toga Legal Fiction", "Old Overlord Rumor", "Marked Window", "Silent Roof Bell", "Cutpurse's Map"],
         level6: ["Audience with Ningauble", "Patron's Impossible Price", "The City Itself Takes Notice", "Master Key of the Inner City", "Gods of Lankhmar Remember You", "Cult Uprising", "Vault No One Admits Exists"]
       },
-      "The Dabbler": {
+      "Dabbler": {
         starting: ["Weird Patron: Ningauble of the Seven Eyes", "Weird Patron: Sheelba of the Eyeless Face", "God: Death's Quiet Ledger", "God: Mog the Spider God", "Guildmaster: A Forbidden Bookseller", "God: The Gods of Trouble"],
         advancement: ["Favor from Ningauble", "Errand for Sheelba", "Death Owes You a Delay", "Spider-Cult Safehouse", "Old Overlord Rumor", "Black-Toga Legal Fiction", "Candle of Unwise Questions", "Borrowed Demon Name", "Ash-Smeared Ward", "Price Written in a Dream"],
         level6: ["Audience with Ningauble", "Summons from Sheelba", "Death Names a Quota", "Patron's Impossible Price", "A God Walks in Lankhmar", "Spell the City Forbids", "Door Beneath the Seventh Eye"]
       },
-      "The Street Priest": {
+      "Street Priest": {
         starting: ["God: Issek of the Jug", "God: Kos of Dooms", "God: Death's Quiet Ledger", "God: Mog the Spider God", "God: The Gods of Lankhmar", "Guildmaster: A Street Shrine Keeper"],
         advancement: ["Temple Debt Marker", "Death Owes You a Delay", "Spider-Cult Safehouse", "Cult Offering Cache", "Pilgrim's Ugly Secret", "Street Sermon Favor", "Borrowed Relic", "Gods' Coin Box", "Fickle Blessing", "Rival Priest's Shame"],
         level6: ["Death Names a Quota", "A God Walks in Lankhmar", "Cult Uprising", "The City Itself Takes Notice", "God Takes Your Face", "Miracle in a Cheap Alley", "Temple Bell That Answers"]
       },
-      "The Foreign Mercenary": {
+      "Foreign Mercenary": {
         starting: ["God: Kos of Dooms", "Guildmaster: A Black-Toga Factor", "Guildmaster: A Foreign Captain", "God: Death's Quiet Ledger", "Weird Patron: Sheelba of the Eyeless Face", "God: A Hearth-God from Home"],
         advancement: ["Black-Toga Legal Fiction", "Temple Debt Marker", "Old Overlord Rumor", "Watch Sergeant's Blind Eye", "Foreign Blade Contract", "Barracks Drinking Friend", "Caravan Guard Signal", "Mercenary Oath Marker", "Border War Tale", "Debt of Blood"],
         level6: ["Summons from Sheelba", "A God Walks in Lankhmar", "Patron's Impossible Price", "The City Itself Takes Notice", "War Band at the Gate", "Death Names a Quota", "Foreign God Answers Here"]
       },
-      "The Courtesan/Dandy": {
+      "Courtesan/Dandy": {
         starting: ["Weird Patron: Ningauble of the Seven Eyes", "Guildmaster: A Black-Toga Factor", "God: Issek of the Jug", "God: The Gods of Lankhmar", "Guildmaster: A Salon of Masks", "Guildmaster: A Jealous Noble"],
         advancement: ["Favor from Ningauble", "Black-Toga Legal Fiction", "Temple Debt Marker", "Bazaar Fence Network", "Invitation No One Gets", "Scandal Ledger", "Perfumed Spy", "Masked Ball Exit", "Noble's Dirty Favor", "Whispered Vow"],
         level6: ["Audience with Ningauble", "Patron's Impossible Price", "A God Walks in Lankhmar", "The City Itself Takes Notice", "Scandal That Topples a House", "Mask Worn by a God", "Summons from Sheelba"]
       },
-      "The Assassin": {
+      "Assassin": {
         starting: ["God: Death's Quiet Ledger", "God: Mog the Spider God", "Guildmaster: A Thieves' Guild Whisperer", "Weird Patron: Sheelba of the Eyeless Face", "Guildmaster: A Silent Contract Broker", "God: The Knife Before Dawn"],
         advancement: ["Death Owes You a Delay", "Spider-Cult Safehouse", "Guild Password", "Errand for Sheelba", "Marked Victim's Routine", "Poisoner's Mercy", "Silent Contract Seal", "Window Without a Watchman", "Body No One Finds", "Old Overlord Rumor"],
         level6: ["Death Names a Quota", "Summons from Sheelba", "Cult Uprising", "Patron's Impossible Price", "The City Itself Takes Notice", "Name Crossed from Death's Book", "A God Walks in Lankhmar"]
       },
-      "The Fence": {
+      "Fence": {
         starting: ["Weird Patron: Ningauble of the Seven Eyes", "Guildmaster: A Black-Toga Factor", "Guildmaster: A Thieves' Guild Whisperer", "God: The Gods of Lankhmar", "Guildmaster: A Collector of Unclean Relics", "God: Mog the Spider God"],
         advancement: ["Favor from Ningauble", "Bazaar Fence Network", "Black-Toga Legal Fiction", "Guild Password", "Old Overlord Rumor", "Appraiser's Lie", "Collector's Private Door", "Stolen Relic Provenance", "Warehouse Nobody Owns", "Temple Debt Marker"],
         level6: ["Audience with Ningauble", "Patron's Impossible Price", "The City Itself Takes Notice", "A God Walks in Lankhmar", "Vault No One Admits Exists", "Market That Opens at Midnight", "Cult Uprising"]
       },
-      "The Beggar Agent": {
+      "Beggar Agent": {
         starting: ["Weird Patron: Ningauble of the Seven Eyes", "God: Issek of the Jug", "God: The Gods of Lankhmar", "Guildmaster: A Beggar-King", "Guildmaster: A Thieves' Guild Whisperer", "God: The Small God Under the Step"],
         advancement: ["Favor from Ningauble", "Rat-Run Escape", "Guild Password", "Temple Debt Marker", "Old Overlord Rumor", "Beggar Sign Network", "Door No Noble Sees", "Street Child Messenger", "Soup-Line Alibi", "Crutch with a Knife Inside"],
         level6: ["Audience with Ningauble", "A God Walks in Lankhmar", "The City Itself Takes Notice", "Patron's Impossible Price", "Every Beggar Knows Your Name", "Cult Uprising", "God Beneath the Threshold"]
@@ -160,7 +160,7 @@ const CAMPAIGN_SUPPLEMENTS = {
 };
 
 const CORE_STONETOP_MOVES = {
-  "The Blessed": {
+  "Blessed": {
     startingText: "Start with Spirit Tongue, Call the Spirits, one background move, and one pre-6 Blessed move.",
     startingSlots: 1,
     startingRules: [],
@@ -169,7 +169,7 @@ const CORE_STONETOP_MOVES = {
     advancement: ["Trackless Step", "Veil", "Wards & Bindings", "Wild Soul", "Borrow Power", "Into the Lion's Den", "Lightning Rod", "Rites of the Land", "Improved Stat"],
     level6: ["Voice of the Earth Mother", "Nature's Wrath", "Potent Workings", "Shared Souls", "Suck the Poison Out", "Superior Stat"]
   },
-  "The Fox": {
+  "Fox": {
     startingText: "Start with Ambush or Skill at Arms; Danger Sense or Perceptive; and one additional pre-6 Fox move.",
     startingSlots: 3,
     startingRules: [
@@ -181,7 +181,7 @@ const CORE_STONETOP_MOVES = {
     advancement: ["Ambush", "Skill at Arms", "Danger Sense", "Perceptive", "Rapier Wit", "Parry & Riposte", "Silver Tongued", "Under Your Skin", "Free Running", "Improved Stat", "Irresistible", "Laugh at Danger", "Light Fingers"],
     level6: ["Battle Dancer", "Cheap Shot", "Eye on the Door", "Pants on Fire", "Second Intent", "Slippery", "Superior Stat"]
   },
-  "The Heavy": {
+  "Heavy": {
     startingText: "Start with Dangerous, Hard to Kill, and either Armored or Uncanny Reflexes.",
     startingSlots: 1,
     startingRules: [
@@ -192,7 +192,7 @@ const CORE_STONETOP_MOVES = {
     advancement: ["Armored", "Uncanny Reflexes", "Payback", "Relentless", "Seasoned Warrior", "Situational Awareness", "Unfettered", "Terror on the Field", "Frosty", "Guardian", "Improved Stat", "Intimidating"],
     level6: ["Bringer of Ruin", "Cut from Granite", "Mighty Thews", "Nemesis", "Steadfast Guardian", "Stone Cold", "Superior Stat"]
   },
-  "The Judge": {
+  "Judge": {
     startingText: "Start with Censure, Chronicler of Stonetop, and two pre-6 Judge moves.",
     startingSlots: 2,
     startingRules: [],
@@ -201,7 +201,7 @@ const CORE_STONETOP_MOVES = {
     advancement: ["The Hammer and the Book", "Truth or Consequences", "Binding Arbitration", "Vision Unclouded", "Well-Read", "Aegis of Faith", "Armored", "Bear Witness", "Break Bread", "Bulwark", "Castigate", "For the Greater Good", "Hound of Aratis", "Like a Dog with a Bone", "Improved Stat", "Knowledge is Power", "Many Hands Make Light Work", "A Bundle of Sticks Unbroken"],
     level6: ["A Mighty Rampart", "Armistice", "Condemn", "Proclamation", "Mirrorshield", "The Tower Eternal", "Superior Stat"]
   },
-  "The Lightbearer": {
+  "Lightbearer": {
     startingText: "Start with Consecrated Flame, Invoke the Sun God, and one pre-6 Lightbearer move.",
     startingSlots: 1,
     startingRules: [],
@@ -210,7 +210,7 @@ const CORE_STONETOP_MOVES = {
     advancement: ["A Candle Against the Dark", "Luminous Shield", "All is Illuminated", "And Behold a Pale Horse", "Keep the Home-Fires Burning", "Lamplighter", "Piety", "Purifying Flames", "Radiant Countenance", "Rise Like the Sun", "Spring's First Thaw", "Fire Within", "Guiding Light", "Helior's Unblinking Eye", "Improved Stat"],
     level6: ["Wielder of the White Flame", "Burn Twice as Bright", "Empowered Invocations", "Glorious Servant", "Hungry Flames", "Light, More Light", "Superior Stat"]
   },
-  "The Marshal": {
+  "Marshal": {
     startingText: "Start with Crew, Logistics, background moves, and one pre-6 Marshal move.",
     startingSlots: 1,
     startingRules: [],
@@ -219,7 +219,7 @@ const CORE_STONETOP_MOVES = {
     advancement: ["Sir, Permission to Die, Sir", "Speak Softly", "Stentorian", "Take the Measure", "We Happy Few", "Armored", "Arts of War", "Veteran Crew", "Front Line Leader", "Improved Stat", "Read the Land", "Prepare a Welcome", "Set-Up Strike", "Shake It Off", "Shield Wall"],
     level6: ["Battlefield Grace", "Heroes to the Last", "Focus Fire", "Like an Open Book", "Noble Mien", "Peace Through Strength", "Superior Stat"]
   },
-  "The Ranger": {
+  "Ranger": {
     startingText: "Start with Home on the Range, background moves, and one pre-6 Ranger move.",
     startingSlots: 1,
     startingRules: [],
@@ -228,7 +228,7 @@ const CORE_STONETOP_MOVES = {
     advancement: ["Predator", "Sniff Out Corruption", "Stalker", "Survivalist", "Warden of the Wild", "Wild Speech", "Worldly", "Expert Tracker", "Improved Stat", "Mental Map", "Naturalist", "On the Hoof", "Pack Horse", "Pathfinder"],
     level6: ["Alpha", "Beast of Legend", "Constant Vigilance", "Giant Slayer", "Trailblazer", "Walk It Off", "Superior Stat"]
   },
-  "The Seeker": {
+  "Seeker": {
     startingText: "Start with Well Versed, Work With What You've Got, and one background move.",
     startingSlots: 0,
     startingRules: [],
@@ -237,7 +237,7 @@ const CORE_STONETOP_MOVES = {
     advancement: ["Quick Study", "Safety First", "Sage Advice", "Well Versed", "Work With What You've Got", "Initiate of the Secret Arts", "Let's Make a Deal", "Logbook", "Magpie", "Never at a Loss", "Polyglot", "Cryptologist"],
     level6: ["Arcane Adept", "Deep Insight", "Improvise", "Mind Over Magic", "Overchannel", "Proof Against Detection", "Superior Stat"]
   },
-  "The Would-be Hero": {
+  "Would-be Hero": {
     startingText: "Start with Anger is a Gift, Potential for Greatness, and two pre-6 Would-be Hero moves.",
     startingSlots: 2,
     startingRules: [],
