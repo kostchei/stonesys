@@ -50,6 +50,42 @@ let state = null;
 let storeKey = "";
 let sp = { player: 1, gm: 1 };
 
+function getMaxHp() {
+  let max = state.hp.max || 0;
+  if (state.obligationTriggered === "Weird Patron: Sheelba of the Eyeless Face") {
+    max = Math.max(1, max - 2);
+  }
+  return max;
+}
+
+function rollObligation() {
+  const roll = Math.floor(Math.random() * 100) + 1;
+  state.obligationSessionRoll = roll;
+  
+  let currentRangeStart = 1;
+  let triggered = null;
+  
+  for (const o of state.obligations || []) {
+    const val = Number(o.value) || 0;
+    if (val <= 0) continue;
+    const rangeEnd = currentRangeStart + val - 1;
+    if (roll >= currentRangeStart && roll <= rangeEnd) {
+      triggered = o.type;
+      break;
+    }
+    currentRangeStart += val;
+  }
+  
+  state.obligationTriggered = triggered;
+  if (triggered) {
+    alert(`⚠️ Obligation Triggered: "${triggered}"! (d100 Roll: ${roll})\n\nConsequence applied to sheet.`);
+  } else {
+    alert(`✅ No Obligation triggered. (d100 Roll: ${roll})`);
+  }
+  save();
+  render();
+}
+
 function defaultState(pb) {
   const chosen = pb.moves.filter((m) => m.type !== "choice").map((m) => m.name);
   defaultStartingChoices(pb).forEach((name) => chosen.push(name));
@@ -59,6 +95,20 @@ function defaultState(pb) {
   for (const m of pb.moves) if (m.hold) holds[m.hold.name] = 0;
   const stats = { ...pb.stats.default };
   const hp = Number(evalFormula(pb.derived.hp, stats)) || 0;
+  
+  let obligations = [];
+  if (pb.campaignId === "lankhmar") {
+    obligations = [{ type: "Patron Debt", value: 10 }];
+  } else if (pb.campaignId === "darksun") {
+    let type = "Hunted by the Templars";
+    if (pb.name.toLowerCase().includes("defiler")) {
+      type = "Defiler's Reek";
+    } else if (pb.name.toLowerCase().includes("templar")) {
+      type = "Sorcerer-King's Pact";
+    }
+    obligations = [{ type, value: 10 }];
+  }
+
   return {
     name: pb.identity.names[0] || "",
     look: Object.fromEntries(pb.identity.look.map((l) => [l.label, l.options[0]])),
@@ -67,7 +117,10 @@ function defaultState(pb) {
     hp: { current: hp, max: hp }, xp: 0, advChecked: {},
     advChoices: {},   // key -> stat or move name chosen for a picker-backed advancement
     trainedRanks: {}, // move name -> proficiency upgrades (1 default, 2 once trained)
-    swapDone: null    // { a, b } once the one allowed chargen stat-swap is used
+    swapDone: null,   // { a, b } once the one allowed chargen stat-swap is used
+    obligations,
+    obligationTriggered: null,
+    obligationSessionRoll: null
   };
 }
 
@@ -199,8 +252,8 @@ function renderLeft() {
   const hp = el("div", { class: "vital" }, [
     el("span", { class: "vital-label", text: "HP" }),
     el("button", { class: "no-print", type: "button", text: "−", onclick: () => { state.hp.current = Math.max(0, state.hp.current - 1); save(); render(); } }),
-    el("span", { class: "vital-val", text: `${state.hp.current} / ${state.hp.max}` }),
-    el("button", { class: "no-print", type: "button", text: "+", onclick: () => { state.hp.current = Math.min(state.hp.max, state.hp.current + 1); save(); render(); } })
+    el("span", { class: "vital-val", text: `${state.hp.current} / ${getMaxHp()}` }),
+    el("button", { class: "no-print", type: "button", text: "+", onclick: () => { state.hp.current = Math.min(getMaxHp(), state.hp.current + 1); save(); render(); } })
   ]);
   const xp = el("div", { class: "vital" }, [
     el("span", { class: "vital-label", text: "XP" }),
@@ -250,8 +303,17 @@ function renderMove(m) {
               }
             }
             if (!state.chosen.includes(m.name)) state.chosen.push(m.name);
+            if (m.name.match(/^(Weird Patron:|God:|Guildmaster:)/)) {
+              state.obligations = state.obligations || [];
+              if (!state.obligations.some(o => o.type === m.name)) {
+                state.obligations.push({ type: m.name, value: 10 });
+              }
+            }
           } else {
             state.chosen = state.chosen.filter((n) => n !== m.name);
+            if (m.name.match(/^(Weird Patron:|God:|Guildmaster:)/)) {
+              state.obligations = (state.obligations || []).filter(o => o.type !== m.name);
+            }
           }
           save(); render();
         } }),
@@ -442,6 +504,126 @@ function renderRight() {
   } else {
     kids.push(el("p", { class: "embed-system", text: "No power-structure layer in this setting; ties are tracked through Bonds." }));
   }
+
+  // Obligations panel for Lankhmar and Dark Sun
+  if (PB.campaignId === "lankhmar" || PB.campaignId === "darksun") {
+    kids.push(el("h2", { text: "Patrons & Obligations" }));
+    kids.push(el("p", { class: "hint", text: "Track your debts, patrons, or complications. Roll d100 at the start of each session." }));
+
+    state.obligations = state.obligations || [];
+    const listDiv = el("div", { class: "obligations-list" });
+    
+    let totalObligation = 0;
+    state.obligations.forEach((o, index) => {
+      totalObligation += Number(o.value) || 0;
+      
+      const row = el("div", { class: "obligation-row", style: "display: flex; gap: 4px; margin-bottom: 4px;" }, [
+        el("input", {
+          type: "text",
+          value: o.type || "",
+          placeholder: "e.g., Hunted by Templars",
+          style: "flex: 2; font-size: 0.85rem; padding: 2px 4px;",
+          onchange: (e) => { o.type = e.target.value; save(); }
+        }),
+        el("input", {
+          type: "number",
+          value: String(o.value || 0),
+          min: "0",
+          max: "100",
+          style: "width: 50px; font-size: 0.85rem; padding: 2px 4px;",
+          onchange: (e) => { o.value = Math.max(0, Number(e.target.value) || 0); save(); render(); }
+        }),
+        el("button", {
+          type: "button",
+          text: "−",
+          class: "no-print clear-btn danger",
+          style: "padding: 2px 8px; font-size: 0.85rem;",
+          onclick: () => {
+            state.obligations.splice(index, 1);
+            save();
+            render();
+          }
+        })
+      ]);
+      listDiv.appendChild(row);
+    });
+    kids.push(listDiv);
+
+    // Controls
+    const controls = el("div", { style: "display: flex; gap: 4px; margin-top: 8px;" }, [
+      el("button", {
+        type: "button",
+        text: "+ Add Obligation",
+        class: "clear-btn",
+        style: "flex: 1; font-size: 0.85rem;",
+        onclick: () => {
+          state.obligations.push({ type: "", value: 10 });
+          save();
+          render();
+        }
+      }),
+      el("button", {
+        type: "button",
+        text: "🎲 Roll d100 Check",
+        class: "clear-btn",
+        style: "flex: 1; font-size: 0.85rem; background-color: var(--accent-light);",
+        onclick: () => rollObligation()
+      })
+    ]);
+    kids.push(controls);
+
+    // Status / Summary
+    const statusText = state.obligationSessionRoll
+      ? `Last Roll: ${state.obligationSessionRoll} (Total Range: 1–${totalObligation})`
+      : `Not rolled this session (Total Value: ${totalObligation})`;
+      
+    const statusRow = el("div", { style: "margin-top: 8px; font-size: 0.85rem; display: flex; align-items: center; justify-content: space-between;" }, [
+      el("span", { text: statusText }),
+      state.obligationTriggered ? el("button", {
+        type: "button",
+        text: "Clear Trigger",
+        class: "clear-btn",
+        style: "font-size: 0.75rem; padding: 2px 6px;",
+        onclick: () => {
+          state.obligationTriggered = null;
+          state.obligationSessionRoll = null;
+          save();
+          render();
+        }
+      }) : null
+    ]);
+    kids.push(statusRow);
+
+    // Show active triggered warning
+    if (state.obligationTriggered) {
+      let penaltyDesc = "Shared party stress (-1 Strain Threshold). Check campaign rules for narrative complications.";
+      if (state.obligationTriggered.includes("Ningauble")) {
+        penaltyDesc = "⚠️ STORY POINT LOCKOUT: You cannot spend Player Story Points this session!";
+      } else if (state.obligationTriggered.includes("Sheelba")) {
+        penaltyDesc = "⚠️ SHADOW SICKNESS: -2 HP to your maximum Wound Threshold (already applied to your sheet)!";
+      } else if (state.obligationTriggered.includes("Watch")) {
+        penaltyDesc = "⚠️ WATCH SURVEILLANCE: All stealth and disguise checks in noble quarters upgrade 1 purple Difficulty to 1 red Challenge die!";
+      } else if (state.obligationTriggered.includes("Thieves' Guild")) {
+        penaltyDesc = "⚠️ GUILD DEBT: 20% coin toll this session. If unpaid, upgrade Rest checks by 1 red Challenge die.";
+      } else if (state.obligationTriggered.includes("Hunted")) {
+        penaltyDesc = "⚠️ TEMPLAR HUNT: All Initiative and Stealth rolls upgrade 1 purple Difficulty to 1 red Challenge die.";
+      } else if (state.obligationTriggered.includes("Defiler's Reek")) {
+        penaltyDesc = "⚠️ ANATHEMA: All social checks with commoners or druids suffer 2 black Setback dice.";
+      } else if (state.obligationTriggered.includes("Sorcerer-King")) {
+        penaltyDesc = "⚠️ WAY DRAIN: Triggering any psionic wild talents or disciplines costs 1 additional strain (or 1 HP/wound).";
+      }
+      
+      const alertBox = el("div", {
+        class: "r-threat",
+        style: "margin-top: 10px; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color);"
+      }, [
+        el("b", { text: `⚠️ TRIGGERED: ${state.obligationTriggered}` }),
+        el("p", { style: "margin: 4px 0 0 0; font-size: 0.8rem; line-height: 1.2;", text: penaltyDesc })
+      ]);
+      kids.push(alertBox);
+    }
+  }
+
   z.replaceChildren(...kids);
 }
 
@@ -704,6 +886,20 @@ async function boot() {
     parsed.advChoices = parsed.advChoices || {};
     parsed.trainedRanks = parsed.trainedRanks || {};
     if (parsed.swapDone === undefined) parsed.swapDone = null;
+    
+    // normalize obligations
+    parsed.obligations = parsed.obligations || [];
+    if (parsed.obligations.length === 0 && (PB.campaignId === "lankhmar" || PB.campaignId === "darksun")) {
+      let type = "Patron Debt";
+      if (PB.campaignId === "darksun") {
+        type = PB.name.toLowerCase().includes("defiler") ? "Defiler's Reek" : 
+               (PB.name.toLowerCase().includes("templar") ? "Sorcerer-King's Pact" : "Hunted by the Templars");
+      }
+      parsed.obligations = [{ type, value: 10 }];
+    }
+    if (parsed.obligationTriggered === undefined) parsed.obligationTriggered = null;
+    if (parsed.obligationSessionRoll === undefined) parsed.obligationSessionRoll = null;
+
     return parsed;
   })();
   
