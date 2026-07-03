@@ -252,6 +252,10 @@ function renderMove(m) {
 
   const usable = m.type !== "choice" || state.chosen.includes(m.name);
   const res = m.results;
+  const rollable = !!(res || m.statPick || m.stat);
+
+  // Structured results block, only for moves that define one (older per-file
+  // playbooks). Bundle moves state their outcomes in the description instead.
   if (res) {
     const block = el("div", { class: "results" });
     block.appendChild(el("p", { class: "r-success" }, [el("b", { text: "Success: " }), res.success]));
@@ -265,38 +269,47 @@ function renderMove(m) {
     if (res.triumph) block.appendChild(el("p", { class: "r-triumph" }, [el("b", { text: "◆ Triumph: " }), res.triumph]));
     if (res.despair) block.appendChild(el("p", { class: "r-despair" }, [el("b", { text: "✶ Despair: " }), res.despair]));
     wrap.appendChild(block);
+  }
 
+  if (rollable) {
     if (!usable) {
       // Reference only: you haven't taken this move, so it can't be rolled.
       wrap.appendChild(el("p", { class: "move-locked", text: "Not taken — check \"taken\" above, or pick it via advancement, to roll this move." }));
     } else {
-      // roll control
       const out = el("div", { class: "move-out" });
       let diff = m.difficulty || "average";
       let boost = 0, setback = 0, risky = true;
+      let stat = m.stat;
       let ranks = m.trained === false ? 0 : (state.trainedRanks?.[m.name] ?? 1);
       const diffSel = el("select", { class: "no-print", onchange: (e) => { diff = e.target.value; } },
         DIFFS.map((d) => el("option", { value: d, selected: d === diff ? "selected" : null, text: d })));
-      // simple boost/setback steppers
+      // stat picker for moves that don't name a stat (player chooses by fiction)
+      const statSel = m.statPick ? el("select", { class: "no-print", title: "Which stat fits what you're doing?", onchange: (e) => { stat = e.target.value; } },
+        STAT_KEYS.map((k) => el("option", { value: k, selected: k === stat ? "selected" : null, text: `${k} (${state.stats[k]})` }))) : null;
       const bChip = el("span", { class: "chip", text: "boost 0" });
       const sChip = el("span", { class: "chip", text: "setback 0" });
       const controls = el("div", { class: "roll-controls no-print" }, [
-        el("span", { text: "difficulty " }), diffSel,
+        m.statPick ? el("span", { text: "stat " }) : null, statSel,
+        el("span", { text: " difficulty " }), diffSel,
         el("label", { class: "risky-toggle", title: "Risky rolls always carry at least 1 yellow and 1 red — triumph and despair are both live." }, [
           el("input", { type: "checkbox", checked: "checked", onchange: (e) => { risky = e.target.checked; } }),
           el("span", { text: " risky" })
         ]),
         el("span", { class: "stepper" }, [el("button", { type: "button", text: "−", onclick: () => { boost = Math.max(0, boost - 1); bChip.textContent = `boost ${boost}`; } }), bChip, el("button", { type: "button", text: "+", onclick: () => { boost++; bChip.textContent = `boost ${boost}`; } })]),
         el("span", { class: "stepper" }, [el("button", { type: "button", text: "−", onclick: () => { setback = Math.max(0, setback - 1); sChip.textContent = `setback ${setback}`; } }), sChip, el("button", { type: "button", text: "+", onclick: () => { setback++; sChip.textContent = `setback ${setback}`; } })]),
-        el("button", { class: "roll-btn", type: "button", text: `Roll +${m.stat}`, onclick: () => {
-          const r = rollMove({ stat: state.stats[m.stat], ranks, difficulty: diff, boost, setback, risky });
+        el("button", { class: "roll-btn", type: "button", text: m.statPick ? "Roll" : `Roll +${m.stat}`, onclick: () => {
+          const r = rollMove({ stat: state.stats[stat], ranks, difficulty: diff, boost, setback, risky });
           const nodes = [
             el("div", { class: "roll-pool", text: poolText(r.pool) }),
-            el("div", { class: `roll-verdict ${r.success ? "ok" : "bad"}`, text: resultSummary(r) }),
-            el("div", { class: "roll-result", text: r.success ? res.success : (res.failure || "You don't. The GM makes a move.") })
+            el("div", { class: `roll-verdict ${r.success ? "ok" : "bad"}`, text: resultSummary(r) })
           ];
-          if (r.triumphs && res.triumph) nodes.push(el("div", { class: "r-triumph", text: "◆ " + res.triumph }));
-          if (r.despairs && res.despair) nodes.push(el("div", { class: "r-despair", text: "✶ " + res.despair }));
+          if (res) {
+            nodes.push(el("div", { class: "roll-result", text: r.success ? res.success : (res.failure || "You don't. The GM makes a move.") }));
+            if (r.triumphs && res.triumph) nodes.push(el("div", { class: "r-triumph", text: "◆ " + res.triumph }));
+            if (r.despairs && res.despair) nodes.push(el("div", { class: "r-despair", text: "✶ " + res.despair }));
+          } else {
+            nodes.push(el("div", { class: "roll-result hint", text: "Read the move above to apply this result." }));
+          }
           if (!r.success) nodes.push(el("button", { class: "xp-btn", type: "button", text: "mark XP", onclick: () => { state.xp += 1; save(); render(); } }));
           out.replaceChildren(...nodes);
         } })
@@ -485,6 +498,24 @@ function renderStoryPoints() {
 // Returns null if no matching archetype is found.
 function slugify(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
 
+// ---- Genesys enrichment layer ----
+// The bundle stores moves as name + description, and the converted campaigns
+// already fold their Genesys outcomes into that description prose ("on a
+// success with Advantage, ...; on Threat, ..."). So enrichment here does NOT
+// fabricate a duplicate results menu — it makes each move *rollable* (a pool
+// the player builds and rolls, choosing the stat that fits the fiction) and
+// adds a light per-campaign embedment track. The move's own text is the read.
+const CAMPAIGN_TRACKS = {
+  stonetop: [{ name: "Standing", min: 0, max: 3, start: 1, note: "Your standing with the folk of the village." }],
+  darksun: [{ name: "Heat", min: 0, max: 4, start: 0, note: "How much danger's eye is on you in the wastes." }],
+  lankhmar: [{ name: "Heat", min: 0, max: 4, start: 0, note: "The city's eye — the watch, the guilds, and rivals." }],
+  elfquest: [{ name: "Standing", min: 0, max: 3, start: 1, note: "Your standing within the tribe." }]
+};
+
+function highestStat(stats) {
+  return STAT_KEYS.reduce((best, k) => ((stats[k] || 0) > (stats[best] || 0) ? k : best), STAT_KEYS[0]);
+}
+
 function bundleArchetypeToPlaybook(id) {
   const bundle = (typeof window !== "undefined" && window.CAMPAIGNS_DATA) || null;
   if (!bundle) return null;
@@ -495,9 +526,18 @@ function bundleArchetypeToPlaybook(id) {
   }
   if (!arch) return null;
 
+  const topStat = highestStat(arch.stats || {});
   const moves = [];
-  (arch.signature_moves || []).forEach((m) => moves.push({ name: m.name, type: "signature", trigger: "", text: m.description || "" }));
-  (arch.choice_moves || []).forEach((m) => moves.push({ name: m.name, type: "choice", trigger: "", text: m.description || "" }));
+  // Signature and choice moves become rollable: the description is the trigger,
+  // and `statPick` lets the player choose which stat to roll (bundle moves
+  // don't name one; `stat` is a sensible default). No fabricated results block —
+  // the description already states the move's outcomes.
+  (arch.signature_moves || []).forEach((m) => moves.push({
+    name: m.name, type: "signature", trigger: m.description || "", stat: topStat, statPick: true
+  }));
+  (arch.choice_moves || []).forEach((m) => moves.push({
+    name: m.name, type: "choice", trigger: m.description || "", stat: topStat, statPick: true
+  }));
   // Surface backgrounds and instincts (which the sheet has no dedicated slot
   // for) as always-on reference entries so nothing is lost.
   (arch.backgrounds || []).forEach((b) => moves.push({ name: `Background — ${b.name}`, type: "fixed", trigger: "", text: b.description || "" }));
@@ -507,6 +547,7 @@ function bundleArchetypeToPlaybook(id) {
   const gearText = Array.isArray(arch.gear) ? arch.gear.join(" · ") : (arch.gear || "");
   if (gearText) moves.push({ name: "Gear", type: "fixed", trigger: "", text: gearText });
 
+  const tracks = CAMPAIGN_TRACKS[campaign && campaign.id] || [];
   const statCap = 5;
   return {
     id,
@@ -519,6 +560,8 @@ function bundleArchetypeToPlaybook(id) {
     derived: { hp: String(arch.hp ?? 0), damage: arch.damage_die || "d6", load: arch.load || "—" },
     gear: [],
     moves,
+    embedment: tracks.length ? {} : undefined,
+    tracks,
     advancement: { basic: [], advanced: [] }
   };
 }
