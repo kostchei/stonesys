@@ -67,7 +67,7 @@ body {
    reads landscape instead of one long scroll (same idea as the A3 print). */
 @media screen and (min-width: 1200px) {
   .zone-center { column-count: 2; column-gap: 12px; }
-  .zone-center > h2 { column-span: all; }
+  .zone-center > h2, .zone-center .move-section { column-span: all; }
   .zone-center .move { break-inside: avoid; }
 }
 
@@ -102,12 +102,17 @@ body {
 .vital-static { margin: 6px 0; font-size: 14px; }
 
 /* ---- moves ---- */
+.move-section { margin-bottom: 14px; break-inside: avoid; }
 .move { border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px; margin-bottom: 8px; }
 .move-signature { border-color: var(--accent); border-width: 2px; }
 .move-head { display: flex; align-items: center; gap: 8px; }
 .move-name { font-weight: bold; font-size: 16px; }
 .move-tag { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; padding: 1px 6px; border-radius: 8px; background: var(--line); }
 .tag-signature { background: var(--accent); color: var(--paper); }
+.tag-fixed { background: var(--accent); color: var(--paper); }
+.tag-starting { background: #d9c79f; color: var(--ink); }
+.tag-advancement { background: #e7ddc4; color: var(--ink); }
+.tag-level6 { background: #2f2a24; color: var(--paper); }
 .move-pick { margin-left: auto; font-size: 12px; }
 .move-trigger { margin: 4px 0; font-style: italic; }
 .move-text { margin: 4px 0; }

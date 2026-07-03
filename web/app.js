@@ -1,5 +1,6 @@
 import { rollMove } from "./dice.js";
 import { getAccessToken, saveCharacterToDrive, listDriveFiles, loadFromDrive } from "./drive.js";
+import { getMoveGroups, validateStartingChoices } from "./move-groups.js";
 
 const CLIENT_ID_KEY = "stonesys:gdrive_client_id";
 const ACTIVE_PB_KEY = "stonesys:active_playbook";
@@ -8,6 +9,7 @@ const STAT_KEYS = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
 const DIFFS = ["simple", "easy", "average", "hard", "daunting"];
 const SP_KEY = "stonesys:storypoints";
 const ADV_XP_COST = 5; // GUIDE.md: "Spend 5 XP to take one advancement checkbox."
+const LEVEL_SIX_ADVANCEMENT_COUNT = 5;
 
 // Advancement effects are detected from text patterns rather than a
 // structured field: verified consistent across every playbook in
@@ -48,7 +50,7 @@ let sp = { player: 1, gm: 1 };
 
 function defaultState(pb) {
   const chosen = pb.moves.filter((m) => m.type !== "choice").map((m) => m.name);
-  for (const m of pb.moves.filter((m) => m.type === "choice").slice(0, 2)) chosen.push(m.name);
+  defaultStartingChoices(pb).forEach((name) => chosen.push(name));
   const tracks = {};
   for (const t of pb.tracks || []) tracks[t.name] = t.start;
   const holds = {};
@@ -74,7 +76,7 @@ function extraMoveSlots() {
   (PB.advancement.basic || []).forEach((t, i) => { if (state.advChecked["b" + i] && isTakeMoveText(t)) n++; });
   return n;
 }
-function moveSlotCap() { return 2 + extraMoveSlots(); }
+function moveSlotCap() { return (PB.startingSlots ?? 2) + extraMoveSlots(); }
 
 function save() { localStorage.setItem(storeKey, JSON.stringify(state)); }
 function saveSP() { localStorage.setItem(SP_KEY, JSON.stringify(sp)); }
@@ -221,22 +223,29 @@ function renderMove(m) {
   const wrap = el("div", { class: `move move-${m.type}` });
   const head = el("div", { class: "move-head" }, [
     el("span", { class: "move-name", text: m.name }),
-    el("span", { class: `move-tag tag-${m.type}`, text: m.type })
+    el("span", { class: `move-tag tag-${m.category || m.type}`, text: m.locked ? "level 6+" : (m.category || m.type) })
   ]);
-  if (m.type === "choice") {
+  if (m.type === "choice" && !m.locked) {
     head.appendChild(el("label", { class: "move-pick no-print" }, [
       el("input", { type: "checkbox", checked: state.chosen.includes(m.name) ? "checked" : null,
         onchange: (e) => {
           if (e.target.checked) {
-            const takenChoiceCount = state.chosen.filter((n) => {
-              const mv = PB.moves.find((x) => x.name === n);
-              return mv && mv.type === "choice";
-            }).length;
-            const cap = moveSlotCap();
-            if (takenChoiceCount >= cap) {
-              e.target.checked = false;
-              alert(`You can only have ${cap} chosen move${cap === 1 ? "" : "s"} right now. Take a "Take another move" advancement to unlock more.`);
-              return;
+            if (m.category === "starting") {
+              const proposed = state.chosen.includes(m.name) ? state.chosen.slice() : state.chosen.concat(m.name);
+              const startingMoves = proposed.filter((n) => {
+                const mv = PB.moves.find((x) => x.name === n);
+                return mv && mv.type === "choice" && mv.category === "starting";
+              });
+              const validation = validateStartingChoices(
+                { startingSlots: moveSlotCap(), startingRules: PB.startingRules || [] },
+                startingMoves,
+                { requireComplete: false }
+              );
+              if (!validation.ok) {
+                e.target.checked = false;
+                alert(validation.message);
+                return;
+              }
             }
             if (!state.chosen.includes(m.name)) state.chosen.push(m.name);
           } else {
@@ -250,7 +259,7 @@ function renderMove(m) {
   wrap.appendChild(head);
   wrap.appendChild(el("p", { class: "move-trigger", text: m.trigger }));
 
-  const usable = m.type !== "choice" || state.chosen.includes(m.name);
+  const usable = m.type !== "choice" || (!m.locked && state.chosen.includes(m.name));
   const res = m.results;
   const rollable = !!(res || m.statPick || m.stat);
 
@@ -274,7 +283,7 @@ function renderMove(m) {
   if (rollable) {
     if (!usable) {
       // Reference only: you haven't taken this move, so it can't be rolled.
-      wrap.appendChild(el("p", { class: "move-locked", text: "Not taken — check \"taken\" above, or pick it via advancement, to roll this move." }));
+      wrap.appendChild(el("p", { class: "move-locked", text: m.locked ? "Locked until level 6+." : "Not taken — check \"taken\" above, or pick it via advancement, to roll this move." }));
     } else {
       const out = el("div", { class: "move-out" });
       let diff = m.difficulty || "average";
@@ -336,8 +345,71 @@ function renderHold(hold) {
   return box;
 }
 
+function renderMoveSection(title, moves, hint = "") {
+  return el("section", { class: "move-section" }, [
+    el("h2", { text: title }),
+    hint ? el("p", { class: "hint", text: hint }) : null,
+    ...(moves.length ? moves.map(renderMove) : [el("p", { class: "hint", text: "No moves in this section." })])
+  ]);
+}
+
+function renderHiddenMoveSection(title, hint = "") {
+  return el("section", { class: "move-section move-section-hidden" }, [
+    el("h2", { text: title }),
+    el("p", { class: "hint", text: hint })
+  ]);
+}
+
+function defaultStartingChoices(pb) {
+  const startingMoves = pb.moves.filter((m) => m.type === "choice" && m.category === "starting");
+  const startingNames = startingMoves.map((m) => m.name);
+  const chosen = [];
+  for (const rule of pb.startingRules || []) {
+    const firstAllowed = (rule.moves || []).find((name) => startingNames.includes(name) && !chosen.includes(name));
+    if (firstAllowed) chosen.push(firstAllowed);
+  }
+  const ruleMoveNames = new Set((pb.startingRules || []).flatMap((rule) => rule.moves || []));
+  for (const move of startingMoves) {
+    if (chosen.length >= (pb.startingSlots || 0)) break;
+    if (!chosen.includes(move.name) && !ruleMoveNames.has(move.name)) chosen.push(move.name);
+  }
+  for (const move of startingMoves) {
+    if (chosen.length >= (pb.startingSlots || 0)) break;
+    if (!chosen.includes(move.name)) chosen.push(move.name);
+  }
+  return chosen;
+}
+
+function advancementMarkerCount() {
+  if (!PB || !state) return 0;
+  const chosenAdvancements = PB.moves
+    .filter((m) => m.category === "advancement" && state.chosen.includes(m.name))
+    .length;
+  const checkedAdvancements = Object.values(state.advChecked || {}).filter(Boolean).length;
+  return Math.max(chosenAdvancements, checkedAdvancements);
+}
+
+function levelSixUnlocked() {
+  return advancementMarkerCount() >= LEVEL_SIX_ADVANCEMENT_COUNT;
+}
+
 function renderCenter() {
-  document.getElementById("zone-center").replaceChildren(el("h2", { text: "Moves" }), ...PB.moves.map(renderMove));
+  const fixed = PB.moves.filter((m) => m.category === "fixed");
+  const starting = PB.moves.filter((m) => m.category === "starting");
+  const advancement = PB.moves.filter((m) => m.category === "advancement");
+  const level6 = PB.moves.filter((m) => m.category === "level6");
+  const level6Section = levelSixUnlocked()
+    ? renderMoveSection("Level 6+ Choices", level6.map((m) => ({ ...m, locked: false })), "Unlocked at level 6.")
+    : renderHiddenMoveSection(
+      "Level 6+ Choices",
+      `Hidden until level 6. Mark ${LEVEL_SIX_ADVANCEMENT_COUNT} advancement choices to reveal ${level6.length} level 6+ choice${level6.length === 1 ? "" : "s"}.`
+    );
+  document.getElementById("zone-center").replaceChildren(
+    renderMoveSection("Signature / Fixed Moves", fixed, "Always on from the start."),
+    renderMoveSection("Starting Choices", starting, PB.startingText || ""),
+    renderMoveSection("Advancement Choices", advancement, "Pre-6 moves available through advancement."),
+    level6Section
+  );
 }
 
 function renderTrack(t) {
@@ -527,25 +599,29 @@ function bundleArchetypeToPlaybook(id) {
   if (!arch) return null;
 
   const topStat = highestStat(arch.stats || {});
+  const groups = getMoveGroups(arch, campaign);
   const moves = [];
-  // Signature and choice moves become rollable: the description is the trigger,
-  // and `statPick` lets the player choose which stat to roll (bundle moves
-  // don't name one; `stat` is a sensible default). No fabricated results block —
-  // the description already states the move's outcomes.
-  (arch.signature_moves || []).forEach((m) => moves.push({
-    name: m.name, type: "signature", trigger: m.description || "", stat: topStat, statPick: true
-  }));
-  (arch.choice_moves || []).forEach((m) => moves.push({
-    name: m.name, type: "choice", trigger: m.description || "", stat: topStat, statPick: true
-  }));
+  const addGroupedMove = (m, type) => moves.push({
+    name: m.name,
+    type,
+    category: m.category,
+    locked: !!m.locked,
+    trigger: m.description || m.text || "",
+    stat: topStat,
+    statPick: !m.synthetic
+  });
+  groups.fixed.forEach((m) => addGroupedMove(m, "fixed"));
+  groups.starting.forEach((m) => addGroupedMove(m, "choice"));
+  groups.advancement.forEach((m) => addGroupedMove(m, "choice"));
+  groups.level6.forEach((m) => addGroupedMove(m, "choice"));
   // Surface backgrounds and instincts (which the sheet has no dedicated slot
   // for) as always-on reference entries so nothing is lost.
-  (arch.backgrounds || []).forEach((b) => moves.push({ name: `Background — ${b.name}`, type: "fixed", trigger: "", text: b.description || "" }));
+  (arch.backgrounds || []).forEach((b) => moves.push({ name: `Background — ${b.name}`, type: "fixed", category: "fixed", trigger: "", text: b.description || "" }));
   if (Array.isArray(arch.instincts) && arch.instincts.length) {
-    moves.push({ name: "Instincts", type: "fixed", trigger: "", text: arch.instincts.join(" · ") });
+    moves.push({ name: "Instincts", type: "fixed", category: "fixed", trigger: "", text: arch.instincts.join(" · ") });
   }
   const gearText = Array.isArray(arch.gear) ? arch.gear.join(" · ") : (arch.gear || "");
-  if (gearText) moves.push({ name: "Gear", type: "fixed", trigger: "", text: gearText });
+  if (gearText) moves.push({ name: "Gear", type: "fixed", category: "fixed", trigger: "", text: gearText });
 
   const tracks = CAMPAIGN_TRACKS[campaign && campaign.id] || [];
   const statCap = 5;
@@ -560,6 +636,9 @@ function bundleArchetypeToPlaybook(id) {
     derived: { hp: String(arch.hp ?? 0), damage: arch.damage_die || "d6", load: arch.load || "—" },
     gear: [],
     moves,
+    startingText: groups.startingText,
+    startingSlots: groups.startingSlots,
+    startingRules: groups.startingRules,
     embedment: tracks.length ? {} : undefined,
     tracks,
     advancement: { basic: [], advanced: [] }

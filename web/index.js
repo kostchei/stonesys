@@ -1,5 +1,6 @@
 // StoneSys JS Application logic
 import { getAccessToken, saveCharacterToDrive, listDriveFiles, loadFromDrive } from "./drive.js";
+import { getMoveGroups, validateStartingChoices } from "./move-groups.js";
 
 // Application State
 let activeCampaign = null;
@@ -17,6 +18,8 @@ const STAT_NAMES = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
 const STONETOP_CREATION_STATS = [4, 3, 3, 2, 2, 1];
 const STONETOP_WOULD_BE_HERO_STATS = [3, 2, 2, 2, 2, 1];
 const STAT_ADVANCE_XP_COST = 10;
+const LEVEL_SIX_ADVANCEMENT_COUNT = 5;
+const LEVEL_ADVANCEMENT_CATEGORIES = new Set(['ability', 'move']);
 
 let dicePool = {
   ability: 0,
@@ -386,7 +389,7 @@ function selectArchetype(arch) {
   renderInstincts(arch.instincts);
   
   // Populate moves
-  renderMoves(arch.signature_moves, arch.choice_moves);
+  renderMoves(arch);
   
   // Populate gear
   document.getElementById('gear-text').value = arch.gear || '';
@@ -610,6 +613,7 @@ function buyStatIncrease(statName) {
   updateSheetCounters();
   renderStats(currentStats);
   renderXpLedger();
+  rerenderMovesPreservingSelections();
   setSaveStatus(`${statName} raised for ${STAT_ADVANCE_XP_COST} XP. Save when ready.`);
 }
 
@@ -664,45 +668,121 @@ function renderInstincts(instincts) {
   });
 }
 
-// Render Signature & Choice moves
-function renderMoves(signature, choice) {
-  const sigContainer = document.getElementById('signature-moves-list');
-  sigContainer.innerHTML = '';
-  
-  if (!signature || signature.length === 0) {
-    sigContainer.innerHTML = '<div class="results-empty">No signature moves.</div>';
-  } else {
-    signature.forEach(move => {
-      const item = document.createElement('div');
-      item.className = 'move-item';
-      item.innerHTML = `
-        <h4>${move.name}</h4>
-        <p>${move.description}</p>
-      `;
-      sigContainer.appendChild(item);
-    });
+function renderMoveList(container, moves, options = {}) {
+  container.innerHTML = '';
+
+  if (!moves || moves.length === 0) {
+    container.innerHTML = `<div class="results-empty">${options.emptyText || 'No moves in this category.'}</div>`;
+    return;
   }
   
-  const choiceContainer = document.getElementById('choice-moves-list');
-  choiceContainer.innerHTML = '';
-  
-  if (!choice || choice.length === 0) {
-    choiceContainer.innerHTML = '<div class="results-empty">No choice moves.</div>';
-  } else {
-    choice.forEach(move => {
-      const item = document.createElement('div');
-      item.className = 'move-item';
+  moves.forEach(move => {
+    const item = document.createElement('div');
+    item.className = `move-item ${move.locked ? 'move-locked' : ''}`;
+    const description = move.description || move.text || '';
+    const badge = move.locked ? '<span class="move-lock-badge">Level 6+</span>' : '';
+
+    if (options.selectable) {
       item.innerHTML = `
-        <label style="display: flex; gap: 0.5rem; cursor: pointer; align-items: flex-start;">
-          <input type="checkbox" class="choice-move-checkbox" value="${move.name}" style="margin-top: 0.25rem; accent-color: var(--accent-color);">
+        <label class="move-select-label">
+          <input type="checkbox" class="choice-move-checkbox" value="${move.name}" data-move-stage="${options.stage || 'advancement'}">
           <div>
-            <h4 style="margin-bottom: 0;">${move.name}</h4>
-            <p style="margin-top: 0.25rem;">${move.description}</p>
+            <h4 style="margin-bottom: 0;">${move.name} ${badge}</h4>
+            <p style="margin-top: 0.25rem;">${description}</p>
           </div>
         </label>
       `;
-      choiceContainer.appendChild(item);
+      const checkbox = item.querySelector('.choice-move-checkbox');
+      checkbox.addEventListener('change', (event) => {
+        if (options.stage === 'starting') {
+          const groups = getMoveGroups(activeArchetype, activeCampaign);
+          const result = validateStartingChoices(groups, getSelectedStartingMoves(), { requireComplete: false });
+          if (!result.ok) {
+            event.target.checked = false;
+            setSaveStatus(result.message);
+          }
+          return;
+        }
+        if (options.stage === 'advancement' || options.stage === 'level6') {
+          rerenderMovesPreservingSelections();
+        }
+      });
+    } else {
+      item.innerHTML = `
+        <h4>${move.name} ${badge}</h4>
+        <p>${description}</p>
+      `;
+    }
+    container.appendChild(item);
+  });
+}
+
+function getAdvancementMarkerCount(selectedMoveNames = null, groups = null) {
+  const ledgerCount = xpLedger.filter((entry) => LEVEL_ADVANCEMENT_CATEGORIES.has(entry.category)).length;
+  let checkedAdvancementCount = document.querySelectorAll('.choice-move-checkbox[data-move-stage="advancement"]:checked').length;
+  if (Array.isArray(selectedMoveNames) && groups) {
+    const advancementNames = new Set(groups.advancement.map((move) => move.name));
+    checkedAdvancementCount = selectedMoveNames.filter((name) => advancementNames.has(name)).length;
+  }
+  return Math.max(ledgerCount, checkedAdvancementCount);
+}
+
+function isLevelSixUnlocked(selectedMoveNames = null, groups = null) {
+  return getAdvancementMarkerCount(selectedMoveNames, groups) >= LEVEL_SIX_ADVANCEMENT_COUNT;
+}
+
+function renderHiddenLevelSixList(container, totalChoices) {
+  container.innerHTML = `
+    <div class="results-empty">
+      Hidden until level 6. Mark ${LEVEL_SIX_ADVANCEMENT_COUNT} advancement choices or advancement XP spends to reveal ${totalChoices} level 6+ choice${totalChoices === 1 ? '' : 's'}.
+    </div>
+  `;
+}
+
+function rerenderMovesPreservingSelections() {
+  if (!activeArchetype) return;
+  const selectedMoves = getSelectedChoiceMoves();
+  renderMoves(activeArchetype, selectedMoves);
+  setSelectedChoiceMoves(selectedMoves);
+}
+
+// Render fixed, starting, advancement, and level-gated moves
+function renderMoves(arch, selectedMoveNames = null) {
+  const groups = getMoveGroups(arch, activeCampaign);
+  const sigContainer = document.getElementById('signature-moves-list');
+  const startingContainer = document.getElementById('starting-moves-list');
+  const advancementContainer = document.getElementById('advancement-moves-list');
+  const level6Container = document.getElementById('level6-moves-list');
+  const startingNote = document.getElementById('starting-moves-note');
+  const startingBadge = document.getElementById('starting-moves-badge');
+  const level6Badge = document.getElementById('level6-moves-badge');
+
+  if (startingNote) startingNote.innerText = groups.startingText || '';
+  if (startingBadge) startingBadge.innerText = groups.startingSlots
+    ? `Choose ${groups.startingSlots}`
+    : 'Background only';
+
+  renderMoveList(sigContainer, groups.fixed, { emptyText: 'No fixed moves.' });
+  renderMoveList(startingContainer, groups.starting, {
+    selectable: true,
+    stage: 'starting',
+    emptyText: 'No starting move choices.'
+  });
+  renderMoveList(advancementContainer, groups.advancement, {
+    selectable: true,
+    stage: 'advancement',
+    emptyText: 'No pre-6 advancement moves.'
+  });
+  if (isLevelSixUnlocked(selectedMoveNames, groups)) {
+    if (level6Badge) level6Badge.innerText = 'Unlocked';
+    renderMoveList(level6Container, groups.level6.map((move) => ({ ...move, locked: false })), {
+      selectable: true,
+      stage: 'level6',
+      emptyText: 'No level 6+ moves.'
     });
+  } else {
+    if (level6Badge) level6Badge.innerText = 'Hidden';
+    renderHiddenLevelSixList(level6Container, groups.level6.length);
   }
 }
 
@@ -721,6 +801,10 @@ function setSelectedBackgroundName(backgroundName) {
 
 function getSelectedChoiceMoves() {
   return Array.from(document.querySelectorAll('.choice-move-checkbox:checked')).map(input => input.value);
+}
+
+function getSelectedStartingMoves() {
+  return Array.from(document.querySelectorAll('.choice-move-checkbox[data-move-stage="starting"]:checked')).map(input => input.value);
 }
 
 function setSelectedChoiceMoves(moveNames) {
@@ -804,6 +888,7 @@ function addXpSpend() {
   labelInput.value = '';
   updateSheetCounters();
   renderXpLedger();
+  rerenderMovesPreservingSelections();
   setSaveStatus('XP spend added. Save when ready.');
 }
 
@@ -816,6 +901,7 @@ function removeXpSpend(entryId) {
   applyStatLedgerUndo(entry);
   updateSheetCounters();
   renderXpLedger();
+  rerenderMovesPreservingSelections();
   setSaveStatus('XP spend undone. Save when ready.');
 }
 
@@ -854,6 +940,16 @@ function saveCurrentCharacter() {
   
   if (isCreationStatMode() && !statsMatchCreationPool()) {
     setSaveStatus(`Finish stat assignment before saving. Use exactly: ${getCreationStatPool().join(', ')}.`);
+    return;
+  }
+
+  const moveValidation = validateStartingChoices(
+    getMoveGroups(activeArchetype, activeCampaign),
+    getSelectedStartingMoves(),
+    { requireComplete: true }
+  );
+  if (!moveValidation.ok) {
+    setSaveStatus(moveValidation.message);
     return;
   }
   
@@ -922,6 +1018,7 @@ function applyCharacterSnapshot(character) {
   renderXpLedger();
   setSelectedBackgroundName(character.backgroundName);
   setSelectedChoiceMoves(character.choiceMoves);
+  rerenderMovesPreservingSelections();
   renderSavedCharacters();
   setSaveStatus(`Loaded ${character.name || archetype.name}.`);
 }
