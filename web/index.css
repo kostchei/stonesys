@@ -1,9 +1,20 @@
 /* StoneSys CSS stylesheet */
 
+/* Self-hosted, open-licensed (OFL) old-printing serifs.
+   IM Fell English — John Fell's 17th-century Oxford press type, inky and
+   crumbly, for headers and flavor. EB Garamond — a legible old-style face
+   for body and UI. */
+@font-face { font-family: "IM Fell English"; src: url("fonts/imfell-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "IM Fell English"; src: url("fonts/imfell-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "EB Garamond"; src: url("fonts/ebgaramond-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "EB Garamond"; src: url("fonts/ebgaramond-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "EB Garamond"; src: url("fonts/ebgaramond-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "EB Garamond"; src: url("fonts/ebgaramond-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+
 :root {
-  /* Match the character sheet: Georgia serif throughout for one unified look */
-  --font-primary: Georgia, "Times New Roman", serif;
-  --font-header: Georgia, "Times New Roman", serif;
+  /* Old-printing serifs: crumbly IM Fell for headers, legible EB Garamond for body */
+  --font-primary: "EB Garamond", Georgia, "Times New Roman", serif;
+  --font-header: "IM Fell English", Georgia, "Times New Roman", serif;
 
   /* Paper theme — very pale warm background, aligned with styles.css */
   --bg-main: #f7f3ea;      /* very pale cream page */
