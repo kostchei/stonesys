@@ -445,6 +445,22 @@ function resolveCampaignSupplement(campaign, arch) {
   };
 }
 
+function descriptionIndex(arch) {
+  const index = new Map();
+  [...(arch.signature_moves || []), ...(arch.choice_moves || [])].forEach((move) => {
+    index.set(normalizeName(move.name), move.description || move.text || "");
+  });
+  return index;
+}
+
+function moveFromName(name, descriptions, extra = {}) {
+  return {
+    name,
+    description: descriptions.get(normalizeName(name)) || sentenceCaseFallback(name, extra.campaignId),
+    ...extra
+  };
+}
+
 export function getMoveGroups(arch, campaign) {
   const descriptions = descriptionIndex(arch);
   const core = campaign && campaign.id === "stonetop" ? CORE_STONETOP_MOVES[arch.name] : null;
