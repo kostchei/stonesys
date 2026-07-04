@@ -296,18 +296,17 @@ front moving without bookkeeping.
 
 ## 9. A worked round
 
-> **Vesh the Beholden** slips into the river-quarter ahead of the caravan and
-> puts out feelers for a contact — that triggers **Strings** (roll +CHA).
+> **Vesh the Fox** slips into the river-quarter ahead of the caravan and
+> tries to talk his way past a suspicious guard — that triggers **Silver Tongued** (roll +CHA).
 > CHA 4, move taken: **3 green, 1 yellow**. The GM calls it average and
 > risky: **1 purple, 1 red**. Vesh's player spends a Story Point — a second
 > yellow is legal (cap is 2), so upgrade: **2Y 2G vs 1P 1R**. The token
 > slides to the GM.
 >
 > The roll: 2 successes, 1 advantage, 1 triumph, 1 threat. Net: **success,
-> ▲/▼ cancel to 0, ◆ fires.** Read: the success line ("you find someone who
-> can help you here") plus the triumph line — *someone with real reach takes
-> a favorable interest*. No net advantage, so no Strings held this time. The
-> GM notes the new patron-shaped attention, and the fiction moves.
+> ▲/▼ cancel to 0, ◆ fires.** Read: the success line ("you successfully avoid suspicion") plus the triumph line — *someone in authority takes
+> a favorable interest*. No net advantage, so no Nerve held this time. The
+> GM notes the new attention, and the fiction moves.
 
 ## Appendix: for players coming from Stonetop / PbtA
 

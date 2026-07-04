@@ -1,0 +1,211 @@
+{
+  "playbooks": [
+    {
+      "name": "Blessed",
+      "expeditions": [
+        {
+          "category": "Category A: Neutralizing Threats (Defensive)",
+          "seed_name": "Primordial/Spiritual Cleansing",
+          "detail": "Forest Fae Anomalies in the Great Wood",
+          "backstory": "The Blessed (carrying the Raised by Wolves background) feels the forest's agony. Fae anomalies are corrupting the wolf pack that raised them, turning their pack-kin feral. The Blessed must cleanse the grove to save their family and preserve their spiritual bond."
+        },
+        {
+          "category": "Category B: Securing Opportunities (Developmental)",
+          "seed_name": "Rare Material Foraging",
+          "detail": "Negotiating for Living Ironwood",
+          "backstory": "Stonetop needs Ironwood to reinforce its palisade, but felling a tree violates the ancient compact. The Blessed must venture in to seek a compromise with the Forest Folk, offering a spiritual trade to secure fallen timber without drawing forest wrath."
+        },
+        {
+          "category": "Category C: Character Playbook & Relational Drives (Personal)",
+          "seed_name": "Spirit Communion",
+          "detail": "Ascending the Huffel Peaks to meet the Wind Spirit",
+          "backstory": "To replenish their Sacred Pouch (essential for casting spells), the Blessed must climb to the highest peaks where the primordial Wind Spirit resides, defying freezing winds to prove their worth."
+        }
+      ]
+    },
+    {
+      "name": "Fox",
+      "expeditions": [
+        {
+          "category": "Category A: Neutralizing Threats (Defensive)",
+          "seed_name": "Repelling Raids & Outlaws",
+          "detail": "Sabotaging Brennan's Claws at the Ruined Tower",
+          "backstory": "The Fox (carrying the Life of Crime background) once ran with Brennan's Claws before stealing a cut of their loot and fleeing to Stonetop. Now, the gang has occupied the nearby Ruined Tower to hunt them down. The Fox must lead the party to flush them out before they sack the village."
+        },
+        {
+          "category": "Category B: Securing Opportunities (Developmental)",
+          "seed_name": "Trade & Diplomacy",
+          "detail": "Smuggling grain from Marshedge",
+          "backstory": "During a winter shortage, Marshedge merchants refuse to sell grain to Stonetop. The Fox uses their old underworld contacts in the wetlands to smuggle food past the river tolls, saving the village from starvation through illicit trade."
+        },
+        {
+          "category": "Category C: Character Playbook & Relational Drives (Personal)",
+          "seed_name": "Antiquarian Hunt",
+          "detail": "Stealing a Maker key from Gordin's Delve",
+          "backstory": "The Fox has learned that a corrupt overseer in Gordin's Delve possesses a Maker key capable of unlocking Stonetop's sealed cistern. Planning a heist to steal the key is the only way to secure the village's water supply."
+        }
+      ]
+    },
+    {
+      "name": "Heavy",
+      "expeditions": [
+        {
+          "category": "Category A: Neutralizing Threats (Defensive)",
+          "seed_name": "Giant (Hagr) Defense",
+          "detail": "Evicting a Hagr from the Foothills",
+          "backstory": "A massive, one-eyed Hagr has begun building a logging dam across the stream feeding Stonetop's mill. As the village Sheriff, the Heavy must lead a physical eviction, using their iron maul to smash the dam and drive the giant back before the crops dry up."
+        },
+        {
+          "category": "Category A: Neutralizing Threats (Defensive)",
+          "seed_name": "Apex Predator Hunt",
+          "detail": "Slaying a Thunder Drake",
+          "backstory": "The Heavy carries the Storm-Marked background, having survived a lightning strike that left them covered in marks. When a Thunder Drake begins hunting Stonetop's sheep, the Heavy believes their survival was destiny preparing them to face this storm-beast."
+        },
+        {
+          "category": "Category C: Character Playbook & Relational Drives (Personal)",
+          "seed_name": "The Judge's Pursuit of Law",
+          "detail": "Hunting a fugitive murderer in the Steplands",
+          "backstory": "A traveler killed a village craftsman and fled into the Steplands. The Heavy must track the killer across the grass seas, using their martial training to apprehend them and prevent a retaliatory blood feud with the Hillfolk."
+        }
+      ]
+    },
+    {
+      "name": "Judge",
+      "expeditions": [
+        {
+          "category": "Category C: Character Playbook & Relational Drives (Personal)",
+          "seed_name": "The Judge's Pursuit of Law",
+          "detail": "Apprehending a seed-grain thief in Marshedge",
+          "backstory": "A villager broke their solemn oath to Aratis, stole Stonetop's winter reserve grain, and fled to Marshedge. The Judge must track down this oathbreaker, reclaim the seed, and enforce Aratis's judgment to keep the village’s covenant intact."
+        },
+        {
+          "category": "Category A: Neutralizing Threats (Defensive)",
+          "seed_name": "Primordial/Spiritual Cleansing",
+          "detail": "Purging wights at the Old Wall",
+          "backstory": "Undead wights are rising from the ancient Maker boundary wall, threatening the shepherds. The Judge must carry the Chronicle to the wall and read the rites of Aratis to lay the spirits of the old barrow-builders to rest."
+        },
+        {
+          "category": "Category B: Securing Opportunities (Developmental)",
+          "seed_name": "Trade & Diplomacy",
+          "detail": "Negotiating an iron treaty with Gordin's Delve",
+          "backstory": "Stonetop needs iron to repair its farming tools, but Gordin's Delve is notorious for unfair trades. The Judge is sent as an envoy, utilizing their Bear Witness move to compel the Delve's castellan to agree to a fair, sworn treaty."
+        }
+      ]
+    },
+    {
+      "name": "Lightbearer",
+      "expeditions": [
+        {
+          "category": "Category C: Character Playbook & Relational Drives (Personal)",
+          "seed_name": "The Lightbearer's Pilgrimage",
+          "detail": "Cleansing a shadow-cyst in the Flats",
+          "backstory": "A pocket of unnatural shadow has formed in the grasslands of the Flats, rotting the grass and causing nightmares in nearby farms. The Lightbearer must travel into the gloom, using Helior's light to purge the darkness and restore the land."
+        },
+        {
+          "category": "Category A: Neutralizing Threats (Defensive)",
+          "seed_name": "The Things Below",
+          "detail": "Descending into the village well to silence chthonic whispers",
+          "backstory": "Restless, dark whispers are drifting up from the cistern under Stonetop, driving several villagers to madness. The Lightbearer must carry their holy light into the lightless deep to banish the mind-warping entities."
+        },
+        {
+          "category": "Category B: Securing Opportunities (Developmental)",
+          "seed_name": "Subsistence Runs",
+          "detail": "Leading a winter relief train to the Hillfolk",
+          "backstory": "A harsh winter has trapped a Hillfolk clan in the Steplands without food. The Lightbearer leads a hazardous supply run across the snow to save them, demonstrating Helior's mercy to secure a long-term peace treaty."
+        }
+      ]
+    },
+    {
+      "name": "Marshal",
+      "expeditions": [
+        {
+          "category": "Category A: Neutralizing Threats (Defensive)",
+          "seed_name": "Repelling Raids & Outlaws",
+          "detail": "Assaulting an outlaw camp in the Foothills",
+          "backstory": "Outlaws are blocking the trade pass to Marshedge, strangling Stonetop's economy. The Marshal must muster their Crew (militia), planning a tactical strike to clear the pass and secure the village's line to the outside world."
+        },
+        {
+          "category": "Category A: Neutralizing Threats (Defensive)",
+          "seed_name": "Rescue Missions",
+          "detail": "Rescuing militia scouts from Ferrier's Fen",
+          "backstory": "A scout patrol went missing near the bog and was captured by lizard-like Suarachan. The Marshal must lead a rescue expedition into the misty wetlands, using their Front Line Leader abilities to bring their people back alive."
+        },
+        {
+          "category": "Category B: Securing Opportunities (Developmental)",
+          "seed_name": "Trade & Diplomacy",
+          "detail": "Brokering a grazing treaty in the Steplands",
+          "backstory": "Tensions are rising over grazing lands between Stonetop shepherds and Hillfolk riders. The Marshal travels to the Steplands to meet the clan chiefs, using their military authority and Speak Softly to negotiate a border agreement."
+        }
+      ]
+    },
+    {
+      "name": "Ranger",
+      "expeditions": [
+        {
+          "category": "Category A: Neutralizing Threats (Defensive)",
+          "seed_name": "Apex Predator Hunt",
+          "detail": "Hunting Spitting Drakes in the Canyons",
+          "backstory": "Acid-spitting drakes have nested along the canyon trade routes, killing sheep and hunting dogs. The Ranger and their wolf companion must hunt the pack in the narrow, rocky ravines where their tracking skills are vital."
+        },
+        {
+          "category": "Category B: Securing Opportunities (Developmental)",
+          "seed_name": "Rare Material Foraging",
+          "detail": "Finding Makerglass in the Huffel Peaks",
+          "backstory": "To protect Stonetop's winter grain from rot-spirits, the village needs glowing Makerglass. The Ranger must scout a safe trail through the mountain cliffs to locate an ancient Maker crash site where the glass is exposed."
+        },
+        {
+          "category": "Category C: Character Playbook & Relational Drives (Personal)",
+          "seed_name": "Antiquarian Hunt",
+          "detail": "Guiding a search party to an ancient Barrow Mound",
+          "backstory": "A Seeker wants to explore a newly discovered barrow mound, but the route is infested with wild drakes. The Ranger is hired as the guide to navigate the party safely through the wilderness and back."
+        }
+      ]
+    },
+    {
+      "name": "Seeker",
+      "expeditions": [
+        {
+          "category": "Category B: Securing Opportunities (Developmental)",
+          "seed_name": "Maker Relic Recovery",
+          "detail": "Recovering a power core from the Lapis Labyrinth",
+          "backstory": "The Seeker discovered references to a functional Maker heating-generator deep in the mountain labyrinth. Retrieving this relic is crucial to keeping Stonetop warm through the upcoming winter season."
+        },
+        {
+          "category": "Category C: Character Playbook & Relational Drives (Personal)",
+          "seed_name": "Antiquarian Hunt",
+          "detail": "Deciphering the runes inside the Ruined Tower",
+          "backstory": "The Seeker wants to unlock the secrets of Noruba's Ice Sphere (their starting major arcanum). They believe the cipher is carved inside the Ruined Tower, which requires them to clear out the bandits currently using it as a hideout."
+        },
+        {
+          "category": "Category A: Neutralizing Threats (Defensive)",
+          "seed_name": "The Things Below",
+          "detail": "Investigating metallic contamination in the cistern",
+          "backstory": "Stonetop's ancient Maker well has started clicking, and the water tastes of copper. The Seeker must lead an investigation into the plumbing ruins below to repair the ancient machinery before the well fails."
+        }
+      ]
+    },
+    {
+      "name": "Would-be Hero",
+      "expeditions": [
+        {
+          "category": "Category C: Character Playbook & Relational Drives (Personal)",
+          "seed_name": "The Would-be Hero's Destiny",
+          "detail": "Seeking the Eclipse Sword in the Huffel Peaks",
+          "backstory": "Born under an eclipse, the Would-be Hero has dreamed of a glowing sword frozen in the high peaks. Believing this sword is their key to protecting Stonetop, they drag the party on a high-altitude climb to find it."
+        },
+        {
+          "category": "Category A: Neutralizing Threats (Defensive)",
+          "seed_name": "Rescue Missions",
+          "detail": "Rescuing an abducted sibling from the Great Wood",
+          "backstory": "Fae creatures snatched the Would-be Hero's younger brother from the forest edge. Driven by guilt and the Impetuous Youth trait, they rashly plunge into the Great Wood, calling on their friends to help retrieve him."
+        },
+        {
+          "category": "Category B: Securing Opportunities (Developmental)",
+          "seed_name": "Subsistence Runs",
+          "detail": "Foraging for plague-curing lichen in the snow",
+          "backstory": "A winter fever has stricken the village children, and the only cure is a rare lichen that grows on the frozen northern cliffs. The Would-be Hero volunteers for the dangerous climb, determined to prove their worth by saving the community."
+        }
+      ]
+    }
+  ]
+}

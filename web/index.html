@@ -199,6 +199,36 @@
             </div>
           </div>
         </div>
+
+        <!-- Page 2 Divider (Back of Sheet) -->
+        <div class="sheet-page-divider no-print">
+          <span>Page 2: Back of Sheet (Narrative & Companions)</span>
+        </div>
+
+        <!-- Page 2 Grid -->
+        <div class="sheet-page-two">
+          <!-- Left Column: Backstory & Adventuring Reasons -->
+          <div class="page-two-main-col">
+            <div class="section-box" id="backstory-section-box" style="display: none;">
+              <h3 id="backstory-title">Adventuring Reasons</h3>
+              <p id="backstory-desc" class="section-note" style="margin-bottom: 1rem;"></p>
+              <div id="backstory-content" class="backstory-content-list">
+                <!-- Populated dynamically by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Followers & Companions -->
+          <div class="page-two-side-col">
+            <div class="section-box" id="companions-section-box" style="display: none;">
+              <h3 id="companions-title">Companions & Followers</h3>
+              <p class="section-note" style="margin-bottom: 1rem;">Track your hirelings, beast companion, or acolytes.</p>
+              <div id="companions-content">
+                <!-- Populated dynamically by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       
       <div id="sheet-empty-state" class="campaign-info-block" style="text-align: center; padding: 4rem 2rem;">
@@ -404,6 +434,7 @@
 
   <!-- Load Data -->
   <script src="data.js"></script>
+  <script src="backstories.js"></script>
   <!-- Load App Code -->
   <script type="module" src="index.js"></script>
 </body>

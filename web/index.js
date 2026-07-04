@@ -459,6 +459,10 @@ function selectArchetype(arch) {
   document.getElementById('steading-upgrades-text').value = '';
   document.getElementById('character-notes-text').value = '';
   renderXpLedger();
+  
+  // Render backstory and companions (Page 2)
+  renderBackstoryAndCompanions(arch, null);
+
   setSaveStatus('New unsaved character.');
 }
 
@@ -992,6 +996,7 @@ function createCharacterSnapshot(existing) {
     gear: document.getElementById('gear-text').value,
     steadingUpgrades: document.getElementById('steading-upgrades-text').value,
     notes: document.getElementById('character-notes-text').value,
+    backstorySelections: getBackstorySelections(),
     createdAt: activeExisting && activeExisting.createdAt ? activeExisting.createdAt : now,
     updatedAt: now,
     driveFileId: activeExisting && activeExisting.driveFileId ? activeExisting.driveFileId : null
@@ -1085,6 +1090,10 @@ function applyCharacterSnapshot(character) {
   setSelectedBackgroundName(character.backgroundName);
   setSelectedChoiceMoves(character.choiceMoves);
   rerenderMovesPreservingSelections();
+  
+  // Restore Page 2 selections
+  renderBackstoryAndCompanions(archetype, character.backstorySelections || null);
+
   renderSavedCharacters();
   setSaveStatus(`Loaded ${character.name || archetype.name}.`);
 }
@@ -1501,3 +1510,286 @@ window.buyStatIncrease = buyStatIncrease;
 window.adjustStat = adjustStat;
 window.selectCampaign = selectCampaign;
 window.selectArchetype = selectArchetype;
+
+// Page 2 Narrative & Companions Rendering
+function renderBackstoryAndCompanions(arch, savedBackstoryState = null) {
+  const backstoryBox = document.getElementById('backstory-section-box');
+  const backstoryTitle = document.getElementById('backstory-title');
+  const backstoryDesc = document.getElementById('backstory-desc');
+  const backstoryContent = document.getElementById('backstory-content');
+  
+  const companionsBox = document.getElementById('companions-section-box');
+  const companionsContent = document.getElementById('companions-content');
+
+  backstoryContent.innerHTML = '';
+  companionsContent.innerHTML = '';
+  backstoryBox.style.display = 'none';
+  companionsBox.style.display = 'none';
+
+  if (!activeCampaign || activeCampaign.id !== 'stonetop') {
+    return;
+  }
+
+  // 1. Backstory Section
+  const data = typeof BACKSTORIES_DATA !== 'undefined' ? BACKSTORIES_DATA[arch.name] : null;
+  if (data) {
+    backstoryBox.style.display = 'block';
+    backstoryTitle.innerText = data.title;
+    backstoryDesc.innerText = data.description;
+
+    data.sections.forEach((sect, sectIndex) => {
+      const groupDiv = document.createElement('div');
+      groupDiv.className = 'backstory-group';
+
+      const titleH4 = document.createElement('h4');
+      titleH4.innerText = sect.title;
+      groupDiv.appendChild(titleH4);
+
+      if (sect.type === 'checkbox' || sect.type === 'radio') {
+        const optionsList = document.createElement('div');
+        optionsList.className = 'backstory-options-list';
+
+        sect.options.forEach((opt, optIndex) => {
+          const rowLabel = document.createElement('label');
+          rowLabel.className = 'backstory-option-row';
+
+          const input = document.createElement('input');
+          input.type = sect.type;
+          input.name = `backstory_${arch.name}_sect_${sectIndex}`;
+          input.value = opt;
+          
+          const savedKey = `sect_${sectIndex}`;
+          if (savedBackstoryState && savedBackstoryState[savedKey]) {
+            if (Array.isArray(savedBackstoryState[savedKey])) {
+              input.checked = savedBackstoryState[savedKey].includes(opt);
+            } else {
+              input.checked = savedBackstoryState[savedKey] === opt;
+            }
+          }
+
+          if (sect.type === 'checkbox' && sect.limit) {
+            input.addEventListener('change', () => {
+              const checked = optionsList.querySelectorAll('input[type="checkbox"]:checked');
+              if (checked.length > sect.limit) {
+                input.checked = false;
+                alert(`You can select at most ${sect.limit} options for this section.`);
+              }
+            });
+          }
+
+          rowLabel.appendChild(input);
+          rowLabel.appendChild(document.createTextNode(opt));
+          optionsList.appendChild(rowLabel);
+        });
+
+        groupDiv.appendChild(optionsList);
+      } else if (sect.type === 'text_options') {
+        const textInputsDiv = document.createElement('div');
+        textInputsDiv.className = 'backstory-text-inputs';
+
+        sect.inputs.forEach((inputSpec, inputIndex) => {
+          const row = document.createElement('div');
+          row.className = 'backstory-text-row';
+
+          const label = document.createElement('label');
+          label.innerText = inputSpec.label;
+          row.appendChild(label);
+
+          const textInput = document.createElement('input');
+          textInput.type = 'text';
+          textInput.className = 'backstory-text-input';
+          textInput.placeholder = inputSpec.placeholder;
+          textInput.name = `backstory_${arch.name}_text_${sectIndex}_${inputIndex}`;
+
+          const savedKey = `text_${sectIndex}_${inputIndex}`;
+          if (savedBackstoryState && savedBackstoryState[savedKey]) {
+            textInput.value = savedBackstoryState[savedKey];
+          }
+
+          row.appendChild(textInput);
+          textInputsDiv.appendChild(row);
+        });
+
+        groupDiv.appendChild(textInputsDiv);
+      } else if (sect.type === 'textarea') {
+        const textarea = document.createElement('textarea');
+        textarea.className = 'sheet-textarea';
+        textarea.style.height = '100px';
+        textarea.name = `backstory_${arch.name}_textarea_${sectIndex}`;
+        textarea.placeholder = "Write details here...";
+
+        const savedKey = `textarea_${sectIndex}`;
+        if (savedBackstoryState && savedBackstoryState[savedKey]) {
+          textarea.value = savedBackstoryState[savedKey];
+        }
+
+        groupDiv.appendChild(textarea);
+      }
+
+      backstoryContent.appendChild(groupDiv);
+    });
+  }
+
+  // 2. Companions Section
+  if (arch.name === 'Ranger' || arch.name === 'Marshal' || arch.name === 'Blessed') {
+    companionsBox.style.display = 'block';
+
+    if (arch.name === 'Ranger') {
+      companionsContent.appendChild(createCompanionCard(
+        "Animal Companion",
+        "Type: Bird, Critter, Hound, or Hunter. HP 5/8/10. Max HP is tracked below.",
+        ["agile", "cautious", "clever", "mimic", "sharp-eyed", "stealthy", "tireless"],
+        savedBackstoryState ? savedBackstoryState.companions : null
+      ));
+    } else if (arch.name === 'Marshal') {
+      companionsContent.appendChild(createCompanionCard(
+        "Militia Crew (Stalwarts)",
+        "A half-dozen strong residents of Stonetop who follow your orders in battle. Loyalty starts at 2.",
+        ["archers", "athletic", "brave", "cunning", "devoted", "hardy", "intimidating", "observant", "warriors"],
+        savedBackstoryState ? savedBackstoryState.companions : null
+      ));
+    } else if (arch.name === 'Blessed') {
+      companionsContent.appendChild(createCompanionCard(
+        "Initiates of Danu",
+        "If you chose the Initiate background, these are your fellow disciples.",
+        ["Enfys (acolyte)", "Afon (devious Fae)", "Gwendyl (mentor/healer)", "Olwin (anointed lover)", "Seren the Eldest"],
+        savedBackstoryState ? savedBackstoryState.companions : null
+      ));
+    }
+  }
+}
+
+function createCompanionCard(name, desc, tags, savedState = null) {
+  const card = document.createElement('div');
+  card.className = 'follower-card';
+
+  const header = document.createElement('div');
+  header.className = 'follower-card-header';
+  
+  const h5 = document.createElement('h5');
+  h5.innerText = name;
+  header.appendChild(h5);
+  card.appendChild(header);
+
+  const body = document.createElement('div');
+  body.className = 'follower-card-body';
+  body.innerText = desc;
+  card.appendChild(body);
+
+  const stats = document.createElement('div');
+  stats.className = 'follower-card-stats';
+  
+  const hpLabel = document.createElement('span');
+  hpLabel.innerText = "HP: ";
+  const hpInput = document.createElement('input');
+  hpInput.type = 'number';
+  hpInput.name = `${name}_hp`;
+  hpInput.value = savedState && savedState.hp ? savedState.hp : 6;
+  hpInput.style.width = '40px';
+  hpInput.style.fontSize = '11px';
+  stats.appendChild(hpLabel);
+  stats.appendChild(hpInput);
+
+  const loyaltyLabel = document.createElement('span');
+  loyaltyLabel.innerText = " Loyalty: ";
+  const loyaltyInput = document.createElement('input');
+  loyaltyInput.type = 'number';
+  loyaltyInput.name = `${name}_loyalty`;
+  loyaltyInput.value = savedState && savedState.loyalty ? savedState.loyalty : 2;
+  loyaltyInput.style.width = '40px';
+  loyaltyInput.style.fontSize = '11px';
+  stats.appendChild(loyaltyLabel);
+  stats.appendChild(loyaltyInput);
+
+  card.appendChild(stats);
+
+  const tagsTitle = document.createElement('div');
+  tagsTitle.style.marginTop = '0.5rem';
+  tagsTitle.style.fontSize = '0.8rem';
+  tagsTitle.style.fontWeight = 'bold';
+  tagsTitle.innerText = "Available Tags / Skills:";
+  card.appendChild(tagsTitle);
+
+  const tagsGrid = document.createElement('div');
+  tagsGrid.style.display = 'grid';
+  tagsGrid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+  tagsGrid.style.gap = '0.3rem';
+  tagsGrid.style.marginTop = '0.25rem';
+
+  tags.forEach(tag => {
+    const row = document.createElement('label');
+    row.className = 'follower-checkbox';
+    row.style.fontSize = '0.8rem';
+    row.style.display = 'flex';
+    row.style.alignItems = 'center';
+    row.style.gap = '0.25rem';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.name = `${name}_tag_${tag}`;
+    checkbox.value = tag;
+    
+    if (savedState && savedState.tags && savedState.tags.includes(tag)) {
+      checkbox.checked = true;
+    }
+
+    row.appendChild(checkbox);
+    row.appendChild(document.createTextNode(tag));
+    tagsGrid.appendChild(row);
+  });
+  card.appendChild(tagsGrid);
+
+  return card;
+}
+
+function getBackstorySelections() {
+  if (!activeArchetype || !activeCampaign || activeCampaign.id !== 'stonetop') {
+    return null;
+  }
+
+  const state = {};
+  const data = typeof BACKSTORIES_DATA !== 'undefined' ? BACKSTORIES_DATA[activeArchetype.name] : null;
+  
+  if (data) {
+    data.sections.forEach((sect, sectIndex) => {
+      if (sect.type === 'checkbox' || sect.type === 'radio') {
+        const name = `backstory_${activeArchetype.name}_sect_${sectIndex}`;
+        const inputs = document.querySelectorAll(`input[name="${name}"]:checked`);
+        if (sect.type === 'checkbox') {
+          state[`sect_${sectIndex}`] = Array.from(inputs).map(i => i.value);
+        } else {
+          state[`sect_${sectIndex}`] = inputs.length ? inputs[0].value : null;
+        }
+      } else if (sect.type === 'text_options') {
+        sect.inputs.forEach((inputSpec, inputIndex) => {
+          const name = `backstory_${activeArchetype.name}_text_${sectIndex}_${inputIndex}`;
+          const input = document.querySelector(`input[name="${name}"]`);
+          state[`text_${sectIndex}_${inputIndex}`] = input ? input.value : '';
+        });
+      } else if (sect.type === 'textarea') {
+        const name = `backstory_${activeArchetype.name}_textarea_${sectIndex}`;
+        const textarea = document.querySelector(`textarea[name="${name}"]`);
+        state[`textarea_${sectIndex}`] = textarea ? textarea.value : '';
+      }
+    });
+  }
+
+  if (activeArchetype.name === 'Ranger' || activeArchetype.name === 'Marshal' || activeArchetype.name === 'Blessed') {
+    let name = "";
+    if (activeArchetype.name === 'Ranger') name = "Animal Companion";
+    else if (activeArchetype.name === 'Marshal') name = "Militia Crew (Stalwarts)";
+    else if (activeArchetype.name === 'Blessed') name = "Initiates of Danu";
+
+    const hpInput = document.querySelector(`input[name="${name}_hp"]`);
+    const loyaltyInput = document.querySelector(`input[name="${name}_loyalty"]`);
+    const tagInputs = document.querySelectorAll(`input[name^="${name}_tag_"]:checked`);
+
+    state.companions = {
+      hp: hpInput ? Number(hpInput.value) : 6,
+      loyalty: loyaltyInput ? Number(loyaltyInput.value) : 2,
+      tags: Array.from(tagInputs).map(t => t.value)
+    };
+  }
+
+  return state;
+}
