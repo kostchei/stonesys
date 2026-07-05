@@ -108,6 +108,78 @@ function evalFormula(formula, stats) {
   try { return Function(`"use strict";return (${expr});`)(); } catch { return formula; }
 }
 
+function numericFormulaValue(formula, stats, fallback = 0) {
+  const value = Number(evalFormula(formula, stats));
+  return Number.isFinite(value) ? value : fallback;
+}
+
+const CONTAINER_LOAD_RULES = [
+  { label: "haulage", bonus: 8, pattern: /\b(?:sledge|litter|travois|cart|wagon|wheelbarrow)\b/ },
+  { label: "pack animal", bonus: 8, pattern: /\b(?:pack horse|pack mule|pack animal|mule|horse)\b/ },
+  { label: "pack", bonus: 2, pattern: /\b(?:backpack|pack)\b/ },
+  { label: "satchel/case", bonus: 1, pattern: /\b(?:satchel|case)\b/ },
+  { label: "bag/sack", bonus: 1, pattern: /\b(?:bag|sack)\b/ },
+  { label: "pouch/purse", bonus: 1, pattern: /\b(?:pouch|purse)\b/ },
+  { label: "box/chest", bonus: 1, pattern: /\b(?:box|chest|coffer)\b/ }
+];
+
+function detectedContainerLoad() {
+  return containerLoadFromGearText(state.gearText);
+}
+
+function autoPackBonus() {
+  return detectedContainerLoad().reduce((sum, entry) => sum + entry.bonus, 0);
+}
+
+function loadCapacity() {
+  return numericFormulaValue(PB.derived.load, state.stats, 0) + autoPackBonus() + (Number(state.loadBonus) || 0);
+}
+
+function loadUsed() {
+  return Math.max(0, Number(state.loadUsed) || 0);
+}
+
+function splitGearItems(text) {
+  const items = [];
+  let current = "";
+  let depth = 0;
+  for (const ch of String(text || "")) {
+    if (ch === "(") depth++;
+    if (ch === ")") depth = Math.max(0, depth - 1);
+    if ((ch === "," || ch === "·") && depth === 0) {
+      if (current.trim()) items.push(current.trim());
+      current = "";
+    } else {
+      current += ch;
+    }
+  }
+  if (current.trim()) items.push(current.trim());
+  return items;
+}
+
+function containerLoadForItem(item) {
+  const text = String(item || "").toLowerCase();
+  if (/\bpack[- ](?:hunter|tactics|wolf|kin)\b/.test(text)) return null;
+  if (/\b(?:run with the pack|pack tactics|inspire pack)\b/.test(text)) return null;
+  if (/\b(?:water skin|waterskin|wineskin|skin)\b/.test(text)) return null;
+  const rule = CONTAINER_LOAD_RULES.find((candidate) => candidate.pattern.test(text));
+  return rule ? { item: String(item || "").trim(), label: rule.label, bonus: rule.bonus } : null;
+}
+
+function containerLoadFromGearText(text) {
+  const gearText = compactGearText(text);
+  if (!gearText) return [];
+  return splitGearItems(gearText)
+    .map(containerLoadForItem)
+    .filter(Boolean);
+}
+
+function estimateLoadFromGearText(text) {
+  const gearText = compactGearText(text);
+  if (!gearText) return 0;
+  return splitGearItems(gearText).length;
+}
+
 // ---------- state ----------
 let PB = null;
 let state = null;
@@ -182,6 +254,8 @@ function defaultState(pb) {
     advChoices: {},   // key -> stat or move name chosen for a picker-backed advancement
     trainedRanks: {}, // move name -> proficiency upgrades (1 default, 2 once trained)
     swapDone: null,   // { a, b } once the one allowed chargen stat-swap is used
+    loadUsed: 0,
+    loadBonus: 0,
     obligations,
     obligationTriggered: null,
     obligationSessionRoll: null
@@ -219,6 +293,10 @@ function normalizeLoadedState(raw, pb, id) {
     notes: parsed.notes || "",
     backstorySelections: parsed.backstorySelections || {}
   };
+  normalized.loadBonus = Number.isFinite(Number(parsed.loadBonus)) ? Number(parsed.loadBonus) : base.loadBonus;
+  normalized.loadUsed = Number.isFinite(Number(parsed.loadUsed))
+    ? Math.max(0, Number(parsed.loadUsed))
+    : estimateLoadFromGearText(normalized.gearText);
 
   if (parsed.hp && typeof parsed.hp === "object") {
     normalized.hp = {
@@ -376,13 +454,43 @@ function renderLeft() {
     el("button", { class: "no-print", type: "button", text: "+", onclick: () => { state.xp += 1; save(); render(); } })
   ]);
 
+  const carried = loadUsed();
+  const containerLoad = detectedContainerLoad();
+  const packAuto = containerLoad.reduce((sum, entry) => sum + entry.bonus, 0);
+  const packManual = Number(state.loadBonus) || 0;
+  const capacity = loadCapacity();
+  const freeLoad = capacity - carried;
+  const containerSummary = containerLoad
+    .map((entry) => `${entry.item} +${entry.bonus}`)
+    .join("; ");
+  const load = el("div", { class: "load-box" }, [
+    el("div", { class: "load-row" }, [
+      el("span", { class: "vital-label", text: "Load" }),
+      el("button", { class: "no-print", type: "button", text: "-", title: "Remove carried equipment load", onclick: () => { state.loadUsed = Math.max(0, loadUsed() - 1); save(); render(); } }),
+      el("span", { class: "vital-val", text: `${carried} / ${capacity}` }),
+      el("button", { class: "no-print", type: "button", text: "+", title: "Add carried equipment load", onclick: () => { state.loadUsed = loadUsed() + 1; save(); render(); } })
+    ]),
+    el("div", { class: "load-row no-print" }, [
+      el("span", { class: "vital-label", text: "Pack" }),
+      el("button", { type: "button", text: "-", title: "Remove manual pack space", onclick: () => { state.loadBonus = Math.max(0, (Number(state.loadBonus) || 0) - 1); save(); render(); } }),
+      el("span", { class: "load-bonus", title: containerSummary ? `Detected container space: ${containerSummary}` : "No container space detected", text: `+${packAuto} auto / +${packManual}` }),
+      el("button", { type: "button", text: "+", title: "Add manual pack space", onclick: () => { state.loadBonus = (Number(state.loadBonus) || 0) + 1; save(); render(); } })
+    ]),
+    containerSummary ? el("div", { class: "load-detected", text: `Detected: ${containerSummary}` }) : null,
+    el("div", {
+      class: "load-note" + (freeLoad < 0 ? " over" : ""),
+      text: freeLoad < 0 ? `Overloaded by ${Math.abs(freeLoad)}.` : `${freeLoad} free load.`
+    })
+  ]);
+
   z.replaceChildren(...[
     el("h2", { text: "Stats" }),
     el("p", { class: "hint", text: "Value = ability dice. A move you have upgrades 1 to proficiency." }),
     statGrid,
     swapPanel,
     el("h2", { text: "Vitals" }), hp,
-    el("div", { class: "vital-static", text: `Damage ${PB.derived.damage}  ·  Load ${evalFormula(PB.derived.load, state.stats)}` }),
+    el("div", { class: "vital-static", text: `Damage ${PB.derived.damage}` }),
+    load,
     xp,
     el("p", { class: "hint", text: "Rolling physical dice instead? Use +/− to mark XP by hand — failure = +1, and mark more at the GM's call." })
   ].filter(Boolean));
@@ -991,6 +1099,14 @@ function renderStoryPoints() {
 // Returns null if no matching archetype is found.
 function slugify(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
 
+function inferredLoadFormula(arch, campaign) {
+  if (arch.load) return arch.load;
+  if (!campaign || campaign.id === "stonetop") return "6+STR";
+  const heavyNames = /gladiator|mercenary|scavenger|smith|shaper/i;
+  if (arch.damage_die === "d10" || Number(arch.hp) >= 20 || heavyNames.test(arch.name || "")) return "8+STR";
+  return "6+STR";
+}
+
 // ---- Genesys enrichment layer ----
 // The bundle stores moves as name + description, and the converted campaigns
 // already fold their Genesys outcomes into that description prose ("on a
@@ -1055,7 +1171,7 @@ function bundleArchetypeToPlaybook(id) {
     chassis: { resolution: "genesys-narrative", array: [4, 3, 3, 2, 2, 1], statCap },
     identity: { names: [], look: [] },
     stats: { default: { ...arch.stats }, anchor: null, swaps: 0 },
-    derived: { hp: String(arch.hp ?? 0), damage: arch.damage_die || "d6", load: arch.load || "—" },
+    derived: { hp: String(arch.hp ?? 0), damage: arch.damage_die || "d6", load: inferredLoadFormula(arch, campaign) },
     gear: [],
     moves,
     startingText: groups.startingText,

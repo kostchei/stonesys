@@ -88,6 +88,13 @@ body {
 .vital-label { font-weight: bold; width: 36px; }
 .vital-val { font-size: 18px; min-width: 60px; text-align: center; }
 .vital-static { margin: 6px 0; font-size: 14px; }
+.load-box { margin: 4px 0 6px; }
+.load-row { display: flex; align-items: center; gap: 8px; margin: 3px 0; }
+.load-row button { width: 24px; }
+.load-bonus { min-width: 112px; text-align: center; }
+.load-detected { font-size: 11px; color: #6a6258; margin-left: 44px; }
+.load-note { font-size: 12px; color: #6a6258; margin-left: 44px; }
+.load-note.over { color: var(--miss); font-weight: bold; }
 
 /* ---- moves ---- */
 .move-section { margin-bottom: 14px; break-inside: avoid; }
