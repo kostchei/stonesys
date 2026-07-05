@@ -108,7 +108,7 @@ The guild provides, and adds 1 Debt. It collects in coin, in silence, or in bloo
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 

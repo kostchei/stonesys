@@ -3,6 +3,20 @@
 When a move tells you to roll, you build a **pool**: positive dice on your
 side, negative dice on the task's side, all thrown together.
 
+If danger looms, the stakes are high, and no named move fits, make a
+**risky check**. Choose the stat that matches how you face the danger:
+
+- **STR** to power through or test your might.
+- **DEX** to rely on speed, agility, aim, or finesse.
+- **CON** to endure, hold steady, or keep going.
+- **INT** to apply expertise or execute a clever plan.
+- **WIS** to rely on senses, judgment, nerve, or will.
+- **CHA** to charm, bluff, impress, command, or fit in.
+
+The GM sets the difficulty from the situation, usually **average**. A risky
+check normally has no move training, but the risk rule below still guarantees
+at least one yellow and one red die.
+
 ## Step 1 — Greens from your stat
 
 Every character has six **stats** — STR, DEX, CON, INT, WIS, CHA — each

@@ -101,7 +101,7 @@ Take a boost die to make them back down, lose their nerve, or fight you on your 
 
 *bastion*
 
-[object Object]
+Start: Standing 1.
 
 **Bonds** — fill in at least two:
 

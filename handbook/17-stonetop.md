@@ -55,6 +55,46 @@ GM applies on the fly wherever a sheet hasn't already been converted:
 - ◆ and ✶ have no old equivalent: on ◆, read the move's most generous
   line and then some; on ✶, its worst outcome arrives immediately.
 
+## Original rules values to preserve
+
+The following Stonetop values are not optional color; they are the numbers
+the conversion keeps.
+
+| Playbook | HP | Damage |
+| --- | ---: | --- |
+| Blessed | 20 | d6 |
+| Fox | 20 | d6 |
+| Heavy | 24 | d10 |
+| Judge | 20 | d6 |
+| Lightbearer | 18 | d4 |
+| Marshal | 20 | d8 |
+| Ranger | 18 | d8 |
+| Seeker | 16 | d6 |
+| Would-Be Hero | 16 | d6 |
+
+Use **d4** for the Lightbearer. If an extracted local playbook table shows
+Lightbearer damage as d6, treat that as an extraction mismatch; the original
+rules reference uses d4.
+
+Damage is playbook-based, not weapon-based. Weapons provide fictional reach
+and tags; only special weapons of war add damage. Armor subtracts from
+incoming damage, does not stack unless gear says **+1 armor**, and is ignored
+by attacks that ignore or bypass physical defense.
+
+When converting the original basic moves, use this bridge:
+
+| Original move | StoneSys handling |
+| --- | --- |
+| Defy Danger | Risky check with the stat that matches the approach. |
+| Aid | Give a blue die if your help is credible; you share the risk. |
+| Clash | On success, deal damage; spend advantage to avoid/counter the enemy or strike for +1d6 while still taking the hit; threat usually means the enemy's attack lands. |
+| Defend | Roll CON, hold Readiness on advantage; a shield increases Readiness. Spend it to take the hit, halve harm, draw attention, or strike back with disadvantage. |
+| Let Fly | If the shot is easy, deal damage. If it is pressured or tricky, roll DEX; threat depletes ammo, delays the shot, exposes you, or creates a complication. |
+
+For recovery and death, use chapter 10 exactly: Recover heals **4 +
+Prosperity**, Make Camp heals **half max HP rounded up**, a bedroll adds
+**+1d6 HP**, and Death's Door can return you at **1 HP**.
+
 ## The nine playbooks
 
 ### The Blessed
@@ -103,7 +143,7 @@ compass — and the one who must rule when neighbors fall out.
 
 ### The Lightbearer
 
-**HP 18 · damage d6.** Bearer of the holy flame, sworn against the things
+**HP 18 · damage d4.** Bearer of the holy flame, sworn against the things
 that move in the dark. Anchor WIS. Backgrounds: an *auspicious birth* under
 signs, a *wandering mystic* come to rest, or a *soul on fire* remade by
 revelation. Signature work is the light itself: kindling sacred flame that

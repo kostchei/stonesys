@@ -10,6 +10,38 @@ mkdirSync(outDir, { recursive: true });
 
 const cap = (s) => (s ? s[0].toUpperCase() + s.slice(1) : s);
 
+function cleanText(s) {
+  if (typeof s !== "string") return s;
+  return s
+    .replace(/\bper core\.md:/g, "per chapter 13:")
+    .replace(/\bcore\.md:\s*Pray for Aid, Devotion, Wrath/g, "chapter 13: Pray for Aid, Devotion, Wrath")
+    .replace(/\bInvoke Patron,\s*core\.md/g, "Invoke Patron — chapter 12")
+    .replace(/\s*\(core\.md\)\.?/g, ".")
+    .replace(/\bcore\.md\b/g, "the core rules");
+}
+
+function cleanData(value) {
+  if (Array.isArray(value)) return value.map(cleanData);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, child]) => [key, cleanData(child)])
+    );
+  }
+  return cleanText(value);
+}
+
+function renderStart(start) {
+  if (!start) return "";
+  if (typeof start === "string") return start;
+  if (Array.isArray(start)) return start.join(", ");
+  if (typeof start === "object") {
+    return `Start: ${Object.entries(start)
+      .map(([k, v]) => `${k} ${v}`)
+      .join(", ")}.`;
+  }
+  return String(start);
+}
+
 function renderMove(m) {
   const L = [];
   const kind = cap(m.type);
@@ -115,7 +147,7 @@ function render(p) {
     L.push("#### Embedment");
     L.push("");
     if (e.system) L.push(`*${e.system}*`);
-    if (e.start) L.push(`\n${e.start}`);
+    if (e.start) L.push(`\n${renderStart(e.start)}`);
     L.push("");
     if (e.bonds?.length) {
       L.push("**Bonds** — fill in at least two:");
@@ -163,7 +195,7 @@ function render(p) {
 }
 
 for (const f of process.argv.slice(3)) {
-  const p = JSON.parse(readFileSync(f, "utf8"));
+  const p = cleanData(JSON.parse(readFileSync(f, "utf8")));
   const out = join(outDir, basename(f).replace(/\.json$/, ".md"));
   writeFileSync(out, render(p));
   console.log("wrote", out);

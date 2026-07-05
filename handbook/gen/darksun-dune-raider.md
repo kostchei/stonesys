@@ -101,7 +101,7 @@ Take a boost die to drive the price your way. But an elf's bargain is a famous t
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 1, Heat 0.
 
 **Bonds** — fill in at least two:
 

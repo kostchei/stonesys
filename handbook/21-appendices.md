@@ -75,7 +75,36 @@ a small true detail. Spent token switches sides.
 | Fortunes (steading) | 1–5 | dice for season moves and steading turns |
 | Surplus (steading) | 0+ | hold; 0 in winter is a crisis |
 
-## Appendix E — Glossary
+## Appendix E — Harm reference
+
+**Taking harm:** subtract armor from incoming damage, then subtract the
+remainder from HP. Armor defaults to 0 and does not stack unless gear says
+**+1 armor**. Armor is ignored by attacks that ignore armor or bypass
+physical defense.
+
+**Dealing harm:** roll your playbook damage die. Do not add STR or DEX.
+Weapons decide reach, plausibility, and tags; only special gear adds damage.
+
+| Tag or rule | Effect |
+| --- | --- |
+| +1 damage | Add 1 to the playbook damage roll. |
+| n piercing | Ignore n armor. |
+| x piercing | Ignore armor equal to steading Prosperity. |
+| forceful | Shove, stagger, knock down, or drive back when fiction supports it. |
+| messy | Maim, shatter, break armor, or leave a problematic wound when fiction supports it. |
+| damage advantage | Roll the damage die twice and keep the higher result, then add flat bonuses. |
+| damage disadvantage | Roll the damage die twice and keep the lower result, then add flat bonuses. |
+
+**Recovery:** Recover heals **4 + Prosperity** HP for 1 use of supplies and
+cannot be used again until you take more damage. Make Camp heals **half max
+HP, rounded up**, or clears a condition. A bedroll adds **+1d6 HP**.
+
+**Death's Door:** at 0 HP from a lethal source, roll the flat risky Death's
+Door check. A strong result returns you to **1 HP**; a weak result leaves you
+alive but out of action; failure means death, revenant or ghost, or a bargain
+with the Things Below.
+
+## Appendix F — Glossary
 
 - **Advantage (▲)** — positive side-effect symbol; cancels threat one for
   one; spent on menus, holds, and edges.

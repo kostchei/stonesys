@@ -153,7 +153,7 @@ Name a Guild contact you can reach here and take a boost die dealing with them. 
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 
@@ -237,7 +237,7 @@ You begin with the signature move, every fixed move, and 2 choice moves.
 
 - **Success:** The god answers — a sign, a small miracle, a whispered truth true to its strange nature.
 - **Failure:** Silence, or an answer that curdles; the GM makes a move.
-- **▲ spend:** Hold 1 Favor (spend per Part III: bless a roll that serves your god, ask an omen, turn a weak holy result stronger, ward off a small curse or fear, or declare a shrine or sign of your god is near). / The god throws in a spiteful truth about someone present.
+- **▲ spend:** Hold 1 Favor (spend per chapter 13: bless a roll that serves your god, ask an omen, turn a weak holy result stronger, ward off a small curse or fear, or declare a shrine or sign of your god is near). / The god throws in a spiteful truth about someone present.
 - **▼ costs:** The god demands its due now — a taboo upheld, an offering paid, a cruelty done. / A rival god or its faithful takes notice of yours.
 - **◆ Triumph:** Your god is delighted; its answer is generous, and a little terrifying.
 - **✶ Despair:** You have offended it. Mark Wrath, and it does not forget.
@@ -299,7 +299,7 @@ Declare the space warded for a scene. Those your god would protect take a boost 
 
 *god*
 
-[object Object]
+Start: Devotion 1, Favor 0, Wrath 0.
 
 **Bonds** — fill in at least two:
 
@@ -445,7 +445,7 @@ Take a boost die to make them back down, lose their nerve, or fight you on your 
 
 *bastion*
 
-[object Object]
+Start: Standing 1.
 
 **Bonds** — fill in at least two:
 
@@ -589,7 +589,7 @@ Take a boost die to pass among them, read their alarm, or turn them from you. Th
 
 *bastion*
 
-[object Object]
+Start: Standing 1.
 
 **Bonds** — fill in at least two:
 
@@ -733,7 +733,7 @@ You may refuse or delay a kill. Take a boost die to make the sparing look like f
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 
@@ -1016,7 +1016,7 @@ Take a boost die to reach the right person through your web. The GM says what sm
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 
@@ -1310,7 +1310,7 @@ Take a boost die; what you know is worth more here than gold. But every secret s
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 

@@ -29,6 +29,36 @@ use one:
 If the dice give you something the menus don't cover, fall back to the
 exchange rates in chapter 5.
 
+## Common action moves
+
+Most playbook moves are written on your sheet, but the following procedures
+come up at every table.
+
+**Risky check.** When danger looms, the stakes are high, and no named move
+fits, roll the stat that matches your approach (chapter 4). On success, you
+do it. On threat, the GM gives a lesser success, cost, consequence, or hard
+choice. On failure, mark XP and the GM makes a move.
+
+**Clash.** When you fight in melee or close quarters, roll with the stat that
+fits the weapon and approach, usually STR. On success, deal your damage. On
+advantage, avoid, prevent, or counter the enemy's attack, or strike hard for
+an extra d6 damage while still suffering their attack. On threat, you suffer
+the enemy's attack or another immediate cost. On failure, the enemy has the
+upper hand.
+
+**Let fly.** When you take an easy shot with a ranged weapon and the fiction
+gives you a clear line, deal your damage. If the shot is tricky or you are
+under pressure, roll DEX. On success, deal your damage. On threat, choose or
+accept a cost: deplete ammo, wait for a clear shot, move into danger for the
+shot, or rush it and accept the GM's complication.
+
+**Defend.** When you take up a defensive stance or throw yourself between a
+threat and your ward, roll CON. On advantage, hold Readiness; a shield gives
+more. Spend Readiness one-for-one to suffer an attack's damage or effects
+instead of your ward, halve an attack's effect or damage, draw attention to
+yourself, or strike back with disadvantage on your damage roll. When you stop
+defending or the threat passes, lose unspent Readiness.
+
 ## Static moves
 
 A move with plain text and no stat doesn't roll — it is a standing

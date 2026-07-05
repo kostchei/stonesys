@@ -101,7 +101,7 @@ Name the harm it turns aside (a kind of magic, fire, prying eyes, the heat). It 
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 1, Heat 1.
 
 **Bonds** — fill in at least two:
 

@@ -101,7 +101,7 @@ Take a boost die to cow, warn off, or stare down a foe with your name and your s
 
 *bastion*
 
-[object Object]
+Start: Standing 1.
 
 **Bonds** — fill in at least two:
 

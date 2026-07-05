@@ -40,4 +40,5 @@
 **Part VI — Reference**
 
 21. Appendices: A. Character Creation Checklist · B. The Outcome Grid ·
-C. Difficulty and Pool Rails · D. Track Thresholds · E. Glossary
+C. Difficulty and Pool Rails · D. Track Thresholds · E. Harm Reference ·
+F. Glossary

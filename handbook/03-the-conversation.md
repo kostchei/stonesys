@@ -17,6 +17,32 @@ Play moves in a loop:
    succeed. Only risk rolls.
 5. **The result changes the situation.** Go back to step 1.
 
+## Action scenes
+
+Fights, chases, escapes, rescues, and other action scenes still use the same
+conversation. There is no tactical grid and no fixed round structure. The GM
+keeps the spotlight moving toward the characters in the most immediate
+danger, the characters whose choices can change the situation, and anyone
+the table has not heard from in a while.
+
+Movement is handled from the fiction:
+
+- If nothing stops you, you get there. Cross the room, duck behind a cart,
+  draw steel, or step through an open door.
+- If the movement is dangerous, contested, or time-critical, make a risky
+  check or trigger the move that fits. Running past a spear line, crossing
+  open ground under arrows, leaping a burning ditch, or forcing your way
+  through a panicked crowd is not free.
+- Distance is descriptive, not measured in squares. Use the weapon and
+  position words that matter in the scene: hand, close, reach, near, and far.
+  A dagger can matter at hand range; a spear keeps danger at reach; a bow
+  needs space and a plausible shot.
+
+Do not wait for "your turn" to protect someone, flee, shout a warning, seize
+an opening, or press an attack. Say what you do. If the fiction gives an
+enemy the immediate edge, the GM says what happens or asks what you do under
+pressure.
+
 ## Fiction first
 
 You cannot press a move like a button. You cannot say "I use Read the Room."

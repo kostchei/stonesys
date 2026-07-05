@@ -11,6 +11,21 @@ access, protection, favors, secrets, magic, work, and trouble.
 Your relationship with a patron lives on three tracks on your sheet's
 embedment rail.
 
+## Patron types
+
+Use these as templates when you create or choose a patron.
+
+| Type | Gifts | Prices |
+| --- | --- | --- |
+| Noble House | Status, soldiers, legal reach | Reputation, obedience, marriage, taxes |
+| Thieves' Guild | Fences, spies, safehouses | Cuts, silence, underworld loyalty |
+| Temple | Healing, sanctuary, relic access | Tithes, doctrine, public service |
+| Arcane Master | Spells, lore, strange tools | Experiments, secrets, corruption |
+| Merchant League | Credit, cargo, maps | Contracts, monopolies, debt |
+| Warlord | Troops, weapons, intimidation | Violence, conquest, tribute |
+| Ancient Spirit | Omens, land magic, protection | Rites, taboos, sacrifice |
+| Outsider | Impossible aid, curses, visions | Soul marks, bargains, future claims |
+
 ## Bond (0–3) — how much they trust you
 
 - **0** — Known contact. The patron recognizes you.

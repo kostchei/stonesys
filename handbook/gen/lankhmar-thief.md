@@ -101,7 +101,7 @@ Name a Guild contact you can reach here and take a boost die dealing with them. 
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 

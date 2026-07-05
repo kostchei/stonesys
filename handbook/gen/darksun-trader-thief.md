@@ -101,7 +101,7 @@ Name a contact you have here — a fence, a guide, a corrupt official, an old fl
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 

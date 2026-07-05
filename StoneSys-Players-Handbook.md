@@ -40,8 +40,8 @@
 **Part VI — Reference**
 
 21. Appendices: A. Character Creation Checklist · B. The Outcome Grid ·
-C. Difficulty and Pool Rails · D. Track Thresholds · E. Glossary
-
+C. Difficulty and Pool Rails · D. Track Thresholds · E. Harm Reference ·
+F. Glossary
 
 ---
 
@@ -98,7 +98,6 @@ story disagree about what makes sense, the story — what everyone has agreed
 is true in the world — wins. That principle is called **fiction first**, and
 it is the single most important rule in this book.
 
-
 ---
 
 # 2. The Dice
@@ -154,7 +153,6 @@ Roll every die in the pool together. Then:
 That's the whole engine. Chapter 4 tells you which dice to pick up; chapter
 5 tells you what the results mean at the table.
 
-
 ---
 
 # 3. The Conversation
@@ -175,6 +173,32 @@ Play moves in a loop:
    a roll. Climbing a ladder, buying bread, walking to the mill — chores
    succeed. Only risk rolls.
 5. **The result changes the situation.** Go back to step 1.
+
+## Action scenes
+
+Fights, chases, escapes, rescues, and other action scenes still use the same
+conversation. There is no tactical grid and no fixed round structure. The GM
+keeps the spotlight moving toward the characters in the most immediate
+danger, the characters whose choices can change the situation, and anyone
+the table has not heard from in a while.
+
+Movement is handled from the fiction:
+
+- If nothing stops you, you get there. Cross the room, duck behind a cart,
+  draw steel, or step through an open door.
+- If the movement is dangerous, contested, or time-critical, make a risky
+  check or trigger the move that fits. Running past a spear line, crossing
+  open ground under arrows, leaping a burning ditch, or forcing your way
+  through a panicked crowd is not free.
+- Distance is descriptive, not measured in squares. Use the weapon and
+  position words that matter in the scene: hand, close, reach, near, and far.
+  A dagger can matter at hand range; a spear keeps danger at reach; a bow
+  needs space and a plausible shot.
+
+Do not wait for "your turn" to protect someone, flee, shout a warning, seize
+an opening, or press an attack. Say what you do. If the fiction gives an
+enemy the immediate edge, the GM says what happens or asks what you do under
+pressure.
 
 ## Fiction first
 
@@ -203,13 +227,26 @@ tells you what you can see coming: how hard something looks, what it might
 cost, what the warning signs are. Dice are for the moments when honesty on
 both sides still leaves the outcome uncertain.
 
-
 ---
 
 # 4. Making a Check
 
 When a move tells you to roll, you build a **pool**: positive dice on your
 side, negative dice on the task's side, all thrown together.
+
+If danger looms, the stakes are high, and no named move fits, make a
+**risky check**. Choose the stat that matches how you face the danger:
+
+- **STR** to power through or test your might.
+- **DEX** to rely on speed, agility, aim, or finesse.
+- **CON** to endure, hold steady, or keep going.
+- **INT** to apply expertise or execute a clever plan.
+- **WIS** to rely on senses, judgment, nerve, or will.
+- **CHA** to charm, bluff, impress, command, or fit in.
+
+The GM sets the difficulty from the situation, usually **average**. A risky
+check normally has no move training, but the risk rule below still guarantees
+at least one yellow and one red die.
 
 ## Step 1 — Greens from your stat
 
@@ -285,7 +322,6 @@ Throw the whole pool at once and read it as chapter 5 describes.
 > average and it's clearly risky: 2 purples, one upgraded → **1 purple +
 > 1 red**. Vesh knows the guard's name from an earlier scene — a true
 > insight — so **+1 blue**. He rolls 3G 1Y 1B against 1P 1R.
-
 
 ---
 
@@ -367,7 +403,6 @@ bookkeeping.
 > familiar manner. Clean success, plus a turn in his favor. The fiction
 > moves.
 
-
 ---
 
 # 6. The Character Sheet
@@ -445,7 +480,6 @@ The **advancement checklist** (chapter 11) and your **gear picks** — the
 equipment choices your playbook offered at creation, plus whatever you've
 gained since.
 
-
 ---
 
 # 7. Creating a Character
@@ -518,7 +552,6 @@ ask questions. Answer them — every answer becomes true.
 
 *The one-page version of this checklist is Appendix A.*
 
-
 ---
 
 # 8. Moves
@@ -552,6 +585,36 @@ use one:
 If the dice give you something the menus don't cover, fall back to the
 exchange rates in chapter 5.
 
+## Common action moves
+
+Most playbook moves are written on your sheet, but the following procedures
+come up at every table.
+
+**Risky check.** When danger looms, the stakes are high, and no named move
+fits, roll the stat that matches your approach (chapter 4). On success, you
+do it. On threat, the GM gives a lesser success, cost, consequence, or hard
+choice. On failure, mark XP and the GM makes a move.
+
+**Clash.** When you fight in melee or close quarters, roll with the stat that
+fits the weapon and approach, usually STR. On success, deal your damage. On
+advantage, avoid, prevent, or counter the enemy's attack, or strike hard for
+an extra d6 damage while still suffering their attack. On threat, you suffer
+the enemy's attack or another immediate cost. On failure, the enemy has the
+upper hand.
+
+**Let fly.** When you take an easy shot with a ranged weapon and the fiction
+gives you a clear line, deal your damage. If the shot is tricky or you are
+under pressure, roll DEX. On success, deal your damage. On threat, choose or
+accept a cost: deplete ammo, wait for a clear shot, move into danger for the
+shot, or rush it and accept the GM's complication.
+
+**Defend.** When you take up a defensive stance or throw yourself between a
+threat and your ward, roll CON. On advantage, hold Readiness; a shield gives
+more. Spend Readiness one-for-one to suffer an attack's damage or effects
+instead of your ward, halve an attack's effect or damage, draw attention to
+yourself, or strike back with disadvantage on your damage roll. When you stop
+defending or the threat passes, lose unspent Readiness.
+
 ## Static moves
 
 A move with plain text and no stat doesn't roll — it is a standing
@@ -579,7 +642,6 @@ way.
 
 Both apply to other player characters and to NPCs alike. Only one aid die
 and one interference die per source, and the fiction must carry it.
-
 
 ---
 
@@ -643,7 +705,6 @@ Ammunition, torches, rations, and remedies have no tick-boxes. They deplete
 when the GM (or you) spends a minor ▼ as "lose a consumable." Keep your
 gear list honest and the dice will handle scarcity for you.
 
-
 ---
 
 # 10. Harm and Recovery
@@ -658,6 +719,16 @@ amount for hazards) and you take that off your **HP**. Armor works in the
 fiction: worn armor reduces incoming damage as its description says, and
 sometimes turns a wound into a bruise entirely.
 
+HP is fighting spirit, luck, grit, and plot armor as much as meat. Losing HP
+does not always mean a visible wound, and a visible wound can matter even
+after HP comes back.
+
+Armor subtracts from incoming damage. Armor defaults to 0, and armor ratings
+do not stack unless a piece of gear explicitly says it grants **+1 armor**.
+Armor does not help against attacks that **ignore armor** or against harm
+that bypasses physical defense, such as fire, poison, psychic force, or a
+curse.
+
 ## Dealing harm
 
 When the fiction says you hurt something, roll **your damage die** (printed
@@ -665,13 +736,44 @@ on your sheet) and apply it. Moves and fictional position — a blade at the
 throat, a fall arranged onto stone — can raise, lower, or bypass the roll
 entirely; the move's text and the GM's judgment govern.
 
+Your damage die comes from your playbook, not your weapon. A Heavy is
+dangerous even with a knife; a scholar does not become a Heavy by picking up
+an axe. Do not add STR or DEX to damage rolls.
+
+Weapons still matter because they decide what is possible. Range tags such
+as **hand**, **close**, **reach**, **near**, and **far** say where the weapon
+can matter. A spear can keep a knife-fighter out; a bow needs distance and a
+line of fire; an ordinary blade may do nothing to a thing made of stone.
+
+Some gear changes damage:
+
+- **+1 damage** adds to your playbook damage roll.
+- **n piercing** ignores n points of armor.
+- **x piercing** ignores armor equal to the steading's current Prosperity.
+- **forceful** can shove, stagger, or knock someone down.
+- **messy** can maim, shatter shields, break armor, or leave a problematic
+  wound when the fiction supports it.
+
+If a move gives advantage or disadvantage on a damage roll, roll the main
+damage die twice and keep the higher or lower result, then add flat bonuses.
+
 ## At zero
 
-Hitting **0 HP** means you are down and the situation is dire. If your
-playbook carries a desperate move for this moment ("when you're dying…"),
-it triggers now. Otherwise the GM says what death's door looks like — and
-what it costs to pull back from it. Death in this game is always the result
-of the fiction, never a bookkeeping surprise.
+Hitting **0 HP** means you are out of the action. If the source could kill
+you, roll **Death's Door**.
+
+Death's Door is a flat risky check: build it as a stat 2, untrained, average
+difficulty roll. On success with advantage or triumph, you wrest yourself
+back to the living at **1 HP** and say how death marked you. On success with
+threat or no net side effect, you are no longer dying but remain out of the
+action, usually unconscious. On failure, your time has come: make one last
+move as if everything broke your way, return changed as a revenant or ghost,
+or call on one of the Things Below and accept what answers.
+
+In the original Stonetop move, that same outcome is: on **10+**, return at
+**1 HP** and say how death marked you; on **7-9**, you are no longer dying
+but unconscious or out of action; on **6-**, choose final death, return as a
+revenant or ghost, or make a bargain with the Things Below.
 
 ## Conditions
 
@@ -679,18 +781,35 @@ Serious harm often leaves a **condition** (chapter 9) even after HP is
 restored: *wounded and untreated*, *exhausted*, *shaken*. Each adds a black
 die to rolls with its paired stats until treated.
 
+The original Stonetop debilities map cleanly to conditions:
+
+- **Weakened:** black die on STR and DEX rolls.
+- **Dazed:** black die on INT and WIS rolls.
+- **Miserable:** black die on CON and CHA rolls.
+
 ## Recovery
 
 Fiction first, as always:
 
-- **Catching your breath** after danger restores a little HP if you're safe,
-  supplied, and tended.
-- **Real care** — a healer's hands, an infirmary bed, days of rest at the
-  steading — restores HP fully and clears conditions.
+- **Recover:** when you take time to catch your breath and tend what ails
+  you, spend **1 use of supplies** and recover HP equal to **4 + the
+  steading's Prosperity**. You cannot gain this benefit again until you take
+  more damage.
+- **Treating a condition or problematic wound:** say how you tend it. The GM
+  says whether that is enough or what else it requires: rest, herbs, field
+  surgery, a healer, a roll, or a facility.
+- **Make camp:** when you settle in to rest in an unsafe area, each member
+  consumes **1 use of supplies or provisions**. If you eat and sleep, choose
+  one: recover HP equal to **half your maximum HP, rounded up**, or clear a
+  condition. For original Stonetop playbooks, this is the choice to clear a
+  debility. If the rest was peaceful and comfortable, take a blue die on your
+  next roll. If you use a bedroll, recover **+1d6 HP**.
+- **Real care at home** — a healer's hands, an infirmary bed, days of rest
+  at the steading — can restore HP fully and clear conditions when the
+  fiction gives it time and safety.
 - **Some things don't heal on rest**: personal tracks like Defilement or
   Corruption (chapter 14) never fade on their own, and a god's Wrath
   (chapter 13) must be appeased, not slept off.
-
 
 ---
 
@@ -713,6 +832,10 @@ advancement list**. Advancements are playbook-specific: new choice moves, a
 second training upgrade on a move you have (raising it to two yellow dice —
 the cap), improvements to holds, followers, gear, or standing.
 
+HP does not automatically increase when you spend XP or take an advancement.
+Your maximum HP changes only if a playbook move or advancement explicitly
+says it does.
+
 ## Advanced advancements
 
 Each playbook's **Advanced** list unlocks after several basic picks (the
@@ -726,7 +849,6 @@ Not everything you gain is a checkbox. Standing with a patron, a god's
 favor, the steading's regard, a hard-won ally, a new facility at home —
 Parts III and IV cover the tracks and rolls those live on. A character a
 year into play is bigger than their advancement column shows.
-
 
 ---
 
@@ -742,6 +864,21 @@ access, protection, favors, secrets, magic, work, and trouble.
 
 Your relationship with a patron lives on three tracks on your sheet's
 embedment rail.
+
+## Patron types
+
+Use these as templates when you create or choose a patron.
+
+| Type | Gifts | Prices |
+| --- | --- | --- |
+| Noble House | Status, soldiers, legal reach | Reputation, obedience, marriage, taxes |
+| Thieves' Guild | Fences, spies, safehouses | Cuts, silence, underworld loyalty |
+| Temple | Healing, sanctuary, relic access | Tithes, doctrine, public service |
+| Arcane Master | Spells, lore, strange tools | Experiments, secrets, corruption |
+| Merchant League | Credit, cargo, maps | Contracts, monopolies, debt |
+| Warlord | Troops, weapons, intimidation | Violence, conquest, tribute |
+| Ancient Spirit | Omens, land magic, protection | Rites, taboos, sacrifice |
+| Outsider | Impossible aid, curses, visions | Soul marks, bargains, future claims |
 
 ## Bond (0–3) — how much they trust you
 
@@ -829,7 +966,6 @@ a taboo to prove loyalty, deliver tribute, endorse the patron publicly,
 sabotage a rival's works, hide someone hunted, enter a ruin for something
 unnamed, or accept a visible mark of service. Saying no is allowed — and
 costs Bond.
-
 
 ---
 
@@ -934,7 +1070,6 @@ An offering should cost something.
 | A vow, oath, or public service | Gain Devotion when fulfilled |
 | A relic, enemy trophy, or reclaimed shrine | Reduce Wrath or raise Devotion |
 
-
 ---
 
 # 14. Personal Tracks
@@ -961,7 +1096,6 @@ Three rules set personal tracks apart from every other number on your sheet:
 
 Treat a personal track as story, not tax. Every pip should be a scene: the
 day the ground died at your touch, the night the book whispered back.
-
 
 ---
 
@@ -997,6 +1131,24 @@ den, a tower, a ship. Its sheet carries what the place *is* and what it can
 Some steadings also hold a **strange resource** — a rare, dangerous asset
 (true steel, old magic, a secret way). Its entry says what it grants and
 what it draws.
+
+When the steading exploits a strange resource, add **+1 Prosperity** while
+the resource flows. If the steading fails a **Gather**, **Craft**, **Trade**,
+or **Build** order while exploiting it, the GM chooses or rolls a side
+effect:
+
+| d10 | Resource side effect |
+| ---: | --- |
+| 1 | Workers develop marks, mutations, dreams, or compulsions. |
+| 2 | A faction demands exclusive rights. |
+| 3 | A god, spirit, or monster claims the resource as sacred. |
+| 4 | The resource changes a facility. |
+| 5 | Local animals, crops, or weather become strange. |
+| 6 | A cure, stabilizer, or protective charm becomes necessary. |
+| 7 | Smugglers and raiders arrive. |
+| 8 | The resource empowers enemies as easily as allies. |
+| 9 | The supply is richer but more dangerous than expected. |
+| 10 | The resource awakens something below. |
 
 ## The season move
 
@@ -1051,6 +1203,30 @@ add 1 Trouble · add 1 Heat · a facility is strained and can't lead the next
 turn · a hireling is injured, offended, missing, or compromised · a patron
 demands credit or payment · a rival copies, blocks, or exploits the work.
 
+## Personal downtime
+
+When the party has time between expeditions, each player can choose one
+downtime option before the next expedition, season move, or steading turn
+pushes play forward:
+
+| Option | Result |
+| --- | --- |
+| Rest | Recover HP or make space for longer healing. |
+| Treat a condition | Tend a condition or problematic wound; the GM says what care is enough. |
+| Repair gear | Fix damaged armor, tools, weapons, or expedition equipment. |
+| Craft something | Make a useful item if you have materials, tools, and time. |
+| Train or practice | Work toward an advancement, learn a technique, or justify new training. |
+| Gather rumors | Ask what people are saying and what threat is moving. |
+| Make offerings | Appease a god, spirit, ancestor, or local power. |
+| Visit a patron | Ask for work, aid, forgiveness, or terms. |
+| Pay down Debt | Satisfy a patron's price, service, tithe, or demand. |
+| Reduce Heat | Lie low, bribe, apologize, make amends, or redirect attention. |
+| Work on a steading order | Help a facility, project, or order directly. |
+| Strengthen a bond | Spend meaningful time with another PC or an NPC tie. |
+| Recruit help | Look for hirelings, guards, guides, specialists, or followers. |
+| Research a threat | Study lore, maps, weaknesses, rituals, or old stories. |
+| Prepare for an expedition | Secure supplies, maps, transport, tools, medicine, or introductions. |
+
 ## The steading and the party
 
 The steading creates adventures; it doesn't replace them. If home can solve
@@ -1058,7 +1234,6 @@ a problem alone, let it. When it can't, the turn's result reveals what the
 characters must do in person — and that's next session. Your **Standing
 (0–3)** with the steading, where your campaign uses it, measures how hard
 the community will rally for *you* in particular.
-
 
 ---
 
@@ -1116,7 +1291,6 @@ which. Take your steading turn if a week passes. Treat wounds, clear
 conditions, honor what you promised, and mark end-of-session XP. Then look
 at what the season roll and the pressures have set in motion, and choose
 where you're needed next.
-
 
 ---
 
@@ -1177,6 +1351,46 @@ GM applies on the fly wherever a sheet hasn't already been converted:
 - ◆ and ✶ have no old equivalent: on ◆, read the move's most generous
   line and then some; on ✶, its worst outcome arrives immediately.
 
+## Original rules values to preserve
+
+The following Stonetop values are not optional color; they are the numbers
+the conversion keeps.
+
+| Playbook | HP | Damage |
+| --- | ---: | --- |
+| Blessed | 20 | d6 |
+| Fox | 20 | d6 |
+| Heavy | 24 | d10 |
+| Judge | 20 | d6 |
+| Lightbearer | 18 | d4 |
+| Marshal | 20 | d8 |
+| Ranger | 18 | d8 |
+| Seeker | 16 | d6 |
+| Would-Be Hero | 16 | d6 |
+
+Use **d4** for the Lightbearer. If an extracted local playbook table shows
+Lightbearer damage as d6, treat that as an extraction mismatch; the original
+rules reference uses d4.
+
+Damage is playbook-based, not weapon-based. Weapons provide fictional reach
+and tags; only special weapons of war add damage. Armor subtracts from
+incoming damage, does not stack unless gear says **+1 armor**, and is ignored
+by attacks that ignore or bypass physical defense.
+
+When converting the original basic moves, use this bridge:
+
+| Original move | StoneSys handling |
+| --- | --- |
+| Defy Danger | Risky check with the stat that matches the approach. |
+| Aid | Give a blue die if your help is credible; you share the risk. |
+| Clash | On success, deal damage; spend advantage to avoid/counter the enemy or strike for +1d6 while still taking the hit; threat usually means the enemy's attack lands. |
+| Defend | Roll CON, hold Readiness on advantage; a shield increases Readiness. Spend it to take the hit, halve harm, draw attention, or strike back with disadvantage. |
+| Let Fly | If the shot is easy, deal damage. If it is pressured or tricky, roll DEX; threat depletes ammo, delays the shot, exposes you, or creates a complication. |
+
+For recovery and death, use chapter 10 exactly: Recover heals **4 +
+Prosperity**, Make Camp heals **half max HP rounded up**, a bedroll adds
+**+1d6 HP**, and Death's Door can return you at **1 HP**.
+
 ## The nine playbooks
 
 ### The Blessed
@@ -1225,7 +1439,7 @@ compass — and the one who must rule when neighbors fall out.
 
 ### The Lightbearer
 
-**HP 18 · damage d6.** Bearer of the holy flame, sworn against the things
+**HP 18 · damage d4.** Bearer of the holy flame, sworn against the things
 that move in the dark. Anchor WIS. Backgrounds: an *auspicious birth* under
 signs, a *wandering mystic* come to rest, or a *soul on fire* remade by
 revelation. Signature work is the light itself: kindling sacred flame that
@@ -1275,7 +1489,6 @@ their head and growing mid-fall, converting failure into growth faster than
 any other playbook — misses feed both XP and the moves themselves. Plays
 as the campaign's stakes made visible: the future the village is fighting
 for.
-
 
 ---
 
@@ -1439,7 +1652,7 @@ Name the harm it turns aside (a kind of magic, fire, prying eyes, the heat). It 
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 1, Heat 1.
 
 **Bonds** — fill in at least two:
 
@@ -1586,7 +1799,7 @@ Take a boost die to cow, warn off, or stare down a foe with your name and your s
 
 *bastion*
 
-[object Object]
+Start: Standing 1.
 
 **Bonds** — fill in at least two:
 
@@ -1730,7 +1943,7 @@ Name a contact you have here — a fence, a guide, a corrupt official, an old fl
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 
@@ -2020,7 +2233,7 @@ Take a boost die and ask the GM who here truly outranks whom, regardless of what
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 3, Heat 1.
 
 **Bonds** — fill in at least two:
 
@@ -2250,7 +2463,7 @@ You begin with the signature move, every fixed move, and 2 choice moves.
 
 - **Success:** The element answers with a sign or aid true to its nature.
 - **Failure:** Only silence, or an answer you did not want; the GM makes a move.
-- **▲ spend:** Hold 1 Favor (spend later per Part III: bless a roll that serves the element, ask an omen, turn a weak result stronger, ward off a minor spiritual harm, or declare a shrine or sign is near). / The aid is greater or lasts longer than you asked.
+- **▲ spend:** Hold 1 Favor (spend later per chapter 13: bless a roll that serves the element, ask an omen, turn a weak result stronger, ward off a minor spiritual harm, or declare a shrine or sign is near). / The aid is greater or lasts longer than you asked.
 - **▼ costs:** The element demands visible obedience or a further offering, now. / A rival power feels you draw on the deep force.
 - **◆ Triumph:** A surge of elemental power, freely given.
 - **✶ Despair:** You have offended the element. Mark Wrath.
@@ -2306,7 +2519,7 @@ You can perform its rites and seek its aid, and you gain Devotion by upholding i
 
 *god*
 
-[object Object]
+Start: Devotion 1, Favor 0, Wrath 0.
 
 **Bonds** — fill in at least two:
 
@@ -2459,7 +2672,7 @@ The guild provides, and adds 1 Debt. It collects in coin, in silence, or in bloo
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 
@@ -2605,7 +2818,7 @@ Take a boost die to drive the price your way. But an elf's bargain is a famous t
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 1, Heat 0.
 
 **Bonds** — fill in at least two:
 
@@ -2647,7 +2860,6 @@ Take a boost die to drive the price your way. But an elf's bargain is a famous t
 - ☐ Bring the tribe in: broker a true alliance, founding a shared Bastion (a desert waystation) for Legion and tribe both.
 
 \newpage
-
 
 ---
 
@@ -3863,7 +4075,6 @@ You sense the rock's faults, hollows, veins, and hidden ways — take a boost di
 
 \newpage
 
-
 ---
 
 # 20. The Sign of the Black Cat
@@ -4021,7 +4232,7 @@ Name a Guild contact you can reach here and take a boost die dealing with them. 
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 
@@ -4105,7 +4316,7 @@ You begin with the signature move, every fixed move, and 2 choice moves.
 
 - **Success:** The god answers — a sign, a small miracle, a whispered truth true to its strange nature.
 - **Failure:** Silence, or an answer that curdles; the GM makes a move.
-- **▲ spend:** Hold 1 Favor (spend per Part III: bless a roll that serves your god, ask an omen, turn a weak holy result stronger, ward off a small curse or fear, or declare a shrine or sign of your god is near). / The god throws in a spiteful truth about someone present.
+- **▲ spend:** Hold 1 Favor (spend per chapter 13: bless a roll that serves your god, ask an omen, turn a weak holy result stronger, ward off a small curse or fear, or declare a shrine or sign of your god is near). / The god throws in a spiteful truth about someone present.
 - **▼ costs:** The god demands its due now — a taboo upheld, an offering paid, a cruelty done. / A rival god or its faithful takes notice of yours.
 - **◆ Triumph:** Your god is delighted; its answer is generous, and a little terrifying.
 - **✶ Despair:** You have offended it. Mark Wrath, and it does not forget.
@@ -4167,7 +4378,7 @@ Declare the space warded for a scene. Those your god would protect take a boost 
 
 *god*
 
-[object Object]
+Start: Devotion 1, Favor 0, Wrath 0.
 
 **Bonds** — fill in at least two:
 
@@ -4313,7 +4524,7 @@ Take a boost die to make them back down, lose their nerve, or fight you on your 
 
 *bastion*
 
-[object Object]
+Start: Standing 1.
 
 **Bonds** — fill in at least two:
 
@@ -4457,7 +4668,7 @@ Take a boost die to pass among them, read their alarm, or turn them from you. Th
 
 *bastion*
 
-[object Object]
+Start: Standing 1.
 
 **Bonds** — fill in at least two:
 
@@ -4601,7 +4812,7 @@ You may refuse or delay a kill. Take a boost die to make the sparing look like f
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 
@@ -4884,7 +5095,7 @@ Take a boost die to reach the right person through your web. The GM says what sm
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 
@@ -5178,7 +5389,7 @@ Take a boost die; what you know is worth more here than gold. But every secret s
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 
@@ -5220,7 +5431,6 @@ Take a boost die; what you know is worth more here than gold. But every secret s
 - ☐ Rise toward the throne: build your own faction and a Bastion (a beggars' court) within the Guild.
 
 \newpage
-
 
 ---
 
@@ -5301,7 +5511,36 @@ a small true detail. Spent token switches sides.
 | Fortunes (steading) | 1–5 | dice for season moves and steading turns |
 | Surplus (steading) | 0+ | hold; 0 in winter is a crisis |
 
-## Appendix E — Glossary
+## Appendix E — Harm reference
+
+**Taking harm:** subtract armor from incoming damage, then subtract the
+remainder from HP. Armor defaults to 0 and does not stack unless gear says
+**+1 armor**. Armor is ignored by attacks that ignore armor or bypass
+physical defense.
+
+**Dealing harm:** roll your playbook damage die. Do not add STR or DEX.
+Weapons decide reach, plausibility, and tags; only special gear adds damage.
+
+| Tag or rule | Effect |
+| --- | --- |
+| +1 damage | Add 1 to the playbook damage roll. |
+| n piercing | Ignore n armor. |
+| x piercing | Ignore armor equal to steading Prosperity. |
+| forceful | Shove, stagger, knock down, or drive back when fiction supports it. |
+| messy | Maim, shatter, break armor, or leave a problematic wound when fiction supports it. |
+| damage advantage | Roll the damage die twice and keep the higher result, then add flat bonuses. |
+| damage disadvantage | Roll the damage die twice and keep the lower result, then add flat bonuses. |
+
+**Recovery:** Recover heals **4 + Prosperity** HP for 1 use of supplies and
+cannot be used again until you take more damage. Make Camp heals **half max
+HP, rounded up**, or clears a condition. A bedroll adds **+1d6 HP**.
+
+**Death's Door:** at 0 HP from a lethal source, roll the flat risky Death's
+Door check. A strong result returns you to **1 HP**; a weak result leaves you
+alive but out of action; failure means death, revenant or ghost, or a bargain
+with the Things Below.
+
+## Appendix F — Glossary
 
 - **Advantage (▲)** — positive side-effect symbol; cancels threat one for
   one; spent on menus, holds, and edges.

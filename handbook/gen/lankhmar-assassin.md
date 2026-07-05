@@ -101,7 +101,7 @@ You may refuse or delay a kill. Take a boost die to make the sparing look like f
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 

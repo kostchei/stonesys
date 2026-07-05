@@ -101,7 +101,7 @@ Take a boost die to reach the right person through your web. The GM says what sm
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 

@@ -101,7 +101,7 @@ Take a boost die; what you know is worth more here than gold. But every secret s
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 2, Heat 0.
 
 **Bonds** — fill in at least two:
 

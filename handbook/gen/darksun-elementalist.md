@@ -39,7 +39,7 @@ You begin with the signature move, every fixed move, and 2 choice moves.
 
 - **Success:** The element answers with a sign or aid true to its nature.
 - **Failure:** Only silence, or an answer you did not want; the GM makes a move.
-- **▲ spend:** Hold 1 Favor (spend later per Part III: bless a roll that serves the element, ask an omen, turn a weak result stronger, ward off a minor spiritual harm, or declare a shrine or sign is near). / The aid is greater or lasts longer than you asked.
+- **▲ spend:** Hold 1 Favor (spend later per chapter 13: bless a roll that serves the element, ask an omen, turn a weak result stronger, ward off a minor spiritual harm, or declare a shrine or sign is near). / The aid is greater or lasts longer than you asked.
 - **▼ costs:** The element demands visible obedience or a further offering, now. / A rival power feels you draw on the deep force.
 - **◆ Triumph:** A surge of elemental power, freely given.
 - **✶ Despair:** You have offended the element. Mark Wrath.
@@ -95,7 +95,7 @@ You can perform its rites and seek its aid, and you gain Devotion by upholding i
 
 *god*
 
-[object Object]
+Start: Devotion 1, Favor 0, Wrath 0.
 
 **Bonds** — fill in at least two:
 

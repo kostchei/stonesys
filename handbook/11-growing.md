@@ -17,6 +17,10 @@ advancement list**. Advancements are playbook-specific: new choice moves, a
 second training upgrade on a move you have (raising it to two yellow dice —
 the cap), improvements to holds, followers, gear, or standing.
 
+HP does not automatically increase when you spend XP or take an advancement.
+Your maximum HP changes only if a playbook move or advancement explicitly
+says it does.
+
 ## Advanced advancements
 
 Each playbook's **Advanced** list unlocks after several basic picks (the

@@ -101,7 +101,7 @@ Take a boost die to pass among them, read their alarm, or turn them from you. Th
 
 *bastion*
 
-[object Object]
+Start: Standing 1.
 
 **Bonds** — fill in at least two:
 

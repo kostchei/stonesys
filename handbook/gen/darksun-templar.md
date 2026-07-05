@@ -101,7 +101,7 @@ Take a boost die and ask the GM who here truly outranks whom, regardless of what
 
 *patron*
 
-[object Object]
+Start: Bond 1, Debt 3, Heat 1.
 
 **Bonds** — fill in at least two:
 
