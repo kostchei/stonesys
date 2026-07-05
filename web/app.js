@@ -114,13 +114,13 @@ function numericFormulaValue(formula, stats, fallback = 0) {
 }
 
 const CONTAINER_LOAD_RULES = [
-  { label: "haulage", bonus: 8, pattern: /\b(?:sledge|litter|travois|cart|wagon|wheelbarrow)\b/ },
-  { label: "pack animal", bonus: 8, pattern: /\b(?:pack horse|pack mule|pack animal|mule|horse)\b/ },
-  { label: "pack", bonus: 2, pattern: /\b(?:backpack|pack)\b/ },
-  { label: "satchel/case", bonus: 1, pattern: /\b(?:satchel|case)\b/ },
-  { label: "bag/sack", bonus: 1, pattern: /\b(?:bag|sack)\b/ },
-  { label: "pouch/purse", bonus: 1, pattern: /\b(?:pouch|purse)\b/ },
-  { label: "box/chest", bonus: 1, pattern: /\b(?:box|chest|coffer)\b/ }
+  { label: "haulage", bonus: 8, capacity: "various", tier: "heavy", pattern: /\b(?:sledge|litter|travois|cart|wagon|wheelbarrow)\b/i },
+  { label: "pack animal", bonus: 8, capacity: "various", tier: "light", pattern: /\b(?:pack horse|pack mule|pack animal|mule|horse)\b/i },
+  { label: "large sea chest (heavy)", bonus: 3, capacity: "up to 20 normal items", tier: "heavy", pattern: /\b(?:large sea chest|sea chest|chest|coffer)\b/i },
+  { label: "backpack (medium)", bonus: 2, capacity: "up to 10 normal items", tier: "medium", pattern: /\b(?:backpack|pack)\b/i },
+  { label: "satchel (medium)", bonus: 2, capacity: "up to 8 normal items", tier: "medium", pattern: /\b(?:satchel|case)\b/i },
+  { label: "bandolier (light)", bonus: 1, capacity: "up to 6 small items", tier: "light", pattern: /\b(?:bandolier|quiver)\b/i },
+  { label: "bucket/pouches (light)", bonus: 0, capacity: "up to 4 normal items", tier: "light", pattern: /\b(?:bucket|hidden pouch|hidden pouches|porter knot|pouch|purse|bag|sack|box|coffer|jar)\b/i }
 ];
 
 function detectedContainerLoad() {
@@ -131,8 +131,18 @@ function autoPackBonus() {
   return detectedContainerLoad().reduce((sum, entry) => sum + entry.bonus, 0);
 }
 
+function loadLimits() {
+  const str = Number(state.stats.STR) || 0;
+  const packBonus = autoPackBonus() + (Number(state.loadBonus) || 0);
+  return {
+    light: str + 1 + packBonus,
+    normal: (str * 2) + 1 + packBonus,
+    heavy: (str * 3) + 6 + packBonus
+  };
+}
+
 function loadCapacity() {
-  return numericFormulaValue(PB.derived.load, state.stats, 0) + autoPackBonus() + (Number(state.loadBonus) || 0);
+  return loadLimits().heavy;
 }
 
 function loadUsed() {
@@ -163,7 +173,7 @@ function containerLoadForItem(item) {
   if (/\b(?:run with the pack|pack tactics|inspire pack)\b/.test(text)) return null;
   if (/\b(?:water skin|waterskin|wineskin|skin)\b/.test(text)) return null;
   const rule = CONTAINER_LOAD_RULES.find((candidate) => candidate.pattern.test(text));
-  return rule ? { item: String(item || "").trim(), label: rule.label, bonus: rule.bonus } : null;
+  return rule ? { item: String(item || "").trim(), label: rule.label, bonus: rule.bonus, capacity: rule.capacity, tier: rule.tier } : null;
 }
 
 function containerLoadFromGearText(text) {
@@ -458,11 +468,33 @@ function renderLeft() {
   const containerLoad = detectedContainerLoad();
   const packAuto = containerLoad.reduce((sum, entry) => sum + entry.bonus, 0);
   const packManual = Number(state.loadBonus) || 0;
-  const capacity = loadCapacity();
-  const freeLoad = capacity - carried;
+  const limits = loadLimits();
+  const capacity = limits.heavy;
   const containerSummary = containerLoad
-    .map((entry) => `${entry.item} +${entry.bonus}`)
+    .map((entry) => `${entry.item} (+${entry.bonus} Load, holds ${entry.capacity})`)
     .join("; ");
+
+  // Determine highest minimum container tier
+  let minTierVal = 0; // 0=light, 1=medium, 2=heavy
+  for (const entry of containerLoad) {
+    if (entry.tier === "heavy") minTierVal = Math.max(minTierVal, 2);
+    else if (entry.tier === "medium") minTierVal = Math.max(minTierVal, 1);
+  }
+
+  // Evaluate final load tier taking min container tier into account
+  let loadTier = "Light";
+  let tierDesc = "quick & quiet";
+  if (carried > limits.heavy) {
+    loadTier = "Overloaded";
+    tierDesc = "immobile / encumbered";
+  } else if (carried > limits.normal || minTierVal >= 2) {
+    loadTier = "Heavy";
+    tierDesc = "noisy, slow, hot, quick to tire";
+  } else if (carried > limits.light || minTierVal >= 1) {
+    loadTier = "Normal";
+    tierDesc = "standard mobility";
+  }
+
   const load = el("div", { class: "load-box" }, [
     el("div", { class: "load-row" }, [
       el("span", { class: "vital-label", text: "Load" }),
@@ -478,8 +510,8 @@ function renderLeft() {
     ]),
     containerSummary ? el("div", { class: "load-detected", text: `Detected: ${containerSummary}` }) : null,
     el("div", {
-      class: "load-note" + (freeLoad < 0 ? " over" : ""),
-      text: freeLoad < 0 ? `Overloaded by ${Math.abs(freeLoad)}.` : `${freeLoad} free load.`
+      class: "load-note" + (carried > limits.heavy ? " over" : ""),
+      text: `Status: ${loadTier} (${tierDesc}). Limits: Light ≤${limits.light}, Normal ≤${limits.normal}, Heavy ≤${limits.heavy}.`
     })
   ]);
 

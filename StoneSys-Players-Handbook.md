@@ -439,8 +439,11 @@ Below the stats:
   (usually a base plus CON). When you take harm, HP goes down (chapter 10).
 - **Damage die** — what you roll when the fiction says you hurt something
   (d6, d8, or d10, set by your playbook).
-- **Load** — how much you can carry without slowing down, set by your
-  playbook (usually a base plus STR).
+- **Load** — your carrying limits, divided into Light, Normal, and Heavy
+  tiers based on your Strength (STR) and containers. Light is STR+1,
+  Normal is (STR*2)+1, and Heavy is (STR*3)+6. Carrying a medium or heavy
+  container (like a backpack or sea chest) forces at least that load tier,
+  even if empty.
 - **XP** — experience marks (chapter 11).
 - **Conditions** — written next to HP as you acquire them (chapter 9).
 
@@ -513,8 +516,10 @@ each Look line (bearing, dress, eyes, and so on). Say what the others see.
 
 ## 5. Note your derived numbers
 
-Copy from the playbook: **maximum HP** (base + CON), **damage die**, and
-**Load** (base + STR). Start at full HP, 0 XP.
+Copy from the playbook: **maximum HP** (base + CON) and **damage die**. Start at full HP, 0 XP. Your carrying **Load** thresholds are calculated based on your Strength (STR):
+* **Light**: STR + 1
+* **Normal**: (STR * 2) + 1
+* **Heavy**: (STR * 3) + 6
 
 ## 6. Take your starting moves
 
@@ -524,8 +529,12 @@ how many). Check them off.
 
 ## 7. Pick your gear
 
-The playbook offers a short list of gear choices — "choose one of…" lines.
-Pick, and note anything with a special rule. Keep total weight within Load.
+The playbook offers a short list of gear choices. Pick items and note their weight. Keep your carried load within your Load limits. Carrying containers modifies your limits and dictates your minimum load tier:
+* **Bucket / Pouches / Bags** (Light): +0 Load limit bonus. Holds up to 4 items. Minimum tier: Light.
+* **Bandolier** (Light): +1 Load limit bonus. Holds up to 6 small items. Minimum tier: Light.
+* **Satchel / Case** (Medium): +2 Load limit bonus. Holds up to 8 items. Minimum tier: Normal.
+* **Backpack / Pack** (Medium): +2 Load limit bonus. Holds up to 10 items. Minimum tier: Normal.
+* **Large Sea Chest** (Heavy): +3 Load limit bonus. Holds up to 20 items. Minimum tier: Heavy.
 
 ## 8. Write your bonds
 

@@ -32,8 +32,11 @@ Below the stats:
   (usually a base plus CON). When you take harm, HP goes down (chapter 10).
 - **Damage die** — what you roll when the fiction says you hurt something
   (d6, d8, or d10, set by your playbook).
-- **Load** — how much you can carry without slowing down, set by your
-  playbook (usually a base plus STR).
+- **Load** — your carrying limits, divided into Light, Normal, and Heavy
+  tiers based on your Strength (STR) and containers. Light is STR+1,
+  Normal is (STR*2)+1, and Heavy is (STR*3)+6. Carrying a medium or heavy
+  container (like a backpack or sea chest) forces at least that load tier,
+  even if empty.
 - **XP** — experience marks (chapter 11).
 - **Conditions** — written next to HP as you acquire them (chapter 9).
 

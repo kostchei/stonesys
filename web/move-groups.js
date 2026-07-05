@@ -478,17 +478,19 @@ export function getMoveGroups(arch, campaign) {
 
   const supplement = resolveCampaignSupplement(campaign, arch);
   const campaignId = campaign ? campaign.id : "";
-  const fixed = (arch.signature_moves || []).map((move) => ({ ...move, category: "fixed" }));
   const { lower, level6 } = splitLevelSix(arch.choice_moves || []);
-  const baseStartingSlots = Math.min(DEFAULT_STARTING_CHOICE_COUNT, lower.length);
+  const extraFixedCount = lower.length > 0 ? 1 : 0;
+  const extraFixed = lower.slice(0, extraFixedCount).map((move) => ({ ...move, category: "fixed" }));
+  const fixed = (arch.signature_moves || []).map((move) => ({ ...move, category: "fixed" })).concat(extraFixed);
+  
+  const baseStartingSlots = lower.length > extraFixedCount ? 1 : 0;
   const supplementStartingSlots = supplement ? supplement.startingSlots || 0 : 0;
-  const startingSlots = baseStartingSlots + supplementStartingSlots;
   const starting = lower
-    .slice(0, baseStartingSlots)
-    .map((move) => ({ ...move, category: "starting" }))
-    .concat((supplement && supplement.starting ? supplement.starting : [])
-      .map((text) => syntheticMove(text, { category: "starting", campaignId })));
-  const advancement = lower.slice(baseStartingSlots).map((move) => ({ ...move, category: "advancement" }));
+    .slice(extraFixedCount, extraFixedCount + baseStartingSlots)
+    .map((move) => ({ ...move, category: "starting" }));
+  const campaignChoice = (supplement && supplement.starting ? supplement.starting : [])
+    .map((text) => syntheticMove(text, { category: "starting", campaignId }));
+  const advancement = lower.slice(extraFixedCount + baseStartingSlots).map((move) => ({ ...move, category: "advancement" }));
   const basicAdvancement = (arch.advancement && arch.advancement.basic ? arch.advancement.basic : [])
     .map((text) => syntheticMove(text, { category: "advancement", campaignId }));
   const advancedAdvancement = (arch.advancement && arch.advancement.advanced ? arch.advancement.advanced : [])
@@ -497,21 +499,18 @@ export function getMoveGroups(arch, campaign) {
     .map((text) => syntheticMove(text, { category: "advancement", campaignId }));
   const supplementalLevel6 = (supplement && supplement.level6 ? supplement.level6 : [])
     .map((text) => syntheticMove(text, { category: "level6", locked: true, campaignId }));
-  const startingRules = supplement && supplementStartingSlots
-    ? [{
-      label: supplement.startingRuleLabel || `Choose ${supplementStartingSlots} campaign option${supplementStartingSlots === 1 ? "" : "s"}`,
-      min: supplementStartingSlots,
-      max: supplementStartingSlots,
-      moves: supplement.starting || []
-    }]
-    : [];
+  const startingRules = [];
   const baseStartingText = baseStartingSlots
     ? `Choose ${baseStartingSlots} starting move${baseStartingSlots === 1 ? "" : "s"} at character creation.`
     : "No additional archetype starting move choices.";
 
   return {
-    startingText: supplement ? `${baseStartingText} ${supplement.startingText}` : baseStartingText,
-    startingSlots,
+    startingText: baseStartingText,
+    startingSlots: baseStartingSlots,
+    campaignChoiceText: supplement ? supplement.startingText : "",
+    campaignChoiceSlots: supplementStartingSlots,
+    campaignChoiceLabel: supplement ? supplement.startingRuleLabel : "",
+    campaignChoice,
     startingRules,
     fixed,
     starting,
@@ -533,17 +532,47 @@ export function getMoveGroupSummary(arch, campaign) {
 
 export function validateStartingChoices(groups, selectedMoveNames, options = {}) {
   const selected = new Set(selectedMoveNames || []);
-  const selectedCount = selected.size;
-  const slotCount = groups.startingSlots || 0;
   const requireComplete = !!options.requireComplete;
 
-  if (selectedCount > slotCount) {
+  // 1. Validate Archetype choices
+  const archetypeMoves = (groups.starting || []).map(m => m.name);
+  const selectedArchetypeCount = archetypeMoves.filter(name => selected.has(name)).length;
+  const archetypeSlots = groups.startingSlots || 0;
+
+  if (selectedArchetypeCount > archetypeSlots) {
     return {
       ok: false,
-      message: `Choose no more than ${slotCount} starting move${slotCount === 1 ? "" : "s"}.`
+      message: `Choose no more than ${archetypeSlots} starting move${archetypeSlots === 1 ? "" : "s"}.`
     };
   }
 
+  if (requireComplete && selectedArchetypeCount < archetypeSlots) {
+    return {
+      ok: false,
+      message: `Choose ${archetypeSlots} starting move${archetypeSlots === 1 ? "" : "s"} before saving.`
+    };
+  }
+
+  // 2. Validate Campaign options
+  const campaignMoves = (groups.campaignChoice || []).map(m => m.name);
+  const selectedCampaignCount = campaignMoves.filter(name => selected.has(name)).length;
+  const campaignSlots = groups.campaignChoiceSlots || 0;
+
+  if (selectedCampaignCount > campaignSlots) {
+    return {
+      ok: false,
+      message: `Choose no more than ${campaignSlots} campaign option${campaignSlots === 1 ? "" : "s"}.`
+    };
+  }
+
+  if (requireComplete && selectedCampaignCount < campaignSlots) {
+    return {
+      ok: false,
+      message: `Choose ${campaignSlots} campaign option${campaignSlots === 1 ? "" : "s"} before saving.`
+    };
+  }
+
+  // 3. Validate starting rules
   for (const rule of groups.startingRules || []) {
     const count = (rule.moves || []).filter((name) => selected.has(name)).length;
     if (rule.max != null && count > rule.max) {
@@ -552,13 +581,6 @@ export function validateStartingChoices(groups, selectedMoveNames, options = {})
     if (requireComplete && rule.min != null && count < rule.min) {
       return { ok: false, message: rule.label || `Choose at least ${rule.min} from this group.` };
     }
-  }
-
-  if (requireComplete && selectedCount < slotCount) {
-    return {
-      ok: false,
-      message: `Choose ${slotCount} starting move${slotCount === 1 ? "" : "s"} before saving.`
-    };
   }
 
   return { ok: true, message: "" };

@@ -22,6 +22,170 @@ const STAT_ADVANCE_XP_COST = 10;
 const LEVEL_SIX_ADVANCEMENT_COUNT = 5;
 const LEVEL_ADVANCEMENT_CATEGORIES = new Set(['ability', 'move']);
 
+const STARTING_GEAR_DATA = {
+  "Blessed": {
+    label: "Choose 1 Special Possession (in addition to symbol of authority and scribe's kit):",
+    limit: 1,
+    options: [
+      "Black iron maul (utterly immune to all magic; close, forceful, awkward, +1 damage)",
+      "Makerglass shield (indestructible, +1 armor, +1 Readiness on success to Defend)",
+      "Helm set with a dark ice jewel (adds 1 blue Boost die to resist mind-affecting magic)"
+    ]
+  },
+  "Fox": {
+    label: "Choose 2 Special Possessions:",
+    limit: 2,
+    options: [
+      "Burglar's kit (picks, files, snippers, wire, dark-lantern, grappling hook, thin rope)",
+      "Carpenter's tools (chisels, files, nails, pitch, prybars, saws, firkins, barrels)",
+      "Distillery (skins of fine whisky [3 uses], copper tubes, malt, stills, casks)",
+      "Hidden stash (valuables worth a purse of silver [Value 3])",
+      "Mummer's kit (juggling balls, motley, ribbons, bells, makeup, masks, lute, fiddle)",
+      "Scribe's tools (parchment, ink, pigments, vials, quills, notebook)"
+    ]
+  },
+  "Heavy": {
+    label: "Choose 2 Special Possessions:",
+    limit: 2,
+    options: [
+      "Burglar's kit (picks, files, snippers, wire, dark-lantern, grappling hook, thin rope)",
+      "Carpenter's tools (chisels, files, nails, pitch, prybars, saws, firkins, barrels)",
+      "Distillery (skins of fine whisky [3 uses], copper tubes, malt, stills, casks)",
+      "Hidden stash (valuables worth a purse of silver [Value 3])",
+      "Mummer's kit (juggling balls, motley, ribbons, bells, makeup, masks, lute, fiddle)",
+      "Scribe's tools (parchment, ink, pigments, vials, quills, notebook)"
+    ]
+  },
+  "Judge": {
+    label: "Choose 1 Symbol & 1 Tool kit (Max 2):",
+    limit: 2,
+    options: [
+      "[Symbol] Black iron maul (immune to magic; close, forceful, awkward, +1 damage)",
+      "[Symbol] Makerglass shield (indestructible, +1 armor, +1 Readiness on Defend)",
+      "[Symbol] Helm set with a dark ice jewel (1 blue Boost die vs mind magic)",
+      "[Tool] Scribe's tools (parchment, ink, pigments, vials, quills, notebook)",
+      "[Tool] Aviary (thick gloves, bird hoods, tethers, messenger birds, cages)",
+      "[Tool] Carpenter's tools (chisels, files, nails, pitch, prybars, saws)",
+      "[Tool] Engineer's tools (rulers, tapes, plumb-bobs, tripods, block & tackle)",
+      "[Tool] Smithy or smithy access (ingots, thick gloves, tongs, bellows, anvil)"
+    ]
+  },
+  "Lightbearer": {
+    label: "Choose 2 Special Possessions:",
+    limit: 2,
+    options: [
+      "Apiary (beeswax, candles [lasts ~1 hr], honey, bee smokers, hats & veils)",
+      "Books & scrolls (3 uses; consult for Know Things success with Advantage)",
+      "Chandlery (beeswax, candles, wicks, scented herbs, soap, lye, ash)",
+      "Distillery (skins of fine whisky [3 uses], copper tubes, malt, stills, barrels)",
+      "Glassworks (vials, charms, lenses, lanterns, extra oil, etc.)",
+      "Holy relics (3 uses; spend in lieu of Invoke Sun God consequence)",
+      "Luthier's tools (chisels, files, catgut, woods, stains, lute, fiddle)"
+    ]
+  },
+  "Marshal": {
+    label: "Choose 2 Special Possessions:",
+    limit: 2,
+    options: [
+      "Chirurgeon's tools (catgut, straps, bandages, poultice, willow bark, bonesaws)",
+      "Distillery (skins of fine whisky [3 uses], copper tubes, malt, stills, barrels)",
+      "Engineer's tools (rulers, tapes, plumb-bobs, tripods, block & tackle, wheelbarrow)",
+      "Personal symbol (flag, crest, marking; display to gain crew Loyalty)",
+      "Scribe's tools (parchment, ink, pigments, vials, quills, notebook)",
+      "Weapons of war (sword, long steel spear, battleaxe, composite bow)"
+    ]
+  },
+  "Ranger": {
+    label: "Choose 2 Special Possessions (in addition to composite bow):",
+    limit: 2,
+    options: [
+      "Distillery (skins of fine whisky [3 uses], copper tubes, malt, stills, barrels)",
+      "Hideouts (3 uses; expend to have a well-stocked, safe shelter nearby)",
+      "Husbandry tools (brushes, muzzles, collars, feed, whips, bridles)",
+      "Hounds (2-3 followers; trackers, keen-nosed, fast; HP 6, Armor 0, Damage d6)"
+    ]
+  },
+  "Seeker": {
+    label: "Choose 2 Special Possessions (in addition to scribe's tools):",
+    limit: 2,
+    options: [
+      "Books & scrolls (3 uses; consult for Know Things success with Advantage)",
+      "Distillery (skins of fine whisky [3 uses], copper tubes, malt, stills, barrels)",
+      "Engineer's tools (rulers, tapes, plumb-bobs, tripods, block & tackle, wheelbarrow)",
+      "Laboratory (chemics, reagents, vials, measures, scales, decanters)",
+      "Naphtha kit (produces d4-1 uses of thrown, area, dangerous, ignores armor naphtha)"
+    ]
+  },
+  "Would-be Hero": {
+    label: "Choose 2 Special Possessions:",
+    limit: 2,
+    options: [
+      "Chirurgeon's tools (catgut, straps, bandages, poultice, willow bark, bonesaws)",
+      "Distillery (skins of fine whisky [3 uses], copper tubes, malt, stills, barrels)",
+      "Engineer's tools (rulers, tapes, plumb-bobs, tripods, block & tackle, wheelbarrow)",
+      "Personal symbol (flag, crest, marking)",
+      "Scribe's tools (parchment, ink, pigments, vials, quills, notebook)",
+      "Weapons of war (sword, long steel spear, battleaxe, composite bow)"
+    ]
+  }
+};
+
+const BONDS_QUESTIONS_DATA = {
+  "Blessed": [
+    "Who is your betrothed / true love / ceremonial partner?",
+    "Whom do you secretly watch over, and why?",
+    "Which of you fears the wider world?"
+  ],
+  "Fox": [
+    "Which one of you joined me in my latest hijinx?",
+    "Which one of you brings your problems to me?",
+    "Which one of you saved my bacon, mor'n once?",
+    "Which one of you trusts me not one bit?"
+  ],
+  "Heavy": [
+    "Which one of you once dragged me home, bleeding and unconscious?",
+    "Which one of you can I trust to always have my back?",
+    "Which one of you has stayed my hand?",
+    "Which one of you has traded blows with me?"
+  ],
+  "Judge": [
+    "Which one of you is a true disciple of Aratis?",
+    "Which one of you is my closest confidant?",
+    "Which one of you has stood beside me in battle against unnatural chaos?",
+    "Against which of you have I passed judgement?"
+  ],
+  "Lightbearer": [
+    "Which one of you is an old and dear friend?",
+    "Which one of you shares my faith?",
+    "Which one of you scoffs at mercy and hope?",
+    "Which one of you will need my guidance soon?"
+  ],
+  "Marshal": [
+    "Which one of you is or was part of my crew?",
+    "Which one of you have I promised to keep safe?",
+    "Which one of you do I still have doubts about?",
+    "Which one of you ignored my orders and got someone killed?"
+  ],
+  "Ranger": [
+    "Which one of you fears the wider world?",
+    "Which one of you has shown me great beauty?",
+    "Which one of you have I caught sometimes staring out at the horizon?",
+    "Which one of you lacked the stomach to put something out if its misery?"
+  ],
+  "Seeker": [
+    "Which one of you led me to a key discovery?",
+    "Which one of you has been at my side the entire way?",
+    "Which one of you most fears the path I tread?",
+    "Which one of you is keeping secrets from me?"
+  ],
+  "Would-be Hero": [
+    "Which one of you is my childhood rival/friend?",
+    "Which one of you did I try to impress, and fail?",
+    "Which one of you saved me from my own folly?",
+    "Which one of you has stayed my hand?"
+  ]
+};
+
 let dicePool = {
   ability: 0,
   proficiency: 0,
@@ -170,6 +334,35 @@ window.addEventListener('DOMContentLoaded', () => {
       bgRadios.forEach(r => r.checked = false);
       const randBg = bgRadios[Math.floor(Math.random() * bgRadios.length)];
       randBg.checked = true;
+    }
+
+    // 3.5. Randomize Instinct
+    const instinctRadios = Array.from(document.querySelectorAll('input[name="character-instinct"]'));
+    if (instinctRadios.length > 0) {
+      instinctRadios.forEach(r => r.checked = false);
+      const randInstinct = instinctRadios[Math.floor(Math.random() * instinctRadios.length)];
+      randInstinct.checked = true;
+    }
+
+    // 3.7. Randomize Starting Gear
+    if (activeCampaign && activeCampaign.id === 'stonetop' && activeArchetype) {
+      const gearData = STARTING_GEAR_DATA[activeArchetype.name];
+      if (gearData) {
+        const checkboxes = Array.from(document.querySelectorAll('.starting-gear-checkbox'));
+        checkboxes.forEach(cb => cb.checked = false);
+        const shuffled = shuffleStats(checkboxes);
+        const toCheck = shuffled.slice(0, gearData.limit);
+        toCheck.forEach(cb => cb.checked = true);
+        updateGearTextarea(activeArchetype, toCheck.map(cb => cb.value));
+      }
+    }
+
+    // 3.8. Randomize Bonds
+    if (activeCampaign && activeCampaign.id === 'stonetop') {
+      const inputs = Array.from(document.querySelectorAll('.bonds-question-input'));
+      inputs.forEach(input => {
+        input.value = generateName('stonetop');
+      });
     }
 
     // 4. Randomize starting moves
@@ -455,7 +648,15 @@ function selectArchetype(arch) {
   renderMoves(arch);
   
   // Populate gear
-  document.getElementById('gear-text').value = arch.gear || '';
+  if (activeCampaign && activeCampaign.id === 'stonetop') {
+    renderStartingGear(arch, null);
+    updateGearTextarea(arch, []);
+    renderBondsQuestions(arch, null);
+  } else {
+    document.getElementById('starting-gear-container').style.display = 'none';
+    document.getElementById('bonds-questions-container').style.display = 'none';
+    document.getElementById('gear-text').value = arch.gear || '';
+  }
   document.getElementById('steading-upgrades-text').value = '';
   document.getElementById('character-notes-text').value = '';
   renderXpLedger();
@@ -713,12 +914,19 @@ function renderBackgrounds(backgrounds) {
         </div>
       </label>
     `;
+    const input = div.querySelector('input[name="archetype-background"]');
+    input.addEventListener('change', () => {
+      setSaveStatus('Unsaved background change.');
+      if (activeArchetype) {
+        renderBackstoryAndCompanions(activeArchetype, getBackstorySelections());
+      }
+    });
     container.appendChild(div);
   });
 }
 
 // Render Instincts list
-function renderInstincts(instincts) {
+function renderInstincts(instincts, selectedInstinct = null) {
   const container = document.getElementById('instincts-list');
   container.innerHTML = '';
   
@@ -727,11 +935,203 @@ function renderInstincts(instincts) {
     return;
   }
   
-  instincts.forEach(inst => {
+  const isStonetop = activeCampaign && activeCampaign.id === 'stonetop';
+  const parsed = [];
+  
+  if (isStonetop) {
+    for (let i = 0; i < instincts.length; i += 2) {
+      const name = instincts[i];
+      const desc = instincts[i + 1] || '';
+      parsed.push({ name, desc });
+    }
+  } else {
+    instincts.forEach(name => {
+      parsed.push({ name, desc: '' });
+    });
+  }
+  
+  parsed.forEach(inst => {
     const item = document.createElement('div');
-    item.className = 'instinct-item';
-    item.innerText = inst;
+    item.className = 'instinct-select-row';
+    
+    const label = document.createElement('label');
+    label.className = 'instinct-label';
+    
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.name = 'character-instinct';
+    input.value = inst.name;
+    
+    if (selectedInstinct && selectedInstinct === inst.name) {
+      input.checked = true;
+    } else if (!selectedInstinct && parsed.length === 1) {
+      // If there's only 1 instinct, select it by default
+      input.checked = true;
+    }
+    
+    input.addEventListener('change', () => {
+      setSaveStatus('Unsaved instinct change.');
+    });
+    
+    const textSpan = document.createElement('span');
+    textSpan.className = 'instinct-text';
+    if (inst.desc) {
+      textSpan.innerHTML = `<strong>${inst.name}</strong> · <span class="instinct-desc">${inst.desc}</span>`;
+    } else {
+      textSpan.innerText = inst.name;
+    }
+    
+    label.appendChild(input);
+    label.appendChild(textSpan);
+    item.appendChild(label);
     container.appendChild(item);
+  });
+}
+
+// Render starting gear picker (Stonetop playbooks)
+function renderStartingGear(arch, savedSelections = null) {
+  const container = document.getElementById('starting-gear-container');
+  const choicesDiv = document.getElementById('starting-gear-choices');
+  const label = document.getElementById('starting-gear-label');
+  
+  choicesDiv.innerHTML = '';
+  
+  if (!activeCampaign || activeCampaign.id !== 'stonetop' || !STARTING_GEAR_DATA[arch.name]) {
+    container.style.display = 'none';
+    return;
+  }
+  
+  const data = STARTING_GEAR_DATA[arch.name];
+  container.style.display = 'block';
+  label.innerText = data.label;
+  
+  data.options.forEach((opt, idx) => {
+    const row = document.createElement('label');
+    row.style.display = 'flex';
+    row.style.alignItems = 'flex-start';
+    row.style.gap = '0.4rem';
+    row.style.fontSize = '0.85rem';
+    row.style.cursor = 'pointer';
+    row.style.marginBottom = '0.2rem';
+    
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.className = 'starting-gear-checkbox';
+    input.value = opt;
+    
+    if (savedSelections && savedSelections.includes(opt)) {
+      input.checked = true;
+    }
+    
+    input.addEventListener('change', () => {
+      const checked = choicesDiv.querySelectorAll('.starting-gear-checkbox:checked');
+      if (checked.length > data.limit) {
+        input.checked = false;
+        alert(`You can select at most ${data.limit} starting possessions.`);
+        return;
+      }
+      
+      updateGearTextarea(arch, Array.from(choicesDiv.querySelectorAll('.starting-gear-checkbox:checked')).map(cb => cb.value));
+      setSaveStatus('Unsaved gear change.');
+    });
+    
+    row.appendChild(input);
+    row.appendChild(document.createTextNode(opt));
+    choicesDiv.appendChild(row);
+  });
+}
+
+function updateGearTextarea(arch, selectedPossessions) {
+  const gearText = document.getElementById('gear-text');
+  
+  // Base fixed items per playbook
+  let baseGear = [];
+  if (arch.name === "Blessed") baseGear = ["Symbol of authority", "Scribe's tools"];
+  else if (arch.name === "Judge") baseGear = ["Symbol of authority", "Scribe's tools"];
+  else if (arch.name === "Seeker") baseGear = ["Scribe's tools"];
+  else if (arch.name === "Ranger") baseGear = ["Composite bow", "Modest clothes"];
+  else if (arch.name === "Fox") baseGear = ["Modest clothes", "Dagger"];
+  else if (arch.name === "Heavy") baseGear = ["Modest clothes", "Dagger"];
+  else if (arch.name === "Lightbearer") baseGear = ["Modest clothes", "Consecrated flame", "Dagger"];
+  else if (arch.name === "Marshal") baseGear = ["Modest clothes", "Dagger"];
+  else if (arch.name === "Would-be Hero") baseGear = ["Modest clothes", "Dagger"];
+  
+  let header = baseGear.map(item => `• ${item}`).join('\n');
+  let selections = selectedPossessions.map(p => `• ${p}`).join('\n');
+  
+  // Filter out existing bulleted items or base items in current textarea to preserve custom manual entries
+  const currentLines = gearText.value.split('\n');
+  const customLines = currentLines.filter(line => {
+    const clean = line.trim();
+    if (!clean) return false;
+    if (clean.startsWith('•')) return false;
+    if (clean === "Additional Gear:") return false;
+    // Check if it's one of the base items
+    if (baseGear.some(item => clean.toLowerCase().includes(item.toLowerCase()))) return false;
+    return true;
+  });
+  
+  let result = "";
+  if (header) result += header + "\n";
+  if (selections) result += selections + "\n";
+  if (customLines.length > 0) {
+    result += "\nAdditional Gear:\n" + customLines.join('\n');
+  }
+  
+  gearText.value = result.trim();
+}
+
+// Render bonds questions inputs (Stonetop playbooks)
+function renderBondsQuestions(arch, savedAnswers = null) {
+  const container = document.getElementById('bonds-questions-container');
+  const listDiv = document.getElementById('bonds-questions-list');
+  
+  listDiv.innerHTML = '';
+  
+  if (!activeCampaign || activeCampaign.id !== 'stonetop' || !BONDS_QUESTIONS_DATA[arch.name]) {
+    container.style.display = 'none';
+    return;
+  }
+  
+  const questions = BONDS_QUESTIONS_DATA[arch.name];
+  container.style.display = 'block';
+  
+  questions.forEach((q, idx) => {
+    const row = document.createElement('div');
+    row.className = 'bonds-question-row';
+    row.style.display = 'flex';
+    row.style.flexDirection = 'column';
+    row.style.gap = '0.2rem';
+    row.style.marginBottom = '0.5rem';
+    
+    const label = document.createElement('label');
+    label.innerText = q;
+    label.style.fontSize = '0.85rem';
+    label.style.color = 'var(--text-main)';
+    
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'bonds-question-input';
+    input.dataset.index = idx;
+    input.placeholder = "Enter character name & details...";
+    input.style.padding = '0.35rem 0.5rem';
+    input.style.fontSize = '0.85rem';
+    input.style.border = '1px solid rgba(107, 79, 42, 0.2)';
+    input.style.borderRadius = '4px';
+    input.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+    input.style.color = 'var(--text-main)';
+    
+    if (savedAnswers && savedAnswers[idx]) {
+      input.value = savedAnswers[idx];
+    }
+    
+    input.addEventListener('input', () => {
+      setSaveStatus('Unsaved bonds change.');
+    });
+    
+    row.appendChild(label);
+    row.appendChild(input);
+    listDiv.appendChild(row);
   });
 }
 
@@ -824,10 +1224,32 @@ function renderMoves(arch, selectedMoveNames = null) {
   const startingBadge = document.getElementById('starting-moves-badge');
   const level6Badge = document.getElementById('level6-moves-badge');
 
+  const campaignBox = document.getElementById('campaign-moves-box');
+  const campaignContainer = document.getElementById('campaign-moves-list');
+  const campaignBadge = document.getElementById('campaign-moves-badge');
+  const campaignNote = document.getElementById('campaign-moves-note');
+
   if (startingNote) startingNote.innerText = groups.startingText || '';
   if (startingBadge) startingBadge.innerText = groups.startingSlots
     ? `Choose ${groups.startingSlots}`
     : 'Background only';
+
+  if (campaignBox && campaignContainer) {
+    if (groups.campaignChoice && groups.campaignChoice.length > 0) {
+      campaignBox.style.display = 'block';
+      if (campaignNote) campaignNote.innerText = groups.campaignChoiceText || '';
+      if (campaignBadge) campaignBadge.innerText = groups.campaignChoiceSlots
+        ? `Choose ${groups.campaignChoiceSlots}`
+        : '';
+      renderMoveList(campaignContainer, groups.campaignChoice, {
+        selectable: true,
+        stage: 'starting',
+        emptyText: 'No campaign option choices.'
+      });
+    } else {
+      campaignBox.style.display = 'none';
+    }
+  }
 
   renderMoveList(sigContainer, groups.fixed, { emptyText: 'No fixed moves.' });
   renderMoveList(startingContainer, groups.starting, {
@@ -978,6 +1400,12 @@ function createCharacterSnapshot(existing) {
   const characters = getSavedCharacters();
   const activeExisting = existing || characters.find(c => c.id === currentCharacterId);
   
+  const selectedInstinctInput = document.querySelector('input[name="character-instinct"]:checked');
+  const selectedInstinct = selectedInstinctInput ? selectedInstinctInput.value : null;
+  
+  const selectedStartingGear = Array.from(document.querySelectorAll('.starting-gear-checkbox:checked')).map(cb => cb.value);
+  const relationshipAnswers = Array.from(document.querySelectorAll('.bonds-question-input')).map(input => input.value);
+  
   return {
     version: 1,
     id: activeExisting && activeExisting.id ? activeExisting.id : (currentCharacterId || makeId()),
@@ -993,6 +1421,9 @@ function createCharacterSnapshot(existing) {
     stats: { ...currentStats },
     backgroundName: getSelectedBackgroundName(),
     choiceMoves: getSelectedChoiceMoves(),
+    selectedInstinct,
+    selectedStartingGear,
+    relationshipAnswers,
     gear: document.getElementById('gear-text').value,
     steadingUpgrades: document.getElementById('steading-upgrades-text').value,
     notes: document.getElementById('character-notes-text').value,
@@ -1080,7 +1511,14 @@ function applyCharacterSnapshot(character) {
   xpLedger = Array.isArray(character.xpLedger) ? character.xpLedger.slice() : [];
   
   document.getElementById('character-name-input').value = character.name || '';
-  document.getElementById('gear-text').value = character.gear || archetype.gear || '';
+  if (activeCampaign && activeCampaign.id === 'stonetop') {
+    renderStartingGear(archetype, character.selectedStartingGear || null);
+    renderBondsQuestions(archetype, character.relationshipAnswers || null);
+  } else {
+    document.getElementById('starting-gear-container').style.display = 'none';
+    document.getElementById('bonds-questions-container').style.display = 'none';
+  }
+  document.getElementById('gear-text').value = character.gear || '';
   document.getElementById('steading-upgrades-text').value = character.steadingUpgrades || '';
   document.getElementById('character-notes-text').value = character.notes || '';
   
@@ -1090,6 +1528,9 @@ function applyCharacterSnapshot(character) {
   setSelectedBackgroundName(character.backgroundName);
   setSelectedChoiceMoves(character.choiceMoves);
   rerenderMovesPreservingSelections();
+  
+  // Restore selected instinct
+  renderInstincts(archetype.instincts, character.selectedInstinct || null);
   
   // Restore Page 2 selections
   renderBackstoryAndCompanions(archetype, character.backstorySelections || null);
@@ -1631,7 +2072,8 @@ function renderBackstoryAndCompanions(arch, savedBackstoryState = null) {
   }
 
   // 2. Companions Section
-  if (arch.name === 'Ranger' || arch.name === 'Marshal' || arch.name === 'Blessed') {
+  const isStormMarkedHeavy = arch.name === 'Heavy' && getSelectedBackgroundName().toUpperCase() === 'STORM-MARKED';
+  if (arch.name === 'Ranger' || arch.name === 'Marshal' || arch.name === 'Blessed' || arch.name === 'Seeker' || isStormMarkedHeavy) {
     companionsBox.style.display = 'block';
 
     if (arch.name === 'Ranger') {
@@ -1653,6 +2095,14 @@ function renderBackstoryAndCompanions(arch, savedBackstoryState = null) {
         "Initiates of Danu",
         "If you chose the Initiate background, these are your fellow disciples.",
         ["Enfys (acolyte)", "Afon (devious Fae)", "Gwendyl (mentor/healer)", "Olwin (anointed lover)", "Seren the Eldest"],
+        savedBackstoryState ? savedBackstoryState.companions : null
+      ));
+    } else if (arch.name === 'Seeker') {
+      companionsContent.appendChild(createSeekerArcanaCard(
+        savedBackstoryState ? savedBackstoryState.arcana : null
+      ));
+    } else if (arch.name === 'Heavy') {
+      companionsContent.appendChild(createStormMarkingsCard(
         savedBackstoryState ? savedBackstoryState.companions : null
       ));
     }
@@ -1742,6 +2192,242 @@ function createCompanionCard(name, desc, tags, savedState = null) {
   return card;
 }
 
+function createSeekerArcanaCard(savedState = null) {
+  const card = document.createElement('div');
+  card.className = 'follower-card';
+  card.style.border = '1px solid var(--accent-color)';
+  
+  const header = document.createElement('div');
+  header.className = 'follower-card-header';
+  const h5 = document.createElement('h5');
+  h5.innerText = "Arcana Collection";
+  header.appendChild(h5);
+  card.appendChild(header);
+  
+  const body = document.createElement('div');
+  body.className = 'follower-card-body';
+  body.style.display = 'flex';
+  body.style.flexDirection = 'column';
+  body.style.gap = '0.75rem';
+  
+  const majorLabel = document.createElement('label');
+  majorLabel.innerHTML = '<strong>Major Arcanum:</strong>';
+  majorLabel.style.fontSize = '0.85rem';
+  const majorSelect = document.createElement('select');
+  majorSelect.name = 'Seeker_major_arcanum';
+  majorSelect.style.width = '100%';
+  majorSelect.style.fontSize = '0.85rem';
+  majorSelect.style.padding = '0.25rem';
+  majorSelect.style.backgroundColor = 'rgba(0,0,0,0.2)';
+  majorSelect.style.color = 'var(--text-main)';
+  majorSelect.style.border = '1px solid rgba(107, 79, 42, 0.2)';
+  majorSelect.addEventListener('change', () => {
+    setSaveStatus('Unsaved backstory selections change.');
+  });
+  
+  const options = [
+    "None selected",
+    "The Demonhide Cloak",
+    "The Redwood Effigy",
+    "The Twisted Spear",
+    "Noruba's Ice Sphere",
+    "The Azure Hand",
+    "The Mindgem"
+  ];
+  options.forEach(opt => {
+    const o = document.createElement('option');
+    o.value = opt;
+    o.innerText = opt;
+    if (savedState && savedState.majorArcanum === opt) {
+      o.selected = true;
+    }
+    majorSelect.appendChild(o);
+  });
+  
+  majorLabel.appendChild(majorSelect);
+  body.appendChild(majorLabel);
+  
+  const qDiv = document.createElement('div');
+  qDiv.style.display = 'flex';
+  qDiv.style.flexDirection = 'column';
+  qDiv.style.gap = '0.4rem';
+  
+  const questions = [
+    "Where did you acquire it?",
+    "From whose grasp did you wrest it?",
+    "Who else wants it?",
+    "What did it cost you?"
+  ];
+  
+  questions.forEach((q, idx) => {
+    const row = document.createElement('div');
+    row.style.display = 'flex';
+    row.style.flexDirection = 'column';
+    row.style.gap = '0.15rem';
+    
+    const label = document.createElement('label');
+    label.innerText = q;
+    label.style.fontSize = '0.8rem';
+    label.style.color = 'var(--text-muted)';
+    
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.name = `Seeker_major_q_${idx}`;
+    input.style.fontSize = '0.8rem';
+    input.style.padding = '0.25rem';
+    input.style.border = '1px solid rgba(107, 79, 42, 0.1)';
+    input.style.borderRadius = '3px';
+    input.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+    input.style.color = 'var(--text-main)';
+    
+    if (savedState && savedState.questions && savedState.questions[idx]) {
+      input.value = savedState.questions[idx];
+    }
+    
+    input.addEventListener('input', () => {
+      setSaveStatus('Unsaved backstory selections change.');
+    });
+    
+    row.appendChild(label);
+    row.appendChild(input);
+    qDiv.appendChild(row);
+  });
+  body.appendChild(qDiv);
+  
+  const mysteryDiv = document.createElement('div');
+  mysteryDiv.style.display = 'flex';
+  mysteryDiv.style.alignItems = 'center';
+  mysteryDiv.style.gap = '0.5rem';
+  mysteryDiv.style.fontSize = '0.8rem';
+  mysteryDiv.innerHTML = '<span>Mysteries Unlocked:</span>';
+  
+  for (let i = 0; i < 3; i++) {
+    const cbLabel = document.createElement('label');
+    cbLabel.style.display = 'flex';
+    cbLabel.style.alignItems = 'center';
+    cbLabel.style.gap = '0.2rem';
+    
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.name = `Seeker_major_mystery_${i}`;
+    if (savedState && savedState.mysteries && savedState.mysteries[i]) {
+      cb.checked = true;
+    }
+    
+    cb.addEventListener('change', () => {
+      setSaveStatus('Unsaved backstory selections change.');
+    });
+    
+    cbLabel.appendChild(cb);
+    cbLabel.appendChild(document.createTextNode(`Mystery ${i+1}`));
+    mysteryDiv.appendChild(cbLabel);
+  }
+  body.appendChild(mysteryDiv);
+  
+  const minorDiv = document.createElement('div');
+  minorDiv.style.display = 'flex';
+  minorDiv.style.flexDirection = 'column';
+  minorDiv.style.gap = '0.4rem';
+  minorDiv.style.borderTop = '1px solid rgba(107, 79, 42, 0.2)';
+  minorDiv.style.paddingTop = '0.5rem';
+  
+  const minorRoles = [
+    { label: "Mastered Minor Arcanum (unlocked secrets):", name: "minorMastered" },
+    { label: "Possessed Minor Arcanum (not yet mastered):", name: "minorPossessed" },
+    { label: "Lead on Minor Arcanum (not yet found):", name: "minorLead" }
+  ];
+  
+  minorRoles.forEach(role => {
+    const row = document.createElement('div');
+    row.style.display = 'flex';
+    row.style.flexDirection = 'column';
+    row.style.gap = '0.15rem';
+    
+    const label = document.createElement('label');
+    label.innerText = role.label;
+    label.style.fontSize = '0.8rem';
+    label.style.fontWeight = 'bold';
+    
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.name = `Seeker_${role.name}`;
+    input.placeholder = "Name of Minor Arcanum...";
+    input.style.fontSize = '0.8rem';
+    input.style.padding = '0.25rem';
+    input.style.border = '1px solid rgba(107, 79, 42, 0.1)';
+    input.style.borderRadius = '3px';
+    input.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+    input.style.color = 'var(--text-main)';
+    
+    if (savedState && savedState[role.name]) {
+      input.value = savedState[role.name];
+    }
+    
+    input.addEventListener('input', () => {
+      setSaveStatus('Unsaved backstory selections change.');
+    });
+    
+    row.appendChild(label);
+    row.appendChild(input);
+    minorDiv.appendChild(row);
+  });
+  
+  body.appendChild(minorDiv);
+  card.appendChild(body);
+  return card;
+}
+
+function createStormMarkingsCard(savedState = null) {
+  const card = document.createElement('div');
+  card.className = 'follower-card';
+  card.style.border = '1px solid var(--accent-color)';
+  
+  const header = document.createElement('div');
+  header.className = 'follower-card-header';
+  const h5 = document.createElement('h5');
+  h5.innerText = "Storm Markings";
+  header.appendChild(h5);
+  card.appendChild(header);
+  
+  const body = document.createElement('div');
+  body.className = 'follower-card-body';
+  body.style.fontSize = '0.85rem';
+  body.innerText = "You woke up covered in lightning marks that crackle with elemental power.";
+  
+  const mysteryDiv = document.createElement('div');
+  mysteryDiv.style.display = 'flex';
+  mysteryDiv.style.alignItems = 'center';
+  mysteryDiv.style.gap = '0.5rem';
+  mysteryDiv.style.fontSize = '0.8rem';
+  mysteryDiv.style.marginTop = '0.5rem';
+  mysteryDiv.innerHTML = '<span>Mysteries Unlocked:</span>';
+  
+  for (let i = 0; i < 3; i++) {
+    const cbLabel = document.createElement('label');
+    cbLabel.style.display = 'flex';
+    cbLabel.style.alignItems = 'center';
+    cbLabel.style.gap = '0.2rem';
+    
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.name = `Heavy_storm_mystery_${i}`;
+    if (savedState && savedState.mysteries && savedState.mysteries[i]) {
+      cb.checked = true;
+    }
+    
+    cb.addEventListener('change', () => {
+      setSaveStatus('Unsaved backstory selections change.');
+    });
+    
+    cbLabel.appendChild(cb);
+    cbLabel.appendChild(document.createTextNode(`Mystery ${i+1}`));
+    mysteryDiv.appendChild(cbLabel);
+  }
+  body.appendChild(mysteryDiv);
+  card.appendChild(body);
+  return card;
+}
+
 function getBackstorySelections() {
   if (!activeArchetype || !activeCampaign || activeCampaign.id !== 'stonetop') {
     return null;
@@ -1788,6 +2474,43 @@ function getBackstorySelections() {
       hp: hpInput ? Number(hpInput.value) : 6,
       loyalty: loyaltyInput ? Number(loyaltyInput.value) : 2,
       tags: Array.from(tagInputs).map(t => t.value)
+    };
+  }
+
+  if (activeArchetype.name === 'Seeker') {
+    const majorSelect = document.querySelector('select[name="Seeker_major_arcanum"]');
+    const questions = [];
+    for (let i = 0; i < 4; i++) {
+      const qInput = document.querySelector(`input[name="Seeker_major_q_${i}"]`);
+      questions.push(qInput ? qInput.value : '');
+    }
+    const mysteries = [];
+    for (let i = 0; i < 3; i++) {
+      const cb = document.querySelector(`input[name="Seeker_major_mystery_${i}"]`);
+      mysteries.push(cb ? cb.checked : false);
+    }
+    const minorMastered = document.querySelector('input[name="Seeker_minorMastered"]');
+    const minorPossessed = document.querySelector('input[name="Seeker_minorPossessed"]');
+    const minorLead = document.querySelector('input[name="Seeker_minorLead"]');
+    
+    state.arcana = {
+      majorArcanum: majorSelect ? majorSelect.value : 'None selected',
+      questions,
+      mysteries,
+      minorMastered: minorMastered ? minorMastered.value : '',
+      minorPossessed: minorPossessed ? minorPossessed.value : '',
+      minorLead: minorLead ? minorLead.value : ''
+    };
+  }
+
+  if (activeArchetype.name === 'Heavy' && getSelectedBackgroundName().toUpperCase() === 'STORM-MARKED') {
+    const mysteries = [];
+    for (let i = 0; i < 3; i++) {
+      const cb = document.querySelector(`input[name="Heavy_storm_mystery_${i}"]`);
+      mysteries.push(cb ? cb.checked : false);
+    }
+    state.companions = {
+      mysteries
     };
   }
 

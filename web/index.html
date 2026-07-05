@@ -141,6 +141,14 @@
               </div>
             </div>
 
+            <div class="section-box" id="campaign-moves-box" style="display: none;">
+              <h3>Campaign Option <span class="badge" id="campaign-moves-badge">Choose 1</span></h3>
+              <p id="campaign-moves-note" class="section-note"></p>
+              <div id="campaign-moves-list" class="moves-list">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
             <div class="section-box" id="advancement-moves-box">
               <h3>Advancement Choices <span class="badge">Pre-6</span></h3>
               <div id="advancement-moves-list" class="moves-list">
@@ -186,6 +194,10 @@
 
             <div class="section-box" id="gear-box">
               <h3>Gear</h3>
+              <div id="starting-gear-container" style="display: none; margin-bottom: 0.75rem;">
+                <p class="section-note" style="margin-bottom: 0.5rem;" id="starting-gear-label">Special Possessions:</p>
+                <div id="starting-gear-choices" class="starting-gear-choices" style="display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.5rem;"></div>
+              </div>
               <textarea id="gear-text" class="sheet-textarea" placeholder="Weapons, armor, supplies, coins, unusual assets..."></textarea>
             </div>
 
@@ -194,8 +206,12 @@
               <textarea id="steading-upgrades-text" class="sheet-textarea" placeholder="Community projects, seasonal upgrades, defenses, holdings, debts..."></textarea>
             </div>
             
-            <div class="section-box">
-              <h3>Bonds & Notes</h3>
+            <div class="section-box" id="bonds-box">
+              <h3>Bonds & Relationships</h3>
+              <div id="bonds-questions-container" style="display: none; margin-bottom: 0.75rem;">
+                <p class="section-note" style="margin-bottom: 0.5rem;">Introductions & Relationships questions:</p>
+                <div id="bonds-questions-list" style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.5rem;"></div>
+              </div>
               <textarea id="character-notes-text" class="sheet-textarea tall" placeholder="Write character bonds or session notes here..."></textarea>
             </div>
           </div>

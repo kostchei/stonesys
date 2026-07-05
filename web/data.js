@@ -41,7 +41,8 @@ const CAMPAIGNS_DATA = [
           "To find beauty, in even the ugliest things.",
           "DET ACHMENT",
           "To remain unmoved, to be cold as winter.",
-          "NURTURE"
+          "NURTURE",
+          "To help others grow, learn, or improve."
         ],
         "signature_moves": [
           {
@@ -149,7 +150,8 @@ const CAMPAIGNS_DATA = [
           "To feel guilty, to try to do right.",
           "FREEDOM",
           "To chafe against rules, expectations, obligations.",
-          "COMFORT"
+          "COMFORT",
+          "To enjoy yourself and avoid hardship."
         ],
         "signature_moves": [],
         "choice_moves": [
@@ -268,7 +270,8 @@ const CAMPAIGNS_DATA = [
           "To avoid (further) bloodshed or violence.",
           "PRIDE",
           "To maintain your dignity, to demand respect.",
-          "RECKLESSNESS"
+          "RECKLESSNESS",
+          "To act without thought to the consequences."
         ],
         "signature_moves": [
           {
@@ -392,7 +395,8 @@ const CAMPAIGNS_DATA = [
           "To increase your status or influence.",
           "DISPASSION",
           "To disregard emotion or sentiment.",
-          "HARMONY"
+          "HARMONY",
+          "To seek a path that makes everyone happy."
         ],
         "signature_moves": [
           {
@@ -540,7 +544,8 @@ const CAMPAIGNS_DATA = [
           "To go without so that others are better off.",
           "HOPE",
           "To inspire others in the face of adversity.",
-          "MERCY"
+          "MERCY",
+          "To bring relief or comfort, to give second chances."
         ],
         "signature_moves": [
           {
@@ -676,7 +681,8 @@ const CAMPAIGNS_DATA = [
           "To take charge and throw your weight around.",
           "CAUTION",
           "To keep everyone safe, to agonize over decisions.",
-          "DRIVE"
+          "DRIVE",
+          "To take on ever more responsibility."
         ],
         "signature_moves": [
           {
@@ -812,7 +818,8 @@ const CAMPAIGNS_DATA = [
           "To test yourself, to experience new things.",
           "INDEPENDENCE",
           "To refuse help and push others away.",
-          "STEWARDSHIP"
+          "STEWARDSHIP",
+          "To value beasts and natural places over people."
         ],
         "signature_moves": [
           {
@@ -940,7 +947,8 @@ const CAMPAIGNS_DATA = [
           "To scheme, manipulate, and plot.",
           "CURIOSITY",
           "To seek answers that maybe you oughtn't.",
-          "HUBRIS"
+          "HUBRIS",
+          "To assume you know best, that you can't fail."
         ],
         "signature_moves": [
           {
@@ -1064,7 +1072,8 @@ const CAMPAIGNS_DATA = [
           "To refuse to back down, give up, give in.",
           "DOUBT",
           "To question yourself, your actions, your worth.",
-          "EARNESTNESS"
+          "EARNESTNESS",
+          "To prove yourself, to yourself and others."
         ],
         "signature_moves": [
           {

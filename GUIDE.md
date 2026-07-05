@@ -129,7 +129,7 @@ under, and the GM will lean on it.
 each rated 1–5. *The number is your dice*: WIS 3 means three greens when a
 move says "roll +WIS." Below each stat the sheet prints its dice count. Under
 that: **HP** (current/max), **damage die** (what you deal when the fiction
-says you hurt something), **Load** (how much you can carry), **XP**.
+says you hurt something), **Load** (your carrying limits: Light, Normal, Heavy based on STR), **XP**.
 
 **Center — Moves.** Everything your character can *do* beyond the obvious,
 in three kinds:
