@@ -1,0 +1,136 @@
+### The Outlander Mercenary
+
+*You came down from the cold hills or the far grasslands to a city that thinks anyone born past its walls is a barbarian and a fool. You have a strong arm, a plain code, and no guild, no god, and no patron pulling your strings — which in this city makes you either the freest person in the band or the most alone.*
+
+**Duty:** You owe no guild and no god here — only the people who took you in, and your own word. In Lankhmar, that makes you strange, and it makes you trusted.
+
+| STR | DEX | CON | INT | WIS | CHA |
+| --- | --- | --- | --- | --- | --- |
+| 4 | 3 | 3 | 1 | 2 | 2 |
+
+Default array shown; you may swap up to 2 pairs. Anchor: **STR 3+** — no swap may take it lower.
+
+**HP** 20+CON · **Damage** d10 · **Load** 8+STR
+
+**Names:** Bjorn, Ulla, Grettir, Sava, Torm, Hedda, Kael, Roldan, Vasska, Enn, Gord, Marn
+
+**Look** — choose one per line:
+
+- *Build:* mountain-broad, rangy and hard, tall and weathered, scarred all over
+- *Bearing:* blunt, watchful of city ways, good-humored, slow to anger, terrible after
+- *Dress:* furs and leather gone city-worn, practical mail and wool, outlander finery that draws stares, whatever keeps the fog out
+- *Mark:* clan tattoos, a great old scar, a weapon from home, an accent you've stopped trying to hide
+
+**Gear** — choose as marked:
+
+- *Weapon:* a great sword or axe (d10) · sword and shield (d8) · a heavy spear and a broad knife (d8)
+- *War-gear:* a coat of mail · a hillman's toughened leathers · nerve, reach, and a hard head
+- *Home:* a token of your clan · a debt of blood you crossed the world to answer · a song no one here knows
+
+#### Moves
+
+You begin with the signature move, every fixed move, and 2 choice moves.
+
+#### Wade In  ·  *Signature*
+
+> When you meet a fight head-on, with weight, reach, and open violence.
+
+**Roll +STR** · default difficulty **average**.
+
+- **Success:** You cut them down or drive them back; the space in front of you is yours.
+- **Failure:** They match you or flank you, and the GM says how it hurts.
+- **▲ spend:** Hold 1 Fury (spend: fell a second foe in reach / shrug off a blow that lands / put yourself between an enemy and a friend / seize a doorway, a bridge, a stair). / The sheer violence of you makes lesser fighters think about running.
+- **▼ costs:** You take a wound, or your blood is up and you overcommit. / The brawl draws the watch, or wrecks something that mattered.
+- **◆ Triumph:** You break them so hard the fight is simply over.
+- **✶ Despair:** You are badly hurt, or your temper takes you somewhere you cannot easily come back from.
+
+**Hold — Fury.** Spend 1 to: Fell or drive back a second foe within reach. / Shrug off a blow that would have put you down. / Put yourself between an enemy and someone you guard. / Seize and hold a doorway, bridge, stair, or chokepoint.
+
+#### No Master Here  ·  *Fixed*
+
+> Because you answer to no guild, god, or patron in this city:
+
+No faction owns your Debt, and none can call you to heel — but none will shelter you either. When guilds and gods lean on the others, they cannot lean on you; and when your friends need someone with nothing to lose but their word, that is you. Your loyalty, once given, is worth more here than any oath sworn to a guild.
+
+#### Iron Frame  ·  *Choice*
+
+> When wounds, weather, drink, or hardship would put a city softling down.
+
+**Roll +CON** · default difficulty **average**.
+
+- **Success:** You stay standing where others fall.
+- **Failure:** Even you break sometime, and this is the time.
+- **▲ spend:** Haul a friend through it as well. / Set a pace or a stand the others can rally to.
+- **▼ costs:** You endure now and pay for it hard later.
+- **◆ Triumph:** You outlast a thing that had no right to leave you standing.
+- **✶ Despair:** Your body fails at the one moment it must not.
+
+#### Outlander's Eye  ·  *Choice*
+
+> When your plain, outside view cuts through the city's schemes and pretenses.
+
+**Roll +WIS** · default difficulty **average**.
+
+- **Success:** Ask the GM one: what's the lie here? who's the real danger? what are they not saying? Acting on it grants a boost die.
+- **Failure:** The city's ways fool you again, and it costs you.
+- **▲ spend:** Ask another. / Your bluntness makes someone let a truth slip.
+- **▼ costs:** You read them right but show your hand doing it.
+- **◆ Triumph:** You see straight to the rotten heart of the matter.
+- **✶ Despair:** You trust the wrong plain-seeming person.
+
+#### Reputation of the Wild  ·  *Choice*
+
+> When you trade on the city's fear of the barbarian outlander:
+
+Take a boost die to cow, warn off, or unsettle city folk who half-believe you eat your enemies. Playing up the savage they expect grants a second boost die — but the tale spreads, and some will want to test or cage the wild man.
+
+#### Sworn Word  ·  *Choice*
+
+> When you give your plain oath to stand by someone or see a thing done.
+
+**Roll +WIS** · default difficulty **average**.
+
+- **Success:** While you hold to the oath, you and those you swore to take a boost die toward keeping it.
+- **Failure:** The world conspires against your word, and keeping it will cost you dearly.
+- **▲ spend:** Others are moved by the weight of an oath actually meant. / The one you swore to trusts you completely now.
+- **▼ costs:** Keeping your word will mean breaking something else you value.
+- **◆ Triumph:** Your oath becomes a thing others rally around.
+- **✶ Despair:** You are forced to choose between two oaths, and breaking either breaks you.
+
+#### Embedment
+
+
+**Bonds** — fill in at least two:
+
+- ____ was the first in this city to treat me as a person and not a beast.
+- ____ laughs at my old ways, but I have caught them copying my caution.
+- I gave ____ my word once, and I will die before I break it.
+- ____ owes me a debt of blood from a fight we barely walked away from.
+- ____ reminds me of home, and I do not know yet if that is comfort or grief.
+
+**Community tie** — choose one:
+
+- The Black Cat trusts you precisely because no guild or god holds your leash; ____ said so aloud once.
+- You stay in this rotten city for ____, not for coin.
+- When the band is betrayed from within, ____ knows it will not be by you.
+
+#### Advancement
+
+**Basic** (5 XP each):
+
+- ☐ Take another Mercenary move.
+- ☐ Take another Mercenary move.
+- ☐ Take a move from another playbook.
+- ☐ Take a move from another playbook.
+- ☐ Increase your maximum held Fury by 1.
+- ☐ Learn the city's ways well enough that it no longer easily fools you.
+- ☐ Train a move you lean on: it upgrades 2 dice to proficiency (never more than its stat).
+- ☐ Earn a name in the quarter that opens doors an outlander's usually don't.
+
+**Advanced:**
+
+- ☐ Raise one stat by 1 (max 5). Rare, and only at a true turning point.
+- ☐ Answer the call home: settle the blood-debt or duty that drove you here, resolving the fallout in play.
+- ☐ Take service, or take command: swear to a patron at last, or raise a free company and a Bastion (a mercenary hall) of your own.
+
+\newpage
