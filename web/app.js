@@ -619,29 +619,109 @@ function flattenChoiceValue(value) {
   return [String(value)];
 }
 
+function normalizeChoiceName(value) {
+  return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
+function backgroundChoiceName(moveName) {
+  return String(moveName || "").replace(/^Background\s+[^A-Za-z0-9]*\s*/, "").trim();
+}
+
+function moveChoiceDetail(move) {
+  if (!move) return "";
+  const parts = [move.trigger, move.text, move.description]
+    .filter((part, index, list) => part && list.indexOf(part) === index);
+  return parts.join(" ");
+}
+
+function compactChoiceText(value, max = 170) {
+  const text = String(value || "").replace(/\s+/g, " ").trim();
+  if (text.length <= max) return text;
+  return text.slice(0, max - 1).trimEnd() + "…";
+}
+
+function compactGearText(value) {
+  const text = String(value || "").replace(/\s+/g, " ").trim();
+  const markers = [
+    " Place of origin",
+    " AEGIS OF FAITH",
+    " Moves You start",
+    " Special possessions",
+    " Stats Assign",
+    " --- PAGE"
+  ];
+  const markerAt = markers
+    .map((marker) => text.indexOf(marker))
+    .filter((index) => index > 0)
+    .sort((a, b) => a - b)[0];
+  return compactChoiceText(markerAt ? text.slice(0, markerAt) : text);
+}
+
+function findBackgroundChoice(name) {
+  const target = normalizeChoiceName(name);
+  if (!target) return null;
+  return PB.moves.find((move) =>
+    move.category === "fixed" &&
+    move.name.startsWith("Background") &&
+    normalizeChoiceName(backgroundChoiceName(move.name)) === target
+  ) || null;
+}
+
+function renderChoiceValue(value, detail = "") {
+  return el("span", {
+    class: "choice-value",
+    text: value,
+    title: detail || null
+  });
+}
+
+function renderChoiceItem(title, detail = "") {
+  const cleanDetail = compactChoiceText(detail);
+  return el("div", { class: "choice-item" }, [
+    renderChoiceValue(title, detail),
+    cleanDetail ? el("div", { class: "choice-item-detail", text: cleanDetail }) : null
+  ]);
+}
+
+function renderChoiceRow(label, children) {
+  return [
+    el("dt", { text: label }),
+    el("dd", {}, children)
+  ];
+}
+
 function renderChoicesPanel() {
   const chosen = new Set(state.chosen || []);
   const selectedMoves = uniqueMovesByName(PB.moves
-    .filter((m) => m.category !== "fixed" && chosen.has(m.name)))
-    .map((m) => m.name);
+    .filter((m) => m.category !== "fixed" && chosen.has(m.name)));
+  const backgroundMove = findBackgroundChoice(state.backgroundName);
   const backstoryChoices = flattenChoiceValue(state.backstorySelections)
     .filter((item) => item.trim());
   const rows = [
-    state.backgroundName ? ["Background", state.backgroundName] : null,
-    selectedMoves.length ? ["Moves", selectedMoves.join(" | ")] : null,
-    state.gearText ? ["Gear", state.gearText] : null,
-    state.steadingUpgrades ? ["Steading", state.steadingUpgrades] : null,
-    backstoryChoices.length ? ["Backstory", backstoryChoices.join(" | ")] : null,
-    state.notes ? ["Notes", state.notes] : null
-  ].filter(Boolean);
+    state.backgroundName ? renderChoiceRow("Background", [
+      renderChoiceItem(state.backgroundName, moveChoiceDetail(backgroundMove))
+    ]) : null,
+    selectedMoves.length ? renderChoiceRow("Moves", selectedMoves.map((move) =>
+      renderChoiceItem(move.name, moveChoiceDetail(move))
+    )) : null,
+    state.gearText ? renderChoiceRow("Gear", [
+      renderChoiceValue(compactGearText(state.gearText))
+    ]) : null,
+    state.steadingUpgrades ? renderChoiceRow("Steading", [
+      renderChoiceValue(compactChoiceText(state.steadingUpgrades), state.steadingUpgrades)
+    ]) : null,
+    backstoryChoices.length ? renderChoiceRow("Backstory", [
+      renderChoiceValue(compactChoiceText(backstoryChoices.join(" | ")), backstoryChoices.join(" | "))
+    ]) : null,
+    state.notes ? renderChoiceRow("Notes", [
+      renderChoiceValue(compactChoiceText(state.notes), state.notes)
+    ]) : null
+  ].filter(Boolean).flat();
 
   return el("section", { class: "choice-summary" }, [
     el("h2", { text: "Choices" }),
     rows.length
-      ? el("dl", { class: "choice-summary-list" }, rows.flatMap(([label, value]) => [
-        el("dt", { text: label }),
-        el("dd", { text: value })
-      ]))
+      ? el("dl", { class: "choice-summary-list" }, rows)
       : el("p", { class: "hint", text: "No character-generation choices have been saved yet." })
   ]);
 }

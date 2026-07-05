@@ -24,11 +24,12 @@ body {
   display: flex; align-items: center; gap: 12px;
   padding: 8px 16px; background: var(--ink); color: var(--paper);
 }
-.toolbar button { margin-left: auto; }
+.toolbar button:first-of-type { margin-left: auto; }
 .toolbar button + button { margin-left: 8px; }
-.toolbar button {
+.toolbar button, .toolbar a {
   font: inherit; padding: 4px 10px; cursor: pointer;
   background: var(--paper); color: var(--ink); border: 0; border-radius: 3px;
+  text-decoration: none;
 }
 
 #loading { padding: 24px; font-size: 18px; }
@@ -138,6 +139,18 @@ body {
 .choice-summary-list { margin: 0; font-size: 12px; }
 .choice-summary-list dt { font-weight: bold; color: var(--accent); margin-top: 6px; }
 .choice-summary-list dd { margin: 1px 0 0; overflow-wrap: anywhere; }
+.choice-item { margin-bottom: 5px; }
+.choice-item-detail {
+  color: #5f574c;
+  font-size: 11px;
+  line-height: 1.25;
+  margin-top: 1px;
+}
+.choice-value[title] {
+  cursor: help;
+  text-decoration: underline dotted rgba(107, 79, 42, .55);
+  text-underline-offset: 2px;
+}
 
 /* ---- footer ---- */
 .zone-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
