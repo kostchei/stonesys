@@ -13,6 +13,70 @@ const SP_KEY = "stonesys:storypoints";
 const ADV_XP_COST = 5; // GUIDE.md: "Spend 5 XP to take one advancement checkbox."
 const LEVEL_SIX_ADVANCEMENT_COUNT = 5;
 
+const COMMON_MOVES = [
+  {
+    name: "Risky Check",
+    type: "fixed",
+    category: "common",
+    trigger: "When danger looms, the stakes are high, and no named move fits, choose the stat that matches your approach. On success, you do it. On threat, the GM gives a lesser success, cost, consequence, or hard choice. On failure, mark XP and the GM makes a move.",
+    stat: "WIS",
+    statPick: true,
+    trained: false
+  },
+  {
+    name: "Clash",
+    type: "fixed",
+    category: "common",
+    trigger: "When you fight in melee or close quarters, roll with the stat that fits the weapon and approach, usually STR. On success, deal your damage. Advantage can avoid, prevent, or counter the enemy's attack, or strike hard for +1d6 while still suffering their attack. Threat usually means the enemy's attack lands or another immediate cost follows.",
+    stat: "STR",
+    statPick: true,
+    trained: false
+  },
+  {
+    name: "Let Fly",
+    type: "fixed",
+    category: "common",
+    trigger: "When you take an easy shot with a clear line, deal your damage. If the shot is tricky or you are under pressure, roll DEX. On success, deal your damage. On threat, deplete ammo, wait for a clear shot, move into danger, or accept the GM's complication.",
+    stat: "DEX",
+    trained: false
+  },
+  {
+    name: "Defend",
+    type: "fixed",
+    category: "common",
+    trigger: "When you take up a defensive stance or throw yourself between a threat and your ward, roll CON. On advantage, hold Readiness; a shield gives more. Spend Readiness to suffer an attack instead of your ward, halve damage or effect, draw attention, or strike back with disadvantage.",
+    stat: "CON",
+    trained: false,
+    hold: {
+      name: "Readiness",
+      spend: [
+        "Suffer an attack's damage or effect instead of your ward.",
+        "Halve an attack's effect or damage.",
+        "Draw attention to yourself.",
+        "Strike back with disadvantage on damage."
+      ]
+    }
+  },
+  {
+    name: "Aid",
+    type: "fixed",
+    category: "common",
+    trigger: "When your bond, position, or skill makes the help credible, describe how you help and give the roller one blue die. If the table calls for a risky roll to make the help matter, roll the stat that fits your approach. You are in the scene now, and the GM may spend threat from that roll against you.",
+    stat: "CHA",
+    statPick: true,
+    trained: false
+  },
+  {
+    name: "Interfere",
+    type: "fixed",
+    category: "common",
+    trigger: "When you get in someone's way, describe how you impose one black die on their roll and accept the fictional consequences. If active opposition is uncertain, roll the stat that fits how you interfere.",
+    stat: "DEX",
+    statPick: true,
+    trained: false
+  }
+];
+
 // Advancement effects are detected from text patterns rather than a
 // structured field: verified consistent across every playbook in
 // playbooks/*.json (see commit history), so this is pattern-matching known
@@ -122,6 +186,56 @@ function defaultState(pb) {
     obligationTriggered: null,
     obligationSessionRoll: null
   };
+}
+
+function normalizeLoadedState(raw, pb, id) {
+  const base = defaultState(pb);
+  const parsed = raw && typeof raw === "object" ? raw : {};
+  const maxHp = Number(evalFormula(pb.derived.hp, parsed.stats || base.stats)) || base.hp.max;
+  const fixedNames = pb.moves.filter((m) => m.type !== "choice").map((m) => m.name);
+  const chosen = Array.isArray(parsed.chosen)
+    ? parsed.chosen.slice()
+    : fixedNames.concat(Array.isArray(parsed.choiceMoves) ? parsed.choiceMoves : []);
+  const normalized = {
+    ...base,
+    ...parsed,
+    playbookId: parsed.playbookId || id,
+    name: parsed.name || base.name,
+    stats: { ...base.stats, ...(parsed.stats || {}) },
+    gear: parsed.gear && typeof parsed.gear === "object" && !Array.isArray(parsed.gear) ? parsed.gear : base.gear,
+    chosen: Array.from(new Set(chosen.length ? chosen : base.chosen)),
+    tracks: { ...base.tracks, ...(parsed.tracks || {}) },
+    holds: { ...base.holds, ...(parsed.holds || {}) },
+    advChecked: parsed.advChecked || {},
+    advChoices: parsed.advChoices || {},
+    trainedRanks: parsed.trainedRanks || {},
+    swapDone: parsed.swapDone === undefined ? null : parsed.swapDone,
+    obligations: parsed.obligations || base.obligations || [],
+    obligationTriggered: parsed.obligationTriggered === undefined ? null : parsed.obligationTriggered,
+    obligationSessionRoll: parsed.obligationSessionRoll === undefined ? null : parsed.obligationSessionRoll,
+    backgroundName: parsed.backgroundName || "",
+    gearText: typeof parsed.gear === "string" ? parsed.gear : (parsed.gearText || ""),
+    steadingUpgrades: parsed.steadingUpgrades || "",
+    notes: parsed.notes || "",
+    backstorySelections: parsed.backstorySelections || {}
+  };
+
+  if (parsed.hp && typeof parsed.hp === "object") {
+    normalized.hp = {
+      current: Math.max(0, Number(parsed.hp.current) || 0),
+      max: Math.max(1, Number(parsed.hp.max) || maxHp)
+    };
+  } else {
+    normalized.hp = {
+      current: Math.max(0, Math.min(maxHp, Number(parsed.hp) || maxHp)),
+      max: maxHp
+    };
+  }
+  normalized.xp = Number.isFinite(Number(parsed.xp))
+    ? Number(parsed.xp)
+    : (Number.isFinite(Number(parsed.availableXp)) ? Number(parsed.availableXp) : base.xp);
+
+  return normalized;
 }
 
 // Pick slots for "choice" moves: 2 at creation, +1 per checked "take another
@@ -424,6 +538,23 @@ function renderHiddenMoveSection(title, hint = "") {
   ]);
 }
 
+function playableMove(move) {
+  return { ...move, type: "fixed", locked: false };
+}
+
+function isReferenceMove(move) {
+  return move.name.startsWith("Background ") || move.name === "Instincts" || move.name === "Gear";
+}
+
+function uniqueMovesByName(moves) {
+  const seen = new Set();
+  return moves.filter((move) => {
+    if (seen.has(move.name)) return false;
+    seen.add(move.name);
+    return true;
+  });
+}
+
 function defaultStartingChoices(pb) {
   const startingMoves = pb.moves.filter((m) => m.type === "choice" && m.category === "starting");
   const startingNames = startingMoves.map((m) => m.name);
@@ -458,21 +589,13 @@ function levelSixUnlocked() {
 }
 
 function renderCenter() {
-  const fixed = PB.moves.filter((m) => m.category === "fixed");
-  const starting = PB.moves.filter((m) => m.category === "starting");
-  const advancement = PB.moves.filter((m) => m.category === "advancement");
-  const level6 = PB.moves.filter((m) => m.category === "level6");
-  const level6Section = levelSixUnlocked()
-    ? renderMoveSection("Level 6+ Choices", level6.map((m) => ({ ...m, locked: false })), "Unlocked at level 6.")
-    : renderHiddenMoveSection(
-      "Level 6+ Choices",
-      `Hidden until level 6. Mark ${LEVEL_SIX_ADVANCEMENT_COUNT} advancement choices to reveal ${level6.length} level 6+ choice${level6.length === 1 ? "" : "s"}.`
-    );
+  const chosen = new Set(state.chosen || []);
+  const fixed = PB.moves.filter((m) => m.category === "fixed" && !isReferenceMove(m));
+  const selected = uniqueMovesByName(PB.moves.filter((m) => m.category !== "fixed" && chosen.has(m.name)));
+  const playbookMoves = fixed.concat(selected).map(playableMove);
   document.getElementById("zone-center").replaceChildren(
-    renderMoveSection("Signature / Fixed Moves", fixed, "Always on from the start."),
-    renderMoveSection("Starting Choices", starting, PB.startingText || ""),
-    renderMoveSection("Advancement Choices", advancement, "Pre-6 moves available through advancement."),
-    level6Section
+    renderMoveSection("Common Moves", COMMON_MOVES, "Available to every character at the table."),
+    renderMoveSection("Your Moves", playbookMoves, "Only fixed moves and the choices on this character are shown here.")
   );
 }
 
@@ -489,10 +612,44 @@ function renderTrack(t) {
   return row;
 }
 
+function flattenChoiceValue(value) {
+  if (value == null || value === "") return [];
+  if (Array.isArray(value)) return value.flatMap(flattenChoiceValue);
+  if (typeof value === "object") return Object.values(value).flatMap(flattenChoiceValue);
+  return [String(value)];
+}
+
+function renderChoicesPanel() {
+  const chosen = new Set(state.chosen || []);
+  const selectedMoves = uniqueMovesByName(PB.moves
+    .filter((m) => m.category !== "fixed" && chosen.has(m.name)))
+    .map((m) => m.name);
+  const backstoryChoices = flattenChoiceValue(state.backstorySelections)
+    .filter((item) => item.trim());
+  const rows = [
+    state.backgroundName ? ["Background", state.backgroundName] : null,
+    selectedMoves.length ? ["Moves", selectedMoves.join(" | ")] : null,
+    state.gearText ? ["Gear", state.gearText] : null,
+    state.steadingUpgrades ? ["Steading", state.steadingUpgrades] : null,
+    backstoryChoices.length ? ["Backstory", backstoryChoices.join(" | ")] : null,
+    state.notes ? ["Notes", state.notes] : null
+  ].filter(Boolean);
+
+  return el("section", { class: "choice-summary" }, [
+    el("h2", { text: "Choices" }),
+    rows.length
+      ? el("dl", { class: "choice-summary-list" }, rows.flatMap(([label, value]) => [
+        el("dt", { text: label }),
+        el("dd", { text: value })
+      ]))
+      : el("p", { class: "hint", text: "No character-generation choices have been saved yet." })
+  ]);
+}
+
 function renderRight() {
   const z = document.getElementById("zone-right");
   const em = PB.embedment;
-  const kids = [el("h2", { text: "Embedment" })];
+  const kids = [renderChoicesPanel(), el("h2", { text: "Embedment" })];
   if (em) {
     if (em.system) {
       const startStr = em.start ? ` Start: ${Object.entries(em.start).map(([k, v]) => `${k} ${v}`).join(", ")}.` : "";
@@ -877,30 +1034,11 @@ async function boot() {
       url.searchParams.delete("import");
       url.searchParams.delete("load");
       window.history.replaceState({}, document.title, url.toString());
-      return urlImportState;
+      return normalizeLoadedState(urlImportState, PB, id);
     }
     const s = localStorage.getItem(storeKey);
     if (!s) return defaultState(PB);
-    const parsed = JSON.parse(s);
-    // normalize saves made before advChoices/trainedRanks/swapDone existed
-    parsed.advChoices = parsed.advChoices || {};
-    parsed.trainedRanks = parsed.trainedRanks || {};
-    if (parsed.swapDone === undefined) parsed.swapDone = null;
-    
-    // normalize obligations
-    parsed.obligations = parsed.obligations || [];
-    if (parsed.obligations.length === 0 && (PB.campaignId === "lankhmar" || PB.campaignId === "darksun")) {
-      let type = "Patron Debt";
-      if (PB.campaignId === "darksun") {
-        type = PB.name.toLowerCase().includes("defiler") ? "Defiler's Reek" : 
-               (PB.name.toLowerCase().includes("templar") ? "Sorcerer-King's Pact" : "Hunted by the Templars");
-      }
-      parsed.obligations = [{ type, value: 10 }];
-    }
-    if (parsed.obligationTriggered === undefined) parsed.obligationTriggered = null;
-    if (parsed.obligationSessionRoll === undefined) parsed.obligationSessionRoll = null;
-
-    return parsed;
+    return normalizeLoadedState(JSON.parse(s), PB, id);
   })();
   
   sp = (() => { const s = localStorage.getItem(SP_KEY); return s ? JSON.parse(s) : { player: 1, gm: 1 }; })();
@@ -995,7 +1133,7 @@ async function boot() {
                 }
                 loaderModal.style.display = "none";
                 const loadedState = await loadFromDrive(accessToken, file.id);
-                state = loadedState;
+                state = normalizeLoadedState(loadedState, PB, loadedState.playbookId || id);
                 save();
                 
                 // If the playbook changed, we need to reload the page to load the correct JSON

@@ -91,6 +91,27 @@ header h1 span {
   color: var(--text-muted);
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.header-actions a {
+  color: var(--accent-color);
+  text-decoration: none;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-card);
+  padding: 0.35rem 0.65rem;
+}
+
+.header-actions a:hover {
+  border-color: var(--accent-color);
+}
+
 .main-container {
   display: flex;
   flex: 1;

@@ -1,0 +1,25 @@
+{
+  "product": "Lulu print interior",
+  "trim": "US Trade 6 x 9 in",
+  "fullBleed": false,
+  "page": {
+    "widthIn": 6,
+    "heightIn": 9
+  },
+  "marginsIn": {
+    "inside": 0.95,
+    "outside": 0.65,
+    "top": 0.65,
+    "bottom": 0.7
+  },
+  "typography": {
+    "bodyFont": "DejaVu Serif",
+    "bodySizePt": 9.2,
+    "leadingPt": 11.2
+  },
+  "notes": [
+    "Interior and cover are separate Lulu uploads.",
+    "This is a no-bleed text interior. Switch fullBleed to true only if edge-to-edge art is added.",
+    "Keep cover design separate until final interior page count is known."
+  ]
+}

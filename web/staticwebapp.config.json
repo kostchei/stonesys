@@ -1,7 +1,7 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/playbooks/*.json", "/*.js", "/*.css", "/*.html"]
+    "exclude": ["/playbooks/*.json", "/wiki/*", "/*.js", "/*.css", "/*.html"]
   },
   "routes": [
     {
